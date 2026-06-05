@@ -5,16 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 </head>
+<style>
+   .login{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    height:200px;
+    width: inherit;
+   }
+   #Email , #Password{
+    margin-top:10px;
+    margin-bottom: 10px;
+    height: 25px;
+    width: 200px;
+    border-radius: 9px;
+   }
+   #Login{
+    width: 90px;
+    margin-top: 10px;
+   }
+
+</style>
 <body>
+    <div class="login">
     <form method="post">
-        <lebel for="Email">Email</lebel>
-        <input type="email" placeholder="Email" id="Email">
+        <lebel for="Email">Email</lebel><br>
+        <input type="email" placeholder="Email" id="Email"><br>
 
-        <lebel for="Password">Password</lebel>
-        <input type="password" placeholder="Password" id="Password">
+        <lebel for="Password">Password</lebel><br>
+        <input type="password" placeholder="Password" id="Password"><br>
 
-        <button type="button" onclick=""> Login</button>
+        <button id="Login" type="button" onclick=""> Login</button>
     </form>
+    </div>
 </body>
 
 <script>
