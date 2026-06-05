@@ -34,7 +34,9 @@ class Admin(BaseModel):
      email : str
      admin_passord : str
     
-
+class Book_slot (BaseModel):
+     #will create later
+     
 
 
 @app.post("/Login")
@@ -69,7 +71,7 @@ def Register(Register_data : Register):
 
      # check if the user is already present or not
 
-     sql = "SELECT * FROM user WHERE Email = %s "
+     sql = "SELECT * FROM user WHERE Email = %s"
      values = (Register_data.Email,)
      cursor.execute(sql, values)
      user = cursor.fetchone()
@@ -138,6 +140,7 @@ def Forget_password(forget_password : Login):
           "success" : True,
           "message" : "password updated successfully"
      }
+
 
 
 
