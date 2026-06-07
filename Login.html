@@ -35,14 +35,33 @@
         <lebel for="Password">Password</lebel><br>
         <input type="password" placeholder="Password" id="Password"><br>
 
-        <button id="Login" type="button" onclick=""> Login</button>
+        <button id="Login" type="button" onclick="Login()"> Login</button>
     </form>
     </div>
 </body>
 
 <script>
     function Login(){
-        
+        Email = document.getElementById("Email").value;
+        Password = document.getElementById("Password").value;
+
+        fetch("http://127.0.0.1:3000/Login",{
+            "method" : "POST",
+            "headers" : {
+                 "Content-Type" : "application/json"
+            },
+             body : JSON.stringify({
+                Email : Email,
+                Password : parseInt(Password)
+             })    
+        }).then((Response) => Response.json()).then(data => {
+            if (data.success){
+                window.location.href = "Home.html"; 
+            }
+            else {
+                alret("Invalid creadentials")
+            }
+        }) 
     }
 </script>
 

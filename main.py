@@ -35,11 +35,16 @@ class Admin(BaseModel):
      admin_passord : str
     
 class Book_slot (BaseModel):
-     #will create later
+     user_id : int
+     slot_id : int
+     vehicle_id : int
+     date_entry : str
+     entry_time : str
+     exit_time : str
+     amount : int
+
      
-
-
-@app.post("/api/Login")
+@app.post("/Login")
 def Login(Login_data : Login ):
     conn = get_connection()
     cursor = conn.cursor()  # object of connection for commands
