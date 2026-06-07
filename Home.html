@@ -202,10 +202,100 @@ body{
     color:#6b7280;
     font-size:22px;
 }
+
+
+
+  /* Main Body */
+.main_body{
+    width:100%;
+}
+/* Hero Section */
+.hero1{
+    min-height:80vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:40px 20px;
+}
+
+/* Header */
+.hero-header{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-bottom:20px;
+}
+
+.logo-box{
+    width:70px;
+    height:70px;
+    background:#030522;
+    color:white;
+    border-radius:18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+.hero-header h1{
+    font-size:4rem;
+    font-weight:700;
+    color:#000;
+}
+
+.hero-subtitle{
+    font-size:1.5rem;
+    color:#667085;
+    margin-bottom:40px;
+    text-align:center;
+}
+
+/* Search Bar */
+.search-container{
+    width:100%;
+    max-width:1000px;
+    height:80px;
+    background:white;
+    border-radius:22px;
+    display:flex;
+    align-items:center;
+    padding:0 25px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom:60px;
+}
+
+.search-icon{
+    font-size:28px;
+    margin-right:15px;
+}
+
+.search-container input{
+    flex:1;
+    border:none;
+    outline:none;
+    font-size:1.5rem;
+    background:transparent;
+}
+
+.search-container input::placeholder{
+    color:#667085;
+}
+
+.search-btn{
+    border:none;
+    background:none;
+    font-size:2rem;
+    cursor:pointer;
+    color:#667085;
+}
+
+
 </style>
 
 <body>
-    <!-- Navigation bar -->
+      <!-- Navigation bar -->
     <div class="navbar">
         <div class="logo">
             <div class="logo-box">
@@ -262,7 +352,50 @@ body{
         </div>
     </div>
 
-<!-- Footer-->
+  
+  <!-- Main Body -->
+<div class="main_body">
+
+    <!-- Hero Section -->
+    <section class="hero1">
+
+        <!-- Logo + Title -->
+        <div class="hero-header">
+            <div class="logo-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"
+                    fill="currentColor" class="bi bi-car-front-fill" viewBox="0 0 16 16">
+                    <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2z"/>
+                </svg>
+            </div>
+
+            <h1>SmartPark</h1>
+        </div>
+
+        <!-- Tagline -->
+        <p class="hero-subtitle">
+            Your intelligent parking companion — ask us anything below.
+        </p>
+
+        <!-- Search Box -->
+        <div class="search-container">
+            <div class="search-icon">
+                🤖
+            </div>
+            <input type="text" placeholder="Ask SmartPark Assistant anything...">
+
+            <button class="search-btn">
+                ❯
+            </button>
+        </div>
+    </section>
+
+    <!-- Future Hero Sections -->
+    <section class="hero2"></section>
+    <section class="hero3"></section>
+
+</div>
+
+    <!-- Footer-->
     <footer class="footer">
 
         <div class="footer-section">
