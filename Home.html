@@ -16,6 +16,8 @@ body{
     font-family: Arial, sans-serif;
 }
 
+/* navigation bar styling */
+
 .navbar{
     height:95px;
     width:100%;
@@ -126,10 +128,84 @@ body{
     height:24px;
 }
 
+/* Footer styling */
+
+.footer{
+    display:flex;
+    justify-content:space-between;
+    padding:50px 70px;
+    background:#f8f9fa;
+    border-top:1px solid #ddd;
+}
+
+.footer-section{
+    width:30%;
+}
+
+.footer-logo{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.logo-box{
+    width:60px;
+    height:60px;
+    background:#020224;
+    color:white;
+    border-radius:15px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.footer-logo h2{
+    font-size:32px;
+}
+
+.footer-text{
+    color:#6b7280;
+    font-size:22px;
+    line-height:1.6;
+}
+
+.footer-section h3{
+    font-size:30px;
+    margin-bottom:25px;
+}
+
+.footer-section ul{
+    list-style:none;
+}
+
+.footer-section ul li{
+    margin-bottom:18px;
+    font-size:22px;
+    color:#6b7280;
+}
+
+.footer-section ul li a{
+    text-decoration:none;
+    color:#6b7280;
+}
+
+.footer-section ul li a:hover{
+    color:black;
+}
+
+.footer-bottom{
+    text-align:center;
+    padding:30px;
+    border-top:1px solid #ddd;
+    background:#f8f9fa;
+    color:#6b7280;
+    font-size:22px;
+}
 </style>
 
 <body>
-    <!-- Nav bar -->
+    <!-- Navigation bar -->
     <div class="navbar">
         <div class="logo">
             <div class="logo-box">
@@ -186,6 +262,53 @@ body{
         </div>
     </div>
 
+<!-- Footer-->
+    <footer class="footer">
 
+        <div class="footer-section">
+
+            <div class="footer-logo">
+                <div class="logo-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                        fill="currentColor" class="bi bi-car-front-fill" viewBox="0 0 16 16">
+                        <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2z"/>
+                    </svg>
+                </div>
+
+                <h2>SmartPark</h2>
+            </div>
+
+            <p class="footer-text">
+                Smart parking solutions for modern cities.
+                Find, book, and manage parking spots with ease.
+            </p>
+
+        </div>
+
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Book a Slot</a></li>
+                <li><a href="#">Admin Login</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h3>Contact</h3>
+
+            <ul>
+                <li>Email: support@smartpark.com</li>
+                <li>Phone: +1 (555) 123-4567</li>
+                <li>24/7 Customer Support</li>
+            </ul>
+        </div>
+
+    </footer>
+
+    <div class="footer-bottom">
+        © 2026 SmartPark. All rights reserved.
+    </div>
 </body>
 </html>
