@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<style>
+   *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f5f5f7;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:40px 0;
+}
+
+
+.login{
+    width:650px;
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo-box{
+    width:80px;
+    height:80px;
+    background:#de6b24;
+    color:white;
+    border-radius:15px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:auto;
+    margin-bottom:20px;
+}
+
+.logo h2{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.logo p{
+    color:#777;
+    font-size:24px;
+}
+
+.login-tabs{
+    display:flex;
+    margin:30px 0;
+    border:1px solid #ddd;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.User_Login,
+.Admin_Login{
+    width:50%;
+    padding:15px;
+    border:none;
+    cursor:pointer;
+    font-size:22px;
+}
+
+.User_Login{
+    background:#ffffff;
+    color:#777;
+}
+
+.Admin_Login{
+    background:#de6b24;
+    color:#ffffff;
+}
+
+form label{
+    display:block;
+    font-size:24px;
+    font-weight:600;
+    margin-bottom:10px;
+    margin-top:20px;
+}
+
+form input[type="email"],
+form input[type="password"]{
+    width:100%;
+    height:65px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    padding:0 20px;
+    font-size:20px;
+    margin-bottom:10px;
+    outline:none;
+}
+
+.radio{
+    display:flex !important;
+    justify-content:space-between;
+    align-items:center;
+    margin:20px 0;
+}
+
+.input{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.input input{
+    width:20px;
+    height:20px;
+}
+
+.input p{
+    font-size:18px;
+}
+
+.radio a{
+    font-size:18px;
+}
+
+#Login{
+    width:100%;
+    height:65px;
+    border:none;
+    border-radius:14px;
+    background:#de6b24;
+    color:white;
+    font-size:28px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+#Login:hover{
+    opacity:.9;
+}
+
+.or{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin:30px 0;
+    color:#777;
+}
+
+.or hr{
+    flex:1;
+}
+
+.social-buttons{
+    display:flex;
+    gap:20px;
+    margin-bottom:30px;
+}
+
+.google{
+    width:50%;
+    height:65px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    background:white;
+    font-size:24px;
+    cursor:pointer;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+}
+
+.google:hover{
+    background:#f7f7f7;
+}
+
+.login p:last-child{
+    text-align:center;
+    margin-top:25px;
+    color:#666;
+    font-size:22px;
+}
+
+.login p:last-child a{
+    font-weight:bold;
+}
+
+.note{
+    display:flex;
+    align-items:center;
+    text-align: center;
+    gap: 10px;
+    background:#fff8e6;
+    border:1px solid #f4d06f;
+    border-radius:18px;
+    padding:20px 24px;
+    margin:25px 0;
+
+}
+
+.note p{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    margin:0;
+    color:#b45309;
+    font-size:22px;
+    line-height:1.5;
+    font-weight:500;
+}
+
+.note svg{
+    flex-shrink:0;
+    width: 35px;
+    height: 35px;
+    color:#b45309;
+    margin-top:4px;
+}
+</style>
+<body>
+    <div class="login">
+
+        <div class="logo">
+
+            <div class="Form-logo">
+                <div class="logo-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-shield" viewBox="0 0 16 16">
+                    <path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .101.025 1 1 0 0 0 .1-.025q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/>
+                    </svg>
+                </div>
+            </div>
+
+            <h2>Admin Portal</h2>
+            <p>Sign with your Admin creadentials</p>
+        </div>
+
+        <!-- redirection buttons-->
+
+        <div class="login-tabs">
+            <button onclick="redirect_Lgin()" class="User_Login">User Login</button>
+            <button  class="Admin_Login" >Admin Login</button>
+        </div>
+
+     <!-- Admin note-->
+      
+     <div class="note">
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield" viewBox="0 0 16 16">
+              <path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .101.025 1 1 0 0 0 .1-.025q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/>
+            </svg>
+        Admin access is restricted. Use your admin credentials
+        to proceed.
+    </p>
+</div>
+     
+
+     <!-- form for data -->
+
+        <form method="post">
+           <label for="Email">Admin Email</label><br>
+            <input type="email" placeholder="Admin@smartpark.com " id="Email"><br>
+
+            <label for="Password">Password</label><br>
+            <input type="password" placeholder="Enter Your Password" id="Password"><br>
+
+            <button id="Login" type="button" onclick="Login()">Sign in</button>
+        </form>
+
+    </div>
+</body>
+
+<!-- Java script -->
+
+<script>
+   
+    function redirect_Lgin(){
+        window.location.href= "Login.html";
+    }
+</script>
+
+</html>
