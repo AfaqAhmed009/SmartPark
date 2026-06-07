@@ -39,7 +39,7 @@ class Book_slot (BaseModel):
      
 
 
-@app.post("/Login")
+@app.post("/api/Login")
 def Login(Login_data : Login ):
     conn = get_connection()
     cursor = conn.cursor()  # object of connection for commands
@@ -64,7 +64,7 @@ def Login(Login_data : Login ):
         "message": "Credentials are incorrect"
     }
 
-@app.post("/Register")
+@app.post("/api/Register")
 def Register(Register_data : Register):
      conn = get_connection() # variable for connection
      cursor = conn.cursor() # object of connection for commands
@@ -98,7 +98,7 @@ def Register(Register_data : Register):
                "message" : "user registered successfully" 
           }
 
-@app.post("/Admin")
+@app.post("/api/Admin")
 def Admin( Admin_data : Admin ):
      conn = get_connection()
      cursor = conn.cursor()
@@ -124,7 +124,7 @@ def Admin( Admin_data : Admin ):
           " message" : "Admin identity not found"
      }
 
-@app.patch("/Forget-password")
+@app.patch("/api/Forget-password")
 def Forget_password(forget_password : Login):
      conn = get_connection()
      cursor = conn.cursor()
