@@ -283,7 +283,25 @@ form input[type="password"]{
 <script>
    function Admin_login(){
        Admin_email = document.getElementById("Email").value;
-       Password = documnet
+       Password = documnet.getElementById("Password").value;
+
+       fetch("http://127.0.0.1:3000/Admin",{
+        "method" : "POST",
+        "headers" :{
+              "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+          Admin_email :  Admin_email,
+          Password  :  Password
+        })
+       }).then((Response) => Response.json()).then(data => {
+        if (data.success){
+            window.location.href = "Home.html";
+        }
+        else{
+            alert("Invalid admin creadentials");
+        }
+       })
    }
 
     function redirect_Lgin(){
