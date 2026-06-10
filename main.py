@@ -69,7 +69,7 @@ def Login(Login_data : Login ):
         "message": "Credentials are incorrect"
     }
 
-@app.post("/api/Register")
+@app.post("/Register")
 def Register(Register_data : Register):
      conn = get_connection() # variable for connection
      cursor = conn.cursor() # object of connection for commands
@@ -103,7 +103,7 @@ def Register(Register_data : Register):
                "message" : "user registered successfully" 
           }
 
-@app.post("/api/Admin")
+@app.post("/Admin")
 def Admin( Admin_data : Admin ):
      conn = get_connection()
      cursor = conn.cursor()

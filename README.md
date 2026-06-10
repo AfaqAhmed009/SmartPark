@@ -1,1 +1,2 @@
 **Smart Park**
+Wit htthe AI chatBot integration and the smart prediction system based on timming and other factores nad the performance graphs of the parking like(earnig of day, cars enterd etc) and one section will be of the future predictions
