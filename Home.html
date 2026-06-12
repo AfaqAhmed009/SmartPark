@@ -210,7 +210,7 @@ body{
 .main_body{
     width:100%;
 }
-/* Hero Section */
+/* Hero 1 */
 .hero1{
     min-height:80vh;
     display:flex;
@@ -294,13 +294,161 @@ body{
 
 /* Hero 2 */ 
 
+.container_hero2{
+    width:100%;
+    padding:80px 5%;
+    background:#f5f5f5;
+}
+
+.main_hero2{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:70px;
+}
+
+/* IMAGE */
+
+.image_hero2{
+    position:relative;
+    flex:1;
+}
+
+.image_hero2 img{
+    width:100%;
+    max-width: 850px;
+    height:650px;
+    object-fit:cover;
+    border-radius:20px;
+    display:block;
+}
+
+/* FLOATING CARD */
+
+.availability_card{
+    position:absolute;
+    right:-25px;
+    bottom:-25px;
+    background:#02011a;
+    color:white;
+    padding:20px 28px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.availability_card span{
+    font-size:18px;
+    color:#cfcfcf;
+}
+
+.availability_card h2{
+    margin-top:8px;
+    font-size:42px;
+    font-weight:600;
+}
+
+/* RIGHT SIDE */
+
+.intro_hero2{
+    flex:1;
+    max-width:650px;
+}
+
+.logo_hero2{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:#e6e6e6;
+    padding:12px 24px;
+    border-radius:50px;
+    margin-bottom:25px;
+}
+
+.logo_hero2 p{
+    margin:0;
+    font-size:18px;
+}
+
+/* HEADING */
+
+.intro_hero2 h1{
+    font-size:70px;
+    line-height:1.1;
+    margin-bottom:25px;
+    font-weight:700;
+}
+
+/* TEXT */
+
+.text_hero2{
+    font-size:24px;
+    line-height:1.8;
+    color:#667085;
+    margin-bottom:35px;
+}
+
+/* BUTTONS */
+
+.buttons_hero2{
+    display:flex;
+    gap:20px;
+    margin-bottom:40px;
+}
+
+.primary_btn{
+    background:#010024;
+    color:white;
+    border:none;
+    padding:20px 35px;
+    border-radius:15px;
+    font-size:22px;
+    cursor:pointer;
+}
+
+.secondary_btn{
+    background:white;
+    border:1px solid #ddd;
+    padding:20px 35px;
+    border-radius:15px;
+    font-size:22px;
+    cursor:pointer;
+}
+
+/* STATS */
+
+.stats{
+    display:flex;
+    justify-content:space-between;
+    max-width:500px;
+    color:#667085;
+    font-size:20px;
+}
+
+.green_dot,
+.blue_dot{
+    display:inline-block;
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    margin-right:10px;
+}
+
+.green_dot{
+    background:#22c55e;
+}
+
+.blue_dot{
+    background:#3b82f6;
+}
+
+/* Hero 3 */ 
 
 .hero3 {
     padding: 100px 8%;
     background: #f5f5f5;
 }
 
-.hero2-container {
+.hero3-container {
     width: 100%;
 }
 
@@ -475,7 +623,7 @@ body{
                 <span>Home</span>
             </a>    
 
-            <a href="#">
+            <a onclick="window.location.href = 'Dashboard.html'" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-columns-gap" viewBox="0 0 16 16">
                 <path d="M6 1v3H1V1zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1zm14 12v3h-5v-3zm-5-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1zM6 8v7H1V8zM1 7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zm14-6v7h-5V1zm-5-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z"/>
                 </svg>
@@ -484,7 +632,7 @@ body{
             </a>
 
 
-             <a href="#">
+             <a onclick="window.location.href ='BookSlot.html'" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
                </svg>
@@ -512,13 +660,13 @@ body{
     </div>
 
   
-  <!-- Main Body -->
+  <!--Main Body -->
 <div class="main_body">
 
-    <!-- Hero Section -->
+    <!--Chatbot Section-->
     <section class="hero1">
 
-        <!-- Logo + Title -->
+        <!--Logo + Title -->
         <div class="hero-header">
             <div class="logo-box">
                 <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"
@@ -548,10 +696,61 @@ body{
         </div>
     </section>
 
-    
-    <section class="hero2"></section>
+    <!--Intro Section-->
+    <section class="hero2">
+    <div class="container_hero2">
+    <div class="main_hero2">
 
-    <!-- Future Hero Sections -->
+        <div class="image_hero2">
+            <img src="/images/parked_cars.avif" alt="Parking Cars">
+            <div class="availability_card">
+                <span>Available Now</span>
+                <h2>164 Slots</h2>
+            </div>
+        </div>
+
+        <div class="intro_hero2">
+
+            <div class="logo_hero2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                    class="bi bi-car-front-fill" viewBox="0 0 16 16">
+                    <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2z"/>
+                </svg>
+                <p>Smart Parking System</p>
+            </div>
+
+            <h1>Park Smarter,<br>Drive Better</h1>
+
+            <p class="text_hero2">
+                Find, book, and manage parking spots in seconds.
+                Supports all vehicle types — sedan, SUV, truck, and bus —
+                with transparent flat-rate pricing.
+            </p>
+
+            <div class="buttons_hero2">
+                <button class="primary_btn">Book a Spot Now</button>
+                <button class="secondary_btn">View Parking Map</button>
+            </div>
+
+            <div class="stats">
+                <div>
+                    <span class="green_dot"></span>
+                    164 slots available
+                </div>
+
+                <div>
+                    <span class="blue_dot"></span>
+                    4 vehicle types
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+    </section>
+
+    <!--Future Hero Sections-->
         <section class="hero3">
             <div class="hero3-container">
 
@@ -619,10 +818,10 @@ body{
             </div>
         </section>
 
-        <!-- Hero 4-->
+        <!--Hero 4-->
          <section class="hero4"></section>
 
-        <!-- Hero Jumbotron-->
+        <!--Hero Jumbotron Section-->
          <section class="hero5">
             <div class="container my-5">
 
@@ -684,9 +883,9 @@ body{
             <h3>Quick Links</h3>
 
             <ul>
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Book a Slot</a></li>
-                <li><a href="#">Admin Login</a></li>
+                <li><a onclick="window.location.href ='Dashboard.html'" href="#">Dashboard</a></li>
+                <li><a onclick="window.location.href ='BookSlot.html'" href="#">Book a Slot</a></li>
+                <li><a onclick="window.location.href ='Admin.html'" href="#">Admin Login</a></li>
             </ul>
         </div>
 
