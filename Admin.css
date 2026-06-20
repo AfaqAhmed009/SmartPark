@@ -365,7 +365,6 @@ tbody tr:hover { background: rgba(243,244,246,0.5); }
   color: var(--muted-foreground);
   padding: 2rem 1rem;
 }
-
 /* ---------- Responsive: mobile table card fallback ---------- */
 @media (max-width: 640px) {
   .tab-content { padding: 1rem; }
