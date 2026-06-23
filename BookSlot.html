@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Parking Slot</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f7f8fa;padding:30px 20px}
+.wrap{max-width:1000px;margin:0 auto}
+h1{text-align:center;font-size:34px;color:#111827}
+.sub{text-align:center;color:#6b7280;margin-top:8px;margin-bottom:30px}
+
+/* ── Navbar ── */
+.navbar { display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 60px; background: #ffffff;
+    border-bottom: 1px solid #e4e4e4; box-shadow: 0 1px 4px rgba(0,0,0,0.06); position: sticky;
+    top: 0;z-index: 100;}
+
+.navbar .logo { display: flex; align-items: center; gap: 10px;}
+.navbar .logo h2 { font-size: 18px; font-weight: 700; color: #111111; margin: 0; letter-spacing: -0.3px;}
+
+.navbar .logo .logo-box {width: 36px;height: 36px;background: #111111;color: white;border-radius: 8px;
+    display: flex;align-items: center;justify-content: center;}
+.navbar .links { display: flex;align-items: center;gap: 4px;}
+.navbar .links a { display: flex; align-items: center;gap: 6px;padding: 7px 14px;border-radius: 8px;font-size: 14px; font-weight: 500; color: #555555;text-decoration: none; transition: background 0.15s, color 0.15s;}
+.navbar .links a:hover { background: #f0f0f0; color: #111111;}
+.navbar .links a.active {  background: #111111;  color: #ffffff;}
+.navbar .buttons { display: flex; align-items: center; gap: 8px;}
+.navbar .buttons .Login {display: flex;align-items: center;gap: 6px;padding: 8px 16px;border: 1px solid #e4e4e4;border-radius: 8px;  background: white; font-size: 14px;font-weight: 500;color: #111111;cursor: pointer;transition: background 0.15s;}
+.navbar .buttons .Login:hover { background: #f5f5f5; }
+.navbar .buttons .Register { display: flex; align-items: center; gap: 6px; padding: 8px 16px;border: none;border-radius: 8px; background: #111111; font-size: 14px; font-weight: 500; color: white; cursor: pointer; transition: opacity 0.15s;}
+.navbar .buttons .Register:hover { opacity: 0.88; }
+
+/* ── Footer ── */
+footer.footer {
+    width: 100%;
+    background: #1a1d2e;
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+    padding: 48px 60px;
+    border-top: 1px solid #2a2d3e;
+    margin-top: auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    padding-right: 40px;
+}
+.footer-section:last-child { padding-right: 0; }
+
+.footer-logo {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+}
+
+.footer-logo .logo-box {
+    width: 34px; height: 34px;
+    background: #2d3047;
+    color: #a5b4fc;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid #3d4163;
+}
+
+.footer-logo h2 {
+    font-size: 16px; font-weight: 700;
+    color: #ffffff;
+}
+
+.footer-text {
+    font-size: 13px;
+    color: #8b92b3;
+    line-height: 1.7;
+    max-width: 220px;
+}
+
+.footer-section h3 {
+    font-size: 12px;
+    font-weight: 600;
+    color: #a5b4fc;
+    margin-bottom: 14px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.footer-section ul { list-style: none; }
+
+.footer-section ul li {
+    font-size: 13px;
+    color: #8b92b3;
+    margin-bottom: 9px;
+}
+
+.footer-section ul li a {
+    color: #8b92b3;
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.footer-section ul li a:hover { color: #e0e4ff; }
+
+.footer-bottom {
+    width: 100%;
+    background: #13152a;
+    color: #5a6080;
+    text-align: center;
+    font-size: 12px;
+    padding: 16px;
+    border-top: 1px solid #22253a;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d0d3e0; border-radius: 3px; }
+
+@media (max-width: 600px) {
+    .slot { width: calc(50% - 7px); height: 92px; }
+    .slots-row { gap: 10px; }
+    .navbar { padding: 0 16px; }
+    .navbar .links a span { display: none; }
+    footer.footer { padding: 36px 24px; }
+}
+  
+/* Tracker */
+.tracker{background:#fff;border-radius:20px;padding:30px 50px;display:flex;align-items:center;
+box-shadow:0 4px 12px rgba(0,0,0,.05);margin-bottom:30px}
+.t-step{display:flex;flex-direction:column;align-items:center;gap:10px;flex-shrink:0}
+.t-circle{width:48px;height:48px;border-radius:50%;background:#eceef1;color:#9aa0aa;
+display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;transition:.3s}
+.t-step.done .t-circle, .t-step.active .t-circle{background:#0a0a23;color:#fff}
+.t-label{font-size:14px;color:#6b7280}
+.t-step.active .t-label, .t-step.done .t-label{color:#111827;font-weight:600}
+.t-line{flex:1;height:2px;background:#eceef1;margin:0 15px;margin-bottom:24px;transition:.3s}
+.t-line.done{background:#0a0a23}
+
+/* Layout */
+.grid{display:grid;grid-template-columns:1fr 380px;gap:25px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.card{background:#fff;border-radius:20px;padding:35px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.card h2{font-size:24px;margin-bottom:25px;color:#111827}
+
+.field{margin-bottom:20px}
+.field label{display:flex;align-items:center;gap:8px;font-weight:600;font-size:15px;margin-bottom:8px;color:#111827}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+input,select{width:100%;padding:14px 16px;border:1px solid #e5e7eb;border-radius:12px;background:#f4f5f7;
+font-size:15px;color:#111827}
+input:focus,select:focus{outline:2px solid #0a0a23}
+
+.btn{padding:16px;border:none;border-radius:14px;font-size:17px;font-weight:700;cursor:pointer;width:100%}
+.btn-primary{background:#0a0a23;color:#fff}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn-outline{background:#fff;border:1px solid #d9d9d9;color:#111827}
+.btn-row{display:flex;gap:15px;margin-top:5px}
+
+/* Vehicle type cards */
+.vtype-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:25px}
+.vtype{border:1px solid #e5e7eb;border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:14px;
+cursor:pointer;transition:.15s}
+.vtype.selected{border:2px solid #0a0a23;background:#f4f5f7}
+.vtype .emoji{font-size:26px}
+.vtype .vt-name{font-weight:700;font-size:16px}
+.vtype .vt-desc{font-size:13px;color:#6b7280}
+.vtype .vt-price{margin-left:auto;font-weight:700;font-size:18px}
+
+/* Payment method */
+.pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:25px}
+.paymethod{border:1px solid #e5e7eb;border-radius:14px;padding:30px;text-align:center;cursor:pointer;font-weight:700}
+.paymethod.selected{border:2px solid #0a0a23;background:#f4f5f7}
+.paymethod .pm-icon{font-size:26px;display:block;margin-bottom:10px}
+
+/* Summary */
+.summary-row{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #f0f0f0;font-size:15px}
+.summary-row span:first-child{color:#6b7280}
+.summary-row span:last-child{font-weight:600;color:#111827}
+.total-box{background:#f4f5f7;border-radius:14px;padding:18px;margin-top:15px}
+.total-box .trow{display:flex;justify-content:space-between;font-weight:700;font-size:18px}
+.total-box .tnote{font-size:12px;color:#9aa0aa;margin-top:4px}
+
+/* Confirmation */
+.confirm-wrap{max-width:600px;margin:60px auto;text-align:center}
+.check{width:90px;height:90px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;
+justify-content:center;font-size:42px;color:#15803d;margin:0 auto 25px}
+.confirm-card{background:#fff;border-radius:20px;padding:40px;box-shadow:0 4px 12px rgba(0,0,0,.05);text-align:left}
+.confirm-card h1{font-size:30px;text-align:center}
+.confirm-card .csub{text-align:center;color:#6b7280;margin:10px 0 25px}
+.receipt{background:#f4f5f7;border-radius:14px;padding:10px 20px}
+.receipt .summary-row:last-child{border-bottom:none}
+
+.hidden{display:none}
+
+
+</style>
+</head>
+<body>
+
+     <!-- Navigation bar -->
+    <div class="navbar">
+        <div class="logo">
+            <div class="logo-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-car-front-fill" viewBox="0 0 16 16">
+                <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z"/>
+                </svg>
+            </div>
+                <h2>SmartPark</h2>
+        </div>
+
+        <div class="links">
+
+             <a onclick="window.location.href ='Home.html'" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+                <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z"/>
+                </svg>
+                
+                <span>Home</span>
+            </a>    
+
+            <a onclick="window.location.href = 'Dashboard.html'" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-columns-gap" viewBox="0 0 16 16">
+                <path d="M6 1v3H1V1zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1zm14 12v3h-5v-3zm-5-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1zM6 8v7H1V8zM1 7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zm14-6v7h-5V1zm-5-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z"/>
+                </svg>
+
+                <span>Dashboard</span>
+            </a>
+
+
+             <a href="#"  class="active">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+               <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+               </svg>
+                
+                <span>Book Slot</span>
+            </a>
+
+        </div>
+
+        <div class="buttons">
+            <button onclick="Login()" class="Login">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                </svg>
+                Login</button>
+
+            <button onclick="Register()" class="Register">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
+                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
+                </svg>
+                Register</button>
+        </div>
+    </div>
+
+  
+<div class="wrap">
+
+  <div id="bookingFlow">
+    <h1>Book a Parking Slot</h1>
+    <p class="sub">Fill in your details to reserve your parking spot</p>
+
+    <div class="tracker">
+      <div class="t-step" id="t-step1"><div class="t-circle">1</div><div class="t-label">Slot &amp; Schedule</div></div>
+      <div class="t-line" id="t-line1"></div>
+      <div class="t-step" id="t-step2"><div class="t-circle">2</div><div class="t-label">Vehicle Details</div></div>
+      <div class="t-line" id="t-line2"></div>
+      <div class="t-step" id="t-step3"><div class="t-circle">3</div><div class="t-label">Payment</div></div>
+    </div>
+
+    <div class="grid">
+      <div>
+
+        <!-- STEP 1 -->
+        <div class="card" id="step1">
+          <h2>Slot &amp; Schedule</h2>
+          <div class="field-row">
+            <div class="field">
+              <label>📚 Block No</label>
+              <select id="blockNo">
+                <option value="">Select Block</option>
+                <option value="A">Block A</option>
+                <option value="B">Block B</option>
+                <option value="C">Block C</option>
+                <option value="D">Block D</option>
+              </select>
+            </div>
+            <div class="field">
+              <label># Slot No</label>
+              <input type="text" id="slotNo" placeholder="e.g. 01, 03">
+            </div>
+          </div>
+          <div class="field">
+            <label>📅 Date</label>
+            <input type="date" id="bDate">
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>🕐 Entry Time</label>
+              <input type="time" id="entryTime">
+            </div>
+            <div class="field">
+              <label>🕐 Exit Time</label>
+              <input type="time" id="exitTime">
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="goToStep(2)">Continue</button>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="card hidden" id="step2">
+          <h2>Vehicle Details</h2>
+          <div class="field">
+            <label>🚗 Car Number Plate</label>
+            <input type="text" id="carNo" placeholder="E.G. ABC-1234">
+          </div>
+          <p style="font-weight:700;margin-bottom:12px">Vehicle Type <span style="font-weight:400;color:#6b7280;font-size:14px">(flat rate — not time-based)</span></p>
+          <div class="vtype-grid" id="vtypeGrid"></div>
+          <div class="btn-row">
+            <button class="btn btn-outline" onclick="goToStep(1)">Back</button>
+            <button class="btn btn-primary" onclick="goToStep(3)">Continue</button>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="card hidden" id="step3">
+          <h2>Payment</h2>
+          <p style="font-weight:700;margin-bottom:12px">💳 Payment Method</p>
+          <div class="pay-grid" id="payGrid">
+            <div class="paymethod selected" data-pm="card"><span class="pm-icon">💳</span>Credit / Debit Card</div>
+            <div class="paymethod" data-pm="wallet"><span class="pm-icon">📍</span>Digital Wallet</div>
+          </div>
+          <div id="cardFields">
+            <div class="field"><label>Card Number</label><input type="text" id="cardNum" placeholder="1234 5678 9012 3456"></div>
+            <div class="field-row">
+              <div class="field"><label>Expiry Date</label><input type="text" id="expDate" placeholder="MM/YY"></div>
+              <div class="field"><label>CVV</label><input type="text" id="cvv" placeholder="123"></div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-outline" onclick="goToStep(2)">Back</button>
+            <button class="btn btn-primary" onclick="confirmBooking()">Confirm Booking</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SUMMARY -->
+      <div class="card">
+        <h2>Booking Summary</h2>
+        <div class="summary-row"><span>Block</span><span id="s-block">—</span></div>
+        <div class="summary-row"><span>Slot No</span><span id="s-slot">—</span></div>
+        <div class="summary-row"><span>Date</span><span id="s-date">—</span></div>
+        <div class="summary-row"><span>Entry Time</span><span id="s-entry">—</span></div>
+        <div class="summary-row"><span>Exit Time</span><span id="s-exit">—</span></div>
+        <div class="summary-row"><span>Car No</span><span id="s-car">—</span></div>
+        <div class="summary-row"><span>Vehicle Type</span><span id="s-vtype">—</span></div>
+        <div class="total-box">
+          <div class="trow"><span>Total (flat rate)</span><span id="s-total">$30.00</span></div>
+          <div class="tnote">Fixed price regardless of parking duration</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRMATION -->
+  <div class="confirm-wrap hidden" id="confirmScreen">
+    <div class="confirm-card">
+      <div class="check">✓</div>
+      <h1>Booking Confirmed!</h1>
+      <p class="csub">Your parking slot has been successfully reserved.</p>
+      <div class="receipt">
+        <div class="summary-row"><span>Booking ID</span><span id="r-bookingid" style="font-weight:700;color:#16a34a;"></span></div>
+        <div class="summary-row"><span>Slot</span><span id="r-slot"></span></div>
+        <div class="summary-row"><span>Block</span><span id="r-block"></span></div>
+        <div class="summary-row"><span>Date</span><span id="r-date"></span></div>
+        <div class="summary-row"><span>Entry</span><span id="r-entry"></span></div>
+        <div class="summary-row"><span>Exit</span><span id="r-exit"></span></div>
+        <div class="summary-row"><span>Vehicle</span><span id="r-car"></span></div>
+        <div class="summary-row"><span>Type</span><span id="r-vtype"></span></div>
+        <div class="summary-row"><span>Total Paid</span><span id="r-total" style="font-weight:700;"></span></div>
+      </div>
+      <div class="btn-row" style="margin-top:25px">
+        <button class="btn btn-outline" onclick="window.location.href='Dashboard.html'">Back to Map</button>
+        <button class="btn btn-primary" onclick="location.reload()">New Booking</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+ <!-- Footer-->
+    <footer class="footer">
+
+        <div class="footer-section">
+
+            <div class="footer-logo">
+                <div class="logo-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                        fill="currentColor" class="bi bi-car-front-fill" viewBox="0 0 16 16">
+                        <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2z"/>
+                    </svg>
+                </div>
+
+                <h2>SmartPark</h2>
+            </div>
+
+            <p class="footer-text">
+                Smart parking solutions for modern cities.
+                Find, book, and manage parking spots with ease.
+            </p>
+
+        </div>
+
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+
+            <ul>
+                <li><a onclick="window.location.href ='Dashboard.html'" href="#">Dashboard</a></li>
+                <li><a onclick="window.location.href ='BookSlot.html'" href="#">Book a Slot</a></li>
+                <li><a onclick="window.location.href ='Admin.html'" href="#">Admin Login</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h3>Contact</h3>
+
+            <ul>
+                <li>Email: support@smartpark.com</li>
+                <li>Phone: +1 (555) 123-4567</li>
+                <li>24/7 Customer Support</li>
+            </ul>
+        </div>
+
+    </footer>
+
+    <div class="footer-bottom">
+        © 2026 SmartPark. All rights reserved.
+    </div>
+
+<script>
+const VEHICLES = [
+  {id:'sedan', emoji:'🚗', name:'Sedan', desc:'Standard 4-door car', price:30},
+  {id:'suv',   emoji:'🚙', name:'SUV',   desc:'Sport Utility Vehicle', price:50},
+  {id:'truck', emoji:'🚚', name:'Truck', desc:'Light or heavy truck', price:70},
+  {id:'bus',   emoji:'🚌', name:'Bus',   desc:'Mini or full-size bus', price:100},
+];
+let selectedVehicle = VEHICLES[0];
+let selectedPM = 'card';
+
+// prefill block/slot from dashboard link
+const params = new URLSearchParams(location.search);
+if(params.get('block')) document.getElementById('blockNo').value = params.get('block');
+if(params.get('slot')) document.getElementById('slotNo').value = params.get('slot').split('-')[1] || '';
+
+// render vehicle type cards
+const vGrid = document.getElementById('vtypeGrid');
+VEHICLES.forEach(v=>{
+  const el = document.createElement('div');
+  el.className = 'vtype' + (v.id==='sedan' ? ' selected' : '');
+  el.dataset.id = v.id;
+  el.innerHTML = `<span class="emoji">${v.emoji}</span><div><div class="vt-name">${v.name}</div><div class="vt-desc">${v.desc}<br>Flat rate per booking</div></div><div class="vt-price">$${v.price}</div>`;
+  el.onclick = () => {
+    document.querySelectorAll('.vtype').forEach(x=>x.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedVehicle = v;
+    updateSummary();
+  };
+  vGrid.appendChild(el);
+});
+
+// payment method select
+document.querySelectorAll('.paymethod').forEach(el=>{
+  el.onclick = () => {
+    document.querySelectorAll('.paymethod').forEach(x=>x.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedPM = el.dataset.pm;
+    document.getElementById('cardFields').style.display = selectedPM==='card' ? 'block' : 'none';
+  };
+});
+
+function updateSummary(){
+  const block = document.getElementById('blockNo').value || '—';
+  const slotNoRaw = document.getElementById('slotNo').value;
+  const slot = slotNoRaw ? `${block!=='—'?block:'?'}-${slotNoRaw.padStart(2,'0')}` : '—';
+  document.getElementById('s-block').textContent = block;
+  document.getElementById('s-slot').textContent = slot;
+  document.getElementById('s-date').textContent = document.getElementById('bDate').value || '—';
+  document.getElementById('s-entry').textContent = document.getElementById('entryTime').value || '—';
+  document.getElementById('s-exit').textContent = document.getElementById('exitTime').value || '—';
+  document.getElementById('s-car').textContent = document.getElementById('carNo').value || '—';
+  document.getElementById('s-vtype').textContent = `${selectedVehicle.emoji} ${selectedVehicle.name}`;
+  document.getElementById('s-total').textContent = `$${selectedVehicle.price.toFixed(2)}`;
+}
+['blockNo','slotNo','bDate','entryTime','exitTime','carNo'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', updateSummary);
+  document.getElementById(id).addEventListener('change', updateSummary);
+});
+updateSummary();
+
+function goToStep(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById('step'+i).classList.toggle('hidden', i!==n);
+    const stepEl = document.getElementById('t-step'+i);
+    stepEl.classList.remove('active','done');
+    if(i < n) stepEl.classList.add('done');
+    else if(i === n) stepEl.classList.add('active');
+  });
+  document.getElementById('t-line1').classList.toggle('done', n>1);
+  document.getElementById('t-line2').classList.toggle('done', n>2);
+  updateSummary();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+goToStep(1);
+
+async function confirmBooking(){
+  const block     = document.getElementById('blockNo').value.trim();
+  const slotNo    = parseInt(document.getElementById('slotNo').value.trim());
+  const date      = document.getElementById('bDate').value;
+  const entry     = document.getElementById('entryTime').value;
+  const exit      = document.getElementById('exitTime').value;
+  const carNo     = document.getElementById('carNo').value.trim();
+  const userId    = parseInt(sessionStorage.getItem('user_id') || '1');
+
+  if (!block || !slotNo || !date || !entry || !exit || !carNo) {
+    alert('Please fill in all booking details before confirming.');
+    return;
+  }
+
+  // Disable confirm button and show loading
+  const confirmBtn = event.target;
+  confirmBtn.disabled = true;
+  confirmBtn.textContent = 'Processing…';
+
+  try {
+    const res = await fetch('http://127.0.0.1:8000/book', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        user_id:      userId,
+        block_no:     block,
+        slot_no:      slotNo,
+        vehicle_no:   carNo,
+        vehicle_type: selectedVehicle.name,
+        date_entry:   date,
+        entry_time:   entry,
+        exit_time:    exit,
+        amount:       selectedVehicle.price,
+      })
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+      alert('Booking failed: ' + data.message);
+      confirmBtn.disabled = false;
+      confirmBtn.textContent = 'Confirm Booking';
+      return;
+    }
+
+    // Populate receipt
+    document.getElementById('r-slot').textContent  = document.getElementById('s-slot').textContent;
+    document.getElementById('r-block').textContent = block;
+    document.getElementById('r-date').textContent  = date;
+    document.getElementById('r-entry').textContent = entry;
+    document.getElementById('r-exit').textContent  = exit;
+    document.getElementById('r-car').textContent   = carNo;
+    document.getElementById('r-vtype').textContent = `${selectedVehicle.emoji} ${selectedVehicle.name}`;
+    document.getElementById('r-total').textContent = `PKR ${(selectedVehicle.price * 280).toLocaleString()}`;
+    if (document.getElementById('r-bookingid')) {
+      document.getElementById('r-bookingid').textContent = '#' + data.booking_id;
+    }
+
+    document.getElementById('bookingFlow').classList.add('hidden');
+    document.getElementById('confirmScreen').classList.remove('hidden');
+    window.scrollTo({top:0,behavior:'smooth'});
+
+  } catch(err) {
+    alert('Cannot reach server. Make sure the backend is running on port 8000.');
+    confirmBtn.disabled = false;
+    confirmBtn.textContent = 'Confirm Booking';
+  }
+}
+</script>
+</body>
+</html>

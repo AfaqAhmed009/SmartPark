@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartPark</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to bottom right, #0f172a, #1e293b, #0f172a);
+    position: relative;
+    overflow-x: hidden;
+    color: #fff;
+  }
+
+  /* Background decorative blurred circles */
+  .bg-decor {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+  }
+
+  .circle-1 {
+    top: -10%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: rgba(59, 130, 246, 0.12);
+  }
+
+  .circle-2 {
+    bottom: -10%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: rgba(59, 130, 246, 0.1);
+  }
+
+  .circle-3 {
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 600px;
+    background: rgba(255, 255, 255, 0.03);
+    transform: translate(-50%, -50%);
+  }
+
+  /* Main content */
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .logo-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .logo-icon {
+    width: 80px;
+    height: 80px;
+    background: #000;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.4);
+    margin-bottom: 24px;
+  }
+
+  .logo-icon svg {
+    width: 40px;
+    height: 40px;
+    color: #fff;
+  }
+
+  h1 {
+    font-size: 48px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .tagline {
+    color: #cbd5e1;
+    font-size: 18px;
+    max-width: 420px;
+    line-height: 1.6;
+  }
+
+  .subtext {
+    color: #94a3b8;
+    font-size: 16px;
+    max-width: 380px;
+    margin-top: 8px;
+  }
+
+  /* Feature pills */
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(6px);
+    border-radius: 999px;
+    padding: 8px 16px;
+  }
+
+  .pill svg {
+    width: 16px;
+    height: 16px;
+    color: #000;
+  }
+
+  .pill span {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* CTA buttons */
+  .cta-row {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    max-width: 384px;
+  }
+
+  .btn {
+    flex: 1;
+    text-align: center;
+    padding: 14px 0;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .btn-primary {
+    background: #000;
+    color: #fff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-primary:hover {
+    opacity: 0.9;
+  }
+
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    backdrop-filter: blur(6px);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .guest-link {
+    margin-top: 24px;
+    color: #94a3b8;
+    font-size: 14px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .guest-link:hover {
+    color: #cbd5e1;
+  }
+
+  /* Footer */
+  .footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding-bottom: 24px;
+    color: #475569;
+    font-size: 12px;
+  }
+
+  @media (min-width: 600px) {
+    .cta-row {
+      flex-direction: row;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .cta-row {
+      flex-direction: column;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="bg-decor">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+  </div>
+
+  <div class="content">
+
+    <div class="logo-wrap">
+      <div class="logo-icon">
+        <!-- Car icon (bootstrap car-front-fill) -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z"/>
+        </svg>
+      </div>
+      <h1>SmartPark</h1>
+      <p class="tagline">Your smart solution for hassle-free city parking.</p>
+      <p class="subtext">Find, book, and manage parking spots in seconds — for every vehicle type.</p>
+    </div>
+
+    <div class="pills">
+      <div class="pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>Live Parking Map</span>
+      </div>
+      <div class="pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>Instant Booking</span>
+      </div>
+      <div class="pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>Secure &amp; Reliable</span>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <a href="Login.html" class="btn btn-primary">Login</a>
+      <a href="Register.html" class="btn btn-secondary">Sign Up</a>
+    </div>
+
+    <a href="Home.html" class="guest-link">Continue as guest →</a>
+
+  </div>
+
+  <div class="footer">
+    &copy; 2026 SmartPark. All rights reserved.
+  </div>
+
+</body>
+</html>

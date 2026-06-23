@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account · SmartPark</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<style>
+*, *::before, *::after {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+:root {
+    --navy:        #0a0a23;
+    --accent:      #4f46e5;
+    --accent-soft: rgba(79,70,229,0.09);
+    --bg:          #f4f6fb;
+    --card:        #ffffff;
+    --border:      #e8eaf0;
+    --muted:       #6b7280;
+    --text:        #111827;
+    --green:       #16a34a;
+    --red:         #dc2626;
+    --shadow:      0 2px 8px rgba(0,0,0,0.05), 0 8px 28px rgba(0,0,0,0.07);
+    --transition:  0.2s cubic-bezier(0.4,0,0.2,1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+}
+
+/* Subtle bg gradient */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 80% 60% at 20% -10%, rgba(79,70,229,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 85% 110%, rgba(10,10,35,0.05) 0%, transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── Card ── */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.register-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 460px;
+    background: var(--card);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 36px 36px 32px;
+    animation: fadeUp 0.4s ease both;
+}
+
+/* ── Logo header ── */
+.card-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.logo-icon {
+    width: 56px; height: 56px;
+    background: var(--navy);
+    color: white;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 16px rgba(10,10,35,0.25);
+    transition: transform var(--transition);
+}
+.logo-icon:hover { transform: scale(1.05); }
+
+.card-logo h2 {
+    font-size: 22px; font-weight: 700;
+    color: var(--text); letter-spacing: -0.4px;
+    margin-bottom: 5px;
+}
+
+.card-logo p {
+    font-size: 14px; color: var(--muted); line-height: 1.5;
+}
+
+/* ── Form fields ── */
+.field {
+    margin-bottom: 16px;
+}
+
+.field label {
+    display: block;
+    font-size: 13.5px; font-weight: 600;
+    color: var(--text);
+    margin-bottom: 7px;
+}
+
+.input-wrap {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 14px;
+    height: 44px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: #f8f9fc;
+    color: #b0b5c3;
+    transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+}
+
+.input-wrap:focus-within {
+    border-color: var(--accent);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(79,70,229,0.10);
+    color: var(--muted);
+}
+
+.input-wrap.error {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(220,38,38,0.10);
+}
+
+.input-wrap svg { flex-shrink: 0; }
+
+.input-wrap input {
+    flex: 1; height: 100%;
+    border: none; outline: none;
+    background: transparent;
+    font-size: 14px; color: var(--text);
+    font-family: inherit;
+}
+
+.input-wrap input::placeholder { color: #b0b5c3; }
+
+/* Remove number input arrows */
+.input-wrap input[type="number"]::-webkit-inner-spin-button,
+.input-wrap input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+.input-wrap input[type="number"] { -moz-appearance: textfield; }
+
+/* Eye toggle */
+.eye-btn {
+    background: none; border: none; cursor: pointer;
+    padding: 0; display: flex; align-items: center;
+    color: #b0b5c3; flex-shrink: 0;
+    transition: color var(--transition);
+}
+.eye-btn:hover { color: var(--muted); }
+
+/* Password strength */
+.strength-bar {
+    display: flex; gap: 4px; margin-top: 8px;
+}
+.strength-seg {
+    flex: 1; height: 3px; border-radius: 2px;
+    background: var(--border);
+    transition: background 0.3s ease;
+}
+.strength-seg.weak   { background: #ef4444; }
+.strength-seg.fair   { background: #f97316; }
+.strength-seg.good   { background: #eab308; }
+.strength-seg.strong { background: var(--green); }
+
+.strength-label {
+    font-size: 11.5px; color: var(--muted);
+    margin-top: 4px; text-align: right;
+    min-height: 16px;
+    transition: color 0.3s;
+}
+
+/* Field hint (error) */
+.field-hint {
+    font-size: 12px; color: var(--red);
+    margin-top: 5px; min-height: 16px;
+    display: none;
+}
+.field-hint.visible { display: block; }
+
+/* Two-column row */
+.field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+/* ── Submit button ── */
+.btn-create {
+    width: 100%; height: 44px;
+    border: none; border-radius: 10px;
+    background: var(--navy); color: white;
+    font-size: 14.5px; font-weight: 600;
+    cursor: pointer; font-family: inherit;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 2px 10px rgba(10,10,35,0.2);
+    transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+    margin-top: 6px;
+}
+.btn-create:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(10,10,35,0.28);
+}
+.btn-create:active { transform: scale(0.98); }
+
+/* ── Divider ── */
+.divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 22px 0; color: var(--muted); font-size: 13px;
+}
+.divider hr { flex: 1; border: none; border-top: 1px solid var(--border); }
+
+/* ── Social buttons ── */
+.social-buttons { display: flex; gap: 10px; margin-bottom: 22px; }
+
+.btn-social {
+    flex: 1; height: 42px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px; background: white;
+    font-size: 13.5px; font-weight: 500;
+    color: var(--text); cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background var(--transition), border-color var(--transition), transform var(--transition);
+    font-family: inherit;
+}
+.btn-social:hover {
+    background: #f5f6fb; border-color: #ccc;
+    transform: translateY(-1px);
+}
+.btn-social:active { transform: scale(0.98); }
+
+/* ── Footer text ── */
+.card-footer-text {
+    text-align: center; font-size: 13.5px; color: var(--muted);
+}
+.card-footer-text a {
+    font-weight: 600; color: var(--navy);
+    text-decoration: none; transition: opacity var(--transition);
+}
+.card-footer-text a:hover { opacity: 0.7; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d0d3e0; border-radius: 3px; }
+
+@media (max-width: 480px) {
+    .register-card { padding: 28px 20px 24px; border-radius: 16px; }
+    .field-row { grid-template-columns: 1fr; gap: 0; }
+}
+</style>
+<body>
+
+<div class="register-card">
+
+    <!-- Logo -->
+    <div class="card-logo">
+        <div class="logo-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2z"/>
+            </svg>
+        </div>
+        <h2>Create your account</h2>
+        <p>Join SmartPark and start parking smarter</p>
+    </div>
+
+    <form onsubmit="return false;" novalidate>
+
+        <!-- Full name -->
+        <div class="field">
+            <label for="name">Full name</label>
+            <div class="input-wrap" id="wrap-name">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                </svg>
+                <input type="text" id="name" placeholder="John Doe" autocomplete="name">
+            </div>
+            <div class="field-hint" id="hint-name">Please enter your full name.</div>
+        </div>
+
+        <!-- Email -->
+        <div class="field">
+            <label for="email">Email address</label>
+            <div class="input-wrap" id="wrap-email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
+                </svg>
+                <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+            </div>
+            <div class="field-hint" id="hint-email">Please enter a valid email address.</div>
+        </div>
+
+        <!-- Phone -->
+        <div class="field">
+            <label for="phone">Phone number</label>
+            <div class="input-wrap" id="wrap-phone">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
+                </svg>
+                <input type="tel" id="phone" placeholder="+92 345 3405000" autocomplete="tel">
+            </div>
+            <div class="field-hint" id="hint-phone">Please enter a valid phone number.</div>
+        </div>
+
+        <!-- Password -->
+        <div class="field">
+            <label for="password">Password</label>
+            <div class="input-wrap" id="wrap-password">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4M4.5 7A1.5 1.5 0 0 0 3 8.5v5A1.5 1.5 0 0 0 4.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 11.5 7zM8 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
+                </svg>
+                <input type="password" id="password" placeholder="Create a strong password" autocomplete="new-password" oninput="checkStrength()">
+                <button type="button" class="eye-btn" onclick="togglePw('password', this)">
+                    <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/></svg>
+                </button>
+            </div>
+            <!-- Strength indicator -->
+            <div class="strength-bar">
+                <div class="strength-seg" id="seg1"></div>
+                <div class="strength-seg" id="seg2"></div>
+                <div class="strength-seg" id="seg3"></div>
+                <div class="strength-seg" id="seg4"></div>
+            </div>
+            <div class="strength-label" id="strength-label"></div>
+            <div class="field-hint" id="hint-password">Password must be at least 6 characters.</div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="field">
+            <label for="confirmPassword">Confirm password</label>
+            <div class="input-wrap" id="wrap-confirm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4M4.5 7A1.5 1.5 0 0 0 3 8.5v5A1.5 1.5 0 0 0 4.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 11.5 7zM8 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
+                </svg>
+                <input type="password" id="confirmPassword" placeholder="Re-enter your password" autocomplete="new-password">
+                <button type="button" class="eye-btn" onclick="togglePw('confirmPassword', this)">
+                    <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/></svg>
+                </button>
+            </div>
+            <div class="field-hint" id="hint-confirm">Passwords do not match.</div>
+        </div>
+
+        <button type="button" class="btn-create" onclick="handleRegister()">
+            Create account
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+            </svg>
+        </button>
+
+    </form>
+
+    <div class="divider"><hr><span>Or sign up with</span><hr></div>
+
+    <div class="social-buttons">
+        <button class="btn-social">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z"/>
+            </svg>
+            Google
+        </button>
+        <button class="btn-social">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+            </svg>
+            GitHub
+        </button>
+    </div>
+
+    <p class="card-footer-text">
+        Already have an account? <a href="Login.html">Sign in</a>
+    </p>
+
+</div>
+
+<script>
+/* ── Eye toggle ── */
+const EYE_OPEN  = `<svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/></svg>`;
+const EYE_SHUT  = `<svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z"/><path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829"/><path d="M3.35 5.47q-.27.238-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"/></svg>`;
+
+function togglePw(id, btn) {
+    const input = document.getElementById(id);
+    const show  = input.type === 'password';
+    input.type  = show ? 'text' : 'password';
+    btn.innerHTML = show ? EYE_SHUT : EYE_OPEN;
+}
+
+/* ── Password strength ── */
+function checkStrength() {
+    const val  = document.getElementById('password').value;
+    const segs = [document.getElementById('seg1'), document.getElementById('seg2'),
+                  document.getElementById('seg3'), document.getElementById('seg4')];
+    const lbl  = document.getElementById('strength-label');
+
+    let score = 0;
+    if (val.length >= 6)  score++;
+    if (val.length >= 10) score++;
+    if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
+    if (/[0-9]/.test(val) && /[^A-Za-z0-9]/.test(val)) score++;
+
+    const levels = [
+        { cls: 'weak',   label: 'Weak',   color: '#ef4444' },
+        { cls: 'fair',   label: 'Fair',   color: '#f97316' },
+        { cls: 'good',   label: 'Good',   color: '#eab308' },
+        { cls: 'strong', label: 'Strong', color: '#16a34a' },
+    ];
+
+    segs.forEach((s, i) => {
+        s.className = 'strength-seg';
+        if (val.length > 0 && i < score) s.classList.add(levels[score - 1].cls);
+    });
+
+    if (val.length === 0) {
+        lbl.textContent = '';
+        lbl.style.color = '';
+    } else {
+        lbl.textContent = levels[score - 1].label;
+        lbl.style.color = levels[score - 1].color;
+    }
+}
+
+/* ── Validation helpers ── */
+function setError(wrapId, hintId, show) {
+    document.getElementById(wrapId).classList.toggle('error', show);
+    const h = document.getElementById(hintId);
+    h.classList.toggle('visible', show);
+}
+
+/* ── Register handler ── */
+function handleRegister() {
+    const name    = document.getElementById('name').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const phone   = document.getElementById('phone').value.trim();
+    const pw      = document.getElementById('password').value;
+    const confirm = document.getElementById('confirmPassword').value;
+
+    let valid = true;
+
+    if (!name) { setError('wrap-name', 'hint-name', true); valid = false; }
+    else          setError('wrap-name', 'hint-name', false);
+
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!emailOk) { setError('wrap-email', 'hint-email', true); valid = false; }
+    else            setError('wrap-email', 'hint-email', false);
+
+    if (!phone) { setError('wrap-phone', 'hint-phone', true); valid = false; }
+    else          setError('wrap-phone', 'hint-phone', false);
+
+    if (pw.length < 6) { setError('wrap-password', 'hint-password', true); valid = false; }
+    else                 setError('wrap-password', 'hint-password', false);
+
+    if (pw !== confirm || !confirm) { setError('wrap-confirm', 'hint-confirm', true); valid = false; }
+    else                              setError('wrap-confirm', 'hint-confirm', false);
+
+    if (!valid) return;
+
+    fetch('http://127.0.0.1:3000/Register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ Name: name, Email: email, Phone: phone, Password: pw })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) window.location.href = 'Login.html';
+        else alert(data.message || 'Registration failed. Please try again.');
+    })
+    .catch(() => window.location.href = 'Login.html');
+}
+
+/* ── Enter key ── */
+document.addEventListener('keydown', e => { if (e.key === 'Enter') handleRegister(); });
+</script>
+</body>
+</html>

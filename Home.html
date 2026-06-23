@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Home</title>
+<style>
+/* ── Global reset ── */
+*, *::before, *::after {
+    font-family: 'Nunito', system-ui, sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6,
+.navbar .logo h2,
+.hero-header h1,
+.intro_hero2 h1,
+.section-title h2,
+.section-header h2,
+.hero5 h1,
+.footer-logo h2,
+.card-content h3,
+.step-card h3 {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    letter-spacing: -0.2px;
+}
+
+body {
+    background: #f5f5f5;
+    color: #1a1a1a;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+/* ── Navbar ── */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 60px;
+    background: #ffffff;
+    border-bottom: 1px solid #e4e4e4;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar .logo h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0;
+    letter-spacing: -0.3px;
+}
+
+.navbar .logo .logo-box {
+    width: 36px;
+    height: 36px;
+    background: #111111;
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar .links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.navbar .links a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #555555;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+}
+
+.navbar .links a:hover {
+    background: #f0f0f0;
+    color: #111111;
+}
+
+.navbar .links a.active {
+    background: #111111;
+    color: #ffffff;
+}
+
+.navbar .buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar .buttons .Login {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 1px solid #e4e4e4;
+    border-radius: 8px;
+    background: white;
+    font-size: 14px;
+    font-weight: 500;
+    color: #111111;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.navbar .buttons .Login:hover { background: #f5f5f5; }
+
+.navbar .buttons .Register {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #111111;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.navbar .buttons .Register:hover { opacity: 0.88; }
+
+
+/* ── Hero 1 — chatbot banner ── */
+.hero1 {
+    background: #fafafa;
+    border-bottom: 1px solid #e4e4e4;
+    padding: 48px 24px 40px;
+    text-align: center;
+}
+
+.hero-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.hero-header .logo-box {
+    width: 48px;
+    height: 48px;
+    background: #111111;
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-header h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #111111;
+    letter-spacing: -0.5px;
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-size: 15px;
+    color: #666666;
+    margin-bottom: 24px;
+}
+
+/* Chat box */
+.chat-box {
+    max-width: 620px;
+    margin: 0 auto;
+    background: white;
+    border: 1px solid #e4e4e4;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    padding: 12px;
+    max-height: 380px;
+    overflow-y: auto;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f5f5f5;
+    border: 1px solid #e4e4e4;
+    border-radius: 8px;
+    padding: 10px 14px;
+}
+
+.search-icon { font-size: 18px; flex-shrink: 0; }
+
+.search-container input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    color: #111111;
+}
+
+.search-container input::placeholder { color: #999999; }
+
+.search-btn {
+    background: #111111;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+}
+
+.search-btn:hover { opacity: 0.85; }
+
+.user-message {
+    background: #111111;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 10px 10px 2px 10px;
+    font-size: 13px;
+    max-width: 80%;
+    margin: 8px 0 8px auto;
+    text-align: right;
+}
+
+.bot-message {
+    background: #f0f0f0;
+    color: #111111;
+    padding: 8px 12px;
+    border-radius: 10px 10px 10px 2px;
+    font-size: 13px;
+    max-width: 80%;
+    margin: 8px auto 8px 0;
+}
+
+/* ── Hero 2 ── */
+.hero2 {
+    background: #ffffff;
+    padding: 60px 24px;
+}
+
+.container_hero2 { max-width: 1100px; margin: 0 auto; }
+
+.main_hero2 {
+    display: flex;
+    gap: 48px;
+    align-items: center;
+}
+
+.image_hero2 {
+    flex: 1;
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+}
+
+.image_hero2 img {
+    width: 100%;
+    display: block;
+    border-radius: 16px;
+}
+
+.intro_hero2 { flex: 1; }
+
+.logo_hero2{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:#e6e6e6;
+    padding:12px 24px;
+    border-radius:50px;
+    margin-bottom:25px;
+}
+
+.logo_hero2 p{
+    margin:0;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.intro_hero2 h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #111111;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+}
+
+.text_hero2 {
+    font-size: 15px;
+    color: #555555;
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+.buttons_hero2 {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.primary_btn {
+    padding: 10px 24px;
+    background: #111111;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    font-family: inherit !important;
+}
+
+.primary_btn:hover { opacity: 0.88; }
+
+.secondary_btn {
+    padding: 10px 24px;
+    background: white;
+    color: #111111;
+    border: 1px solid #e4e4e4;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-family: inherit !important;
+}
+
+.secondary_btn:hover { background: #f5f5f5; }
+
+.stats {
+    display: flex;
+    gap: 20px;
+    font-size: 13px;
+    color: #555555;
+    align-items: center;
+}
+
+.stats div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.green_dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    display: inline-block;
+}
+
+.blue_dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #3b82f6;
+    display: inline-block;
+}
+
+/* ── Hero 3 — AI Feature Cards ── */
+.hero3 {
+    background: #f5f5f5;
+    padding: 60px 24px;
+}
+
+.hero3-container { max-width: 1100px; margin: 0 auto; }
+
+.section-title {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.section-title h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #111111;
+    letter-spacing: -0.3px;
+}
+
+.feature-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.feature-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e4e4e4;
+    background: white;
+    cursor: pointer;
+    padding: 0;
+    aspect-ratio: 4/3;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.feature-card:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+    transform: translateY(-2px);
+}
+
+.feature-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 55%);
+}
+
+.card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    color: white;
+}
+
+.card-content h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    opacity: 0.85;
+}
+
+/* ── How It Works ── */
+.how-it-works {
+    background: #ffffff;
+    padding: 60px 24px;
+}
+
+.how-it-works .container { max-width: 900px; margin: 0 auto; }
+
+.section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #111111;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+}
+
+.section-header p {
+    font-size: 14px;
+    color: #666666;
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+.step-card {
+    text-align: center;
+    padding: 24px 16px;
+}
+
+.step-number {
+    width: 52px;
+    height: 52px;
+    background: #111111;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 auto 16px;
+}
+
+.step-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111111;
+    margin-bottom: 8px;
+}
+
+.step-card p {
+    font-size: 13px;
+    color: #666666;
+    line-height: 1.6;
+}
+
+/* ── Hero 4 — Pricing ── */
+.hero4 {
+    background: #f5f5f5;
+    padding: 60px 24px;
+}
+
+.hero4 .card {
+    border-radius: 12px !important;
+    border-color: #e4e4e4 !important;
+}
+
+.hero4 .card-header {
+    background: #f0f0f0 !important;
+    border-bottom: 1px solid #e4e4e4 !important;
+    color: #111111 !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    letter-spacing: 0.5px;
+    padding: 12px 16px !important;
+}
+
+.hero4 .card-header.text-bg-dark {
+    background: #111111 !important;
+    color: white !important;
+}
+
+.hero4 .card-header.text-bg-danger {
+    background: #111111 !important;
+    color: white !important;
+}
+
+.hero4 .card-body { padding: 20px 16px !important; }
+
+.hero4 .card-title {
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    color: #111111 !important;
+    margin-bottom: 12px !important;
+}
+
+.hero4 .list-unstyled li {
+    font-size: 13px;
+    color: #555555;
+    padding: 4px 0;
+}
+
+.hero4 .btn-outline-dark {
+    border-color: #111111 !important;
+    color: #111111 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    border-radius: 8px !important;
+    padding: 9px !important;
+}
+
+.hero4 .btn-outline-dark:hover {
+    background: #111111 !important;
+    color: white !important;
+}
+
+.hero4 .btn-dark,
+.hero4 .btn-danger {
+    background: #111111 !important;
+    border-color: #111111 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    border-radius: 8px !important;
+    padding: 9px !important;
+}
+
+.hero4 .border-danger { border-color: #e4e4e4 !important; }
+
+/* ── Hero 5 — Jumbotron CTA ── */
+.hero5 { background: #ffffff; padding: 48px 24px; }
+
+.hero5 .p-5 {
+    background: #f0f0f0 !important;
+    border-radius: 16px !important;
+    padding: 48px 32px !important;
+}
+
+.hero5 h1 {
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    color: #111111 !important;
+    margin-bottom: 12px !important;
+}
+
+.hero5 .text-muted {
+    font-size: 14px !important;
+    color: #666666 !important;
+}
+
+.hero5 .btn-dark {
+    background: #111111 !important;
+    border-color: #111111 !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    padding: 10px 24px !important;
+}
+
+.hero5 .btn-outline-secondary {
+    border-color: #e4e4e4 !important;
+    color: #111111 !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    padding: 10px 24px !important;
+}
+
+.hero5 .btn-outline-secondary:hover {
+    background: #e4e4e4 !important;
+    color: #111111 !important;
+}
+
+/* ── Footer ── */
+footer.footer {
+    width: 100%;
+    background: #1a1d2e;
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+    padding: 48px 60px;
+    border-top: 1px solid #2a2d3e;
+    margin-top: auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    padding-right: 40px;
+}
+.footer-section:last-child { padding-right: 0; }
+
+.footer-logo {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+}
+
+.footer-logo .logo-box {
+    width: 34px; height: 34px;
+    background: #2d3047;
+    color: #a5b4fc;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid #3d4163;
+}
+
+.footer-logo h2 {
+    font-size: 16px; font-weight: 700;
+    color: #ffffff;
+}
+
+.footer-text {
+    font-size: 13px;
+    color: #8b92b3;
+    line-height: 1.7;
+    max-width: 220px;
+}
+
+.footer-section h3 {
+    font-size: 12px;
+    font-weight: 600;
+    color: #a5b4fc;
+    margin-bottom: 14px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.footer-section ul { list-style: none; }
+
+.footer-section ul li {
+    font-size: 13px;
+    color: #8b92b3;
+    margin-bottom: 9px;
+}
+
+.footer-section ul li a {
+    color: #8b92b3;
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.footer-section ul li a:hover { color: #e0e4ff; }
+
+.footer-bottom {
+    width: 100%;
+    background: #13152a;
+    color: #5a6080;
+    text-align: center;
+    font-size: 12px;
+    padding: 16px;
+    border-top: 1px solid #22253a;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d0d3e0; border-radius: 3px; }
+
+@media (max-width: 600px) {
+    .slot { width: calc(50% - 7px); height: 92px; }
+    .slots-row { gap: 10px; }
+    .navbar { padding: 0 16px; }
+    .navbar .links a span { display: none; }
+    footer.footer { padding: 36px 24px; }
+}
+
+/* ── Availability card — original style ── */
+.availability_card {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: #111111;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+.availability_card span {
+    font-size: 12px;
+    opacity: 0.7;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.availability_card h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .main_hero2 { flex-direction: column; }
+    .feature-cards { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .navbar { padding: 0 16px; }
+    .navbar .links { display: none; }
+}
+</style>
+</head>
+<body>
+      <!-- Navigation bar -->
+    <div class="navbar">
+        <div class="logo">
+            <div class="logo-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-car-front-fill" viewBox="0 0 16 16">
+                <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z"/>
+                </svg>
+            </div>
+                <h2>SmartPark</h2>
+        </div>
+
+        <div class="links">
+
+             <a href="#" class="active">
+                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+                <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z"/>
+                </svg>
+                
+                <span>Home</span>
+            </a>    
+
+            <a onclick="window.location.href = 'Dashboard.html'" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-columns-gap" viewBox="0 0 16 16">
+                <path d="M6 1v3H1V1zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1zm14 12v3h-5v-3zm-5-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1zM6 8v7H1V8zM1 7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zm14-6v7h-5V1zm-5-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z"/>
+                </svg>
+
+                <span>Dashboard</span>
+            </a>
+
+
+             <a onclick="window.location.href ='BookSlot.html'" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+               <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+               </svg>
+                
+                <span>Book Slot</span>
+            </a>
+
+        </div>
+
+        <div class="buttons">
+            <button onclick="Login()" class="Login">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                </svg>
+                Login</button>
+
+            <button onclick="Register()" class="Register">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
+                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
+                </svg>
+                Register</button>
+        </div>
+    </div>
+
+  
+  <!--Main Body -->
+<div class="main_body">
+
+    <!--Chatbot Section-->
+    <section class="hero1">
+
+        <!--Logo + Title -->
+        <div class="hero-header">
+            <div class="logo-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"
+                    fill="currentColor" class="bi bi-car-front-fill" viewBox="0 0 16 16">
+                    <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2z"/>
+                </svg>
+            </div>
+
+            <h1>SmartPark</h1>
+        </div>
+
+        <!-- Tagline -->
+        <p class="hero-subtitle">
+            Your intelligent parking companion — ask us anything below.
+        </p>
+
+        <!-- Search Box -->
+        <div id="chatbox" class="chat-box">
+            <div class="search-container">
+                <div class="search-icon">
+                    🤖
+                </div>
+                <input id="Chat" type="text" placeholder="Ask SmartPark Assistant anything...">
+
+                <button class="search-btn" onclick="chatbot()">
+                    ❯
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!--hero 2 Section-->
+    <section class="hero2">
+        <div class="container_hero2">
+            <div class="main_hero2">
+
+                <div class="image_hero2">
+                 <img src="/images/parked_cars.avif" alt="Parking Cars">
+                    <div class="availability_card">
+                        <span>Available Now</span>
+                        <h2>164 Slots</h2>
+                    </div>
+                </div>
+
+            <div class="intro_hero2">
+
+             <div class="logo_hero2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                class="bi bi-car-front-fill" viewBox="0 0 16 16">
+                <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2z"/>
+                </svg>
+                <p>Smart Parking System</p>
+            </div>
+
+            <h1>Park Smarter,<br>Drive Better</h1>
+
+            <p class="text_hero2">
+                Find, book, and manage parking spots in seconds.
+                Supports all vehicle types — sedan, SUV, truck, and bus —
+                with transparent flat-rate pricing.
+            </p>
+
+            <div class="buttons_hero2">
+                <button onclick="window.location.href = 'BookSlot.html'" class="primary_btn">Book a Spot Now</button>
+                <button onclick="window.location.href = 'Dashboard.html'" class="secondary_btn">View Parking Map</button>
+                </div>
+
+                    <div class="stats">
+                        <div>
+                            <span class="green_dot"></span>
+                            164 slots available
+                        </div>
+
+                        <div>
+                            <span class="blue_dot"></span>
+                            4 vehicle types
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Feature Hero Sections-->
+        <section class="hero3">
+            <div class="hero3-container">
+
+            <div class="section-title">
+            <h2>AI Features</h2>
+            </div>
+
+                <div class="feature-cards">
+
+                <!-- Card 1 -->
+                    <button class="feature-card">
+                        <img src="images/earningPredictor.png" alt="">
+                     <!-- Uploadim your image here -->
+                     <!-- <img src="images/feature1.jpg" alt=""> -->
+
+                      <div class="card-overlay"></div>
+
+                        <div class="card-content">
+                           <h3>AI Graphical Predictor</h3>
+
+                            <div class="card-footer">
+                                <span>Generate Articles</span>
+                                <span>→</span>
+                            </div>
+                        </div>
+                    </button>
+
+                <!-- Card 2 -->
+                    <button onclick="window.location.href = 'Home.html'" class="feature-card">
+                        <img src="images/AI chatbot.png" alt="">
+                     <!-- Upload your image here -->
+                     <!-- <img src="images/feature2.jpg" alt=""> -->
+
+                     <div class="card-overlay"></div>
+
+                            <div class="card-content">
+                              <h3>AI Chat Assistant</h3>
+
+                            <div class="card-footer">
+                                <span>Create Images</span>
+                                <span>→</span>
+                            </div>
+                        </div>
+                    </button>
+
+                <!-- Card 3 -->
+                    <button onclick="window.location.href ='BookSlot.html'" class="feature-card">
+                        <img src="images/SlotPredictor.png" alt="">
+                     <!-- Upload your image here -->
+                     <!-- <img src="images/feature3.jpg" alt=""> -->
+
+                     <div class="card-overlay"></div>
+
+                        <div class="card-content">
+                            <h3>AI Parking Slot Predictor</h3>
+
+                            <div class="card-footer">
+                                <span>Smart Responses</span>
+                                <span>→</span>
+                            </div>
+                        </div>
+                    </button>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Hero working-->
+
+        <section class="how-it-works">
+            <div class="container">
+
+                <div class="section-header">
+                    <h2>How It Works</h2>
+                    <p>Three simple steps to secure your parking spot</p>
+                </div>
+
+                <div class="steps">
+
+                <!-- Step 1 -->
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3>Find a Spot</h3>
+                        <p>
+                            Browse the live parking map and spot available slots
+                            by block
+                        </p>
+                    </div>
+
+                <!-- Step 2 -->
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3>Book & Pay</h3>
+                        <p>
+                            Enter your slot, block, vehicle details and pay a flat rate
+                            by vehicle type
+                        </p>
+                    </div>
+
+                <!-- Step 3 -->
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3>Park & Go</h3>
+                        <p>
+                            Drive to your reserved spot and enjoy hassle-free
+                            parking
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--Hero 4-->
+        <section class="hero4">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mb-3 text-center">
+
+                    <!-- Free Plan -->
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">SEDAN</h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title">
+                            $0
+                            <small class="text-body-secondary fw-light">/mo</small>
+                            </h1>
+
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>10 users included</li>
+                                <li>2 GB of storage</li>
+                                <li>Email support</li>
+                                <li>Help center access</li>
+                            </ul>
+
+                            <button type="button" class="w-100 btn btn-lg btn-outline-dark">
+                            Sign up for free
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Pro Plan -->
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                         <h4 class="my-0 fw-normal">SUV</h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title">
+                                $15
+                                <small class="text-body-secondary fw-light">/mo</small>
+                            </h1>
+
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>20 users included</li>
+                                <li>10 GB of storage</li>
+                                <li>Priority email support</li>
+                                <li>Help center access</li>
+                            </ul>
+
+                            <button type="button" class="w-100 btn btn-lg btn-dark">
+                                 Get Started
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Premium Plan -->
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm border-dark">
+                        <div class="card-header py-3 text-bg-dark border-dark">
+                          <h4 class="my-0 fw-normal">TRUCK</h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title">
+                            $22
+                            <small class="text-body-secondary fw-light">/mo</small>
+                            </h1>
+
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>25 users included</li>
+                                <li>12 GB of storage</li>
+                                <li>24/7 Email Support</li>
+                                <li>Priority Help Center Access</li>
+                            </ul>
+
+                            <button type="button" class="w-100 btn btn-lg btn-dark">
+                                  Choose Plan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Enterprise Plan -->
+                <div class="col"> 
+                    <div class="card mb-4 rounded-3 shadow-sm border-danger">
+                        <div class="card-header py-3 text-bg-danger border-danger">
+                             <h4 class="my-0 fw-normal">BUS</h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title">
+                            $29
+                            <small class="text-body-secondary fw-light">/mo</small>
+                            </h1>
+
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>30 users included</li>
+                                <li>15 GB of storage</li>
+                                <li>Phone & Email Support</li>
+                                <li>Help Center Access</li>
+                            </ul>
+
+                            <button type="button" class="w-100 btn btn-lg btn-danger">
+                            Contact Us
+                            </button>
+                          </div>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!--Hero Jumbotron Section-->
+         <section class="hero5">
+            <div class="container my-5">
+
+                <div class="p-5 text-center bg-body-tertiary rounded-3">
+
+                    <!-- Heading -->
+                    <h1 class="text-body-emphasis">
+                        Ready to Get Started
+                    </h1>
+
+                    <!-- Paragraph -->
+                    <p class="col-lg-8 mx-auto fs-5 text-muted">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium tenetur vero saepe! Libero labore incidunt mollitia, voluptate inventore et itaque obcaecati eos saepe odit aspernatur facere! Voluptatum perferendis recusandae aperiam?
+                    </p>
+
+                    <!-- Buttons -->
+                    <div class="d-inline-flex gap-2 mb-3">
+
+                        <button onclick="Register()" class="d-inline-flex align-items-center btn btn-dark btn-lg px-4 rounded-3" type="button">
+                             Create Account
+                        </button>
+
+                        <button onclick="Login()" class="btn btn-outline-secondary btn-lg px-4 rounded-3" 
+                        type="button">
+                             Login 
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+         </section>
+
+</div>
+
+    <!-- Footer-->
+    <footer class="footer">
+
+        <div class="footer-section">
+
+            <div class="footer-logo">
+                <div class="logo-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                        fill="currentColor" class="bi bi-car-front-fill" viewBox="0 0 16 16">
+                        <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2z"/>
+                    </svg>
+                </div>
+
+                <h2>SmartPark</h2>
+            </div>
+
+            <p class="footer-text">
+                Smart parking solutions for modern cities.
+                Find, book, and manage parking spots with ease.
+            </p>
+
+        </div>
+
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+
+            <ul>
+                <li><a onclick="window.location.href ='Dashboard.html'" href="#">Dashboard</a></li>
+                <li><a onclick="window.location.href ='BookSlot.html'" href="#">Book a Slot</a></li>
+                <li><a onclick="window.location.href ='Admin.html'" href="#">Admin Login</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h3>Contact</h3>
+
+            <ul>
+                <li>Email: support@smartpark.com</li>
+                <li>Phone: +1 (555) 123-4567</li>
+                <li>24/7 Customer Support</li>
+            </ul>
+        </div>
+
+    </footer>
+
+    <div class="footer-bottom">
+        © 2026 SmartPark. All rights reserved.
+    </div>
+</body>
+<script>
+     function Login(){
+        window.location.href = "Login.html";
+     }
+
+       function Register(){
+        window.location.href = "Register.html";
+     }
+
+     /*Chatbot function*/
+    function chatbot() {
+
+    let input = document.getElementById("Chat");
+    let chatBox = document.getElementById("chatbox");
+
+    let message = input.value.trim();
+
+    if (message === "") return;
+
+    // USER MESSAGE
+    let userDiv = document.createElement("div");
+    userDiv.classList.add("user-message");
+    userDiv.innerText = message;
+
+    chatBox.appendChild(userDiv);
+
+    input.value = "";
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // LOADING MESSAGE
+    let loadingDiv = document.createElement("div");
+    loadingDiv.classList.add("bot-message");
+    loadingDiv.innerText = "Thinking...";
+    chatBox.appendChild(loadingDiv);
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // SEND TO BACKEND
+    fetch("http://127.0.0.1:8000/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ question: message })
+})
+.then(response => {
+    if (!response.ok) throw new Error("HTTP " + response.status); // ADD THIS
+    return response.json();
+})
+.then(data => {
+    loadingDiv.remove();
+    let botDiv = document.createElement("div");
+    botDiv.classList.add("bot-message");
+    botDiv.innerText = data.answer;
+    chatBox.appendChild(botDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+})
+.catch((err) => {
+    loadingDiv.remove();
+    let errorDiv = document.createElement("div");
+    errorDiv.classList.add("bot-message");
+    errorDiv.innerText = "Server error: " + err.message; // shows actual error now
+    chatBox.appendChild(errorDiv);
+});
+}
+
+// we can use enter key for activating the fucntion
+document.getElementById("Chat").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault(); // stops form refresh (important)
+        chatbot(); // call your function
+    }
+});
+</script>
+</html>

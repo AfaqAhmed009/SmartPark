@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal · SmartPark</title>
+</head>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+body {
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 32px 16px;
+}
+
+/* ── Card ── */
+.login {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    padding: 36px 32px;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 8px 32px rgba(0,0,0,0.08);
+    border: 1px solid #e8e8e8;
+    animation: fadeUp 0.35s ease both;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Logo / Header ── */
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo-box {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #e07820, #c95f10);
+    color: white;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 14px;
+    box-shadow: 0 4px 14px rgba(222,107,36,0.35);
+}
+
+.logo h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+}
+
+.logo p {
+    color: #888;
+    font-size: 13px;
+}
+
+/* ── Tab switcher ── */
+.login-tabs {
+    display: flex;
+    margin: 18px 0;
+    border: 1px solid #e4e4e4;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f5f5f5;
+    padding: 3px;
+    gap: 3px;
+}
+
+.User_Login,
+.Admin_Login {
+    flex: 1;
+    padding: 9px 0;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 7px;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    font-family: inherit;
+}
+
+.User_Login {
+    background: transparent;
+    color: #888;
+}
+
+.User_Login:hover {
+    background: #ececec;
+    color: #444;
+}
+
+.Admin_Login {
+    background: #fff;
+    color: #de6b24;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+}
+
+/* ── Alert note ── */
+.note {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #fff8ed;
+    border: 1px solid #f5d89a;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin: 0 0 18px;
+}
+
+.note svg {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    color: #b45309;
+    margin-top: 1px;
+}
+
+.note p {
+    margin: 0;
+    color: #92400e;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+/* ── Form labels ── */
+form label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+    margin-top: 14px;
+}
+
+/* ── Input boxes ── */
+.email-box,
+.password-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: 42px;
+    padding: 0 14px;
+    border: 1.5px solid #e4e4e4;
+    border-radius: 10px;
+    background: #fafafa;
+    transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+    color: #aaa;
+}
+
+.email-box:focus-within,
+.password-box:focus-within {
+    border-color: #de6b24;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(222,107,36,0.12);
+    color: #666;
+}
+
+.email-box svg,
+.password-box svg {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+}
+
+.email-box input,
+.password-box input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 13.5px;
+    color: #111;
+    font-family: inherit;
+}
+
+.email-box input::placeholder,
+.password-box input::placeholder {
+    color: #bbb;
+}
+
+/* ── Sign in button ── */
+#Login {
+    width: 100%;
+    height: 42px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #e07820, #c95f10);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 18px;
+    letter-spacing: 0.1px;
+    transition: opacity 0.18s, transform 0.12s;
+    font-family: inherit;
+    position: relative;
+    overflow: hidden;
+}
+
+#Login:hover  { opacity: 0.92; }
+#Login:active { transform: scale(0.98); }
+
+/* loading spinner inside button */
+#Login .spinner {
+    display: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ── Error message ── */
+.error-msg {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 9px 12px;
+    margin-top: 12px;
+    color: #b91c1c;
+    font-size: 12.5px;
+    font-weight: 500;
+}
+
+.error-msg.show { display: flex; }
+
+/* ── Footer note ── */
+.form-footer {
+    text-align: center;
+    margin-top: 18px;
+    color: #999;
+    font-size: 12px;
+}
+
+.form-footer a {
+    color: #de6b24;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.form-footer a:hover { text-decoration: underline; }
+</style>
+
+<body>
+    <div class="login">
+
+        <!-- Header -->
+        <div class="logo">
+            <div class="logo-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .101.025 1 1 0 0 0 .1-.025q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/>
+                </svg>
+            </div>
+            <h2>Admin Portal</h2>
+            <p>Sign in with your admin credentials</p>
+        </div>
+
+        <!-- Tab switcher -->
+        <div class="login-tabs">
+            <button onclick="redirect_Login()" class="User_Login">User Login</button>
+            <button class="Admin_Login">Admin Login</button>
+        </div>
+
+        <!-- Security note -->
+        <div class="note">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .201 0q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/>
+            </svg>
+            <p>Admin access is restricted. Use your admin credentials to proceed.</p>
+        </div>
+
+        <!-- Form -->
+        <form method="post" onsubmit="return false;">
+
+            <label for="Email">Admin Email</label>
+            <div class="email-box">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
+                </svg>
+                <input type="email" id="Email" placeholder="admin@smartpark.com" autocomplete="email">
+            </div>
+
+            <label for="Password">Password</label>
+            <div class="password-box">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4M4.5 7A1.5 1.5 0 0 0 3 8.5v5A1.5 1.5 0 0 0 4.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 11.5 7zM8 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
+                </svg>
+                <input type="password" id="Password" placeholder="Enter your password" autocomplete="current-password">
+            </div>
+
+            <!-- Error message -->
+            <div class="error-msg" id="errorMsg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+                </svg>
+                <span id="errorText">Invalid admin credentials.</span>
+            </div>
+
+            <button id="Login" type="button" onclick="Admin_login()">
+                <span id="btnText">Sign in</span>
+                <div class="spinner" id="spinner"></div>
+            </button>
+        </form>
+
+        <p class="form-footer">
+            Not an admin? <a onclick="redirect_Login()" href="#">User Login</a>
+        </p>
+    </div>
+</body>
+
+<script>
+    function Admin_login() {
+        const Admin_email = document.getElementById("Email").value.trim();
+        const Password    = document.getElementById("Password").value;
+        const btn         = document.getElementById("Login");
+        const btnText     = document.getElementById("btnText");
+        const spinner     = document.getElementById("spinner");
+        const errorMsg    = document.getElementById("errorMsg");
+        const errorText   = document.getElementById("errorText");
+
+        // Basic validation
+        if (!Admin_email || !Password) {
+            errorText.textContent = "Please fill in both fields.";
+            errorMsg.classList.add("show");
+            return;
+        }
+        errorMsg.classList.remove("show");
+
+        // Loading state
+        btn.disabled    = true;
+        btnText.style.display  = "none";
+        spinner.style.display  = "block";
+
+        fetch("http://127.0.0.1:8000/Admin", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: Admin_email, admin_password: Password })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("HTTP " + response.status);
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                window.location.href = "AdminPanel.html";
+            } else {
+                errorText.textContent = "Invalid admin credentials. Please try again.";
+                errorMsg.classList.add("show");
+            }
+        })
+        .catch(() => {
+            errorText.textContent = "Cannot reach server. Make sure the backend is running.";
+            errorMsg.classList.add("show");
+        })
+        .finally(() => {
+            btn.disabled           = false;
+            btnText.style.display  = "inline";
+            spinner.style.display  = "none";
+        });
+    }
+
+    function redirect_Login() {
+        window.location.href = "Login.html";
+    }
+
+    // Enter key support
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") Admin_login();
+    });
+</script>
+</html>

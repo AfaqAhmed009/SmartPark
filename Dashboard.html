@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parking Map · SmartPark</title>
+<style>
+/* ── Reset & tokens ── */
+*, *::before, *::after {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+:root {
+    --navy:        #0a0a23;
+    --navy-light:  #1a1a3e;
+    --accent:      #4f46e5;
+    --accent-soft: rgba(79,70,229,0.08);
+    --bg:          #f4f6fb;
+    --card:        #ffffff;
+    --border:      #e8eaf0;
+    --muted:       #6b7280;
+    --text:        #111827;
+    --green:       #16a34a;
+    --green-bg:    #dcfce7;
+    --radius:      14px;
+    --shadow:      0 2px 8px rgba(0,0,0,0.05), 0 8px 28px rgba(0,0,0,0.07);
+    --shadow-sm:   0 1px 4px rgba(0,0,0,0.06);
+    --transition:  0.2s cubic-bezier(0.4,0,0.2,1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ══════════════════════════════
+   NAVBAR — from BookSlot
+══════════════════════════════ */
+.navbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 64px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    transition: box-shadow var(--transition);
+}
+
+.navbar.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,0.10); }
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.navbar .logo .logo-box {
+    width: 38px; height: 38px;
+    background: var(--navy);
+    color: white;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform var(--transition);
+}
+
+.navbar .logo:hover .logo-box { transform: scale(1.06); }
+
+.navbar .logo h2 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.3px;
+}
+
+.navbar .links {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.navbar .links a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    transition: background var(--transition), color var(--transition);
+}
+
+.navbar .links a:hover { background: #f1f2f6; color: var(--text); }
+.navbar .links a.active { background: var(--navy); color: #fff; }
+
+.navbar .buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar .buttons .Login {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 9px;
+    background: white;
+    font-size: 13.5px; font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: background var(--transition), border-color var(--transition);
+}
+.navbar .buttons .Login:hover { background: #f5f5f8; border-color: #ccc; }
+
+.navbar .buttons .Register {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 16px;
+    border: none; border-radius: 9px;
+    background: var(--navy);
+    font-size: 13.5px; font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: opacity var(--transition), transform var(--transition);
+}
+.navbar .buttons .Register:hover { opacity: 0.88; transform: translateY(-1px); }
+
+/* ══════════════════════════════
+   MAIN CONTENT
+══════════════════════════════ */
+.main {
+    flex: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 36px 28px 60px;
+}
+
+@keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero */
+.hero1 {
+    padding: 28px 36px;
+    background: var(--card);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    animation: fadeDown 0.4s ease both;
+}
+
+.hero1 h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.4px;
+}
+
+.intro_hero1 {
+    margin-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.text_hero1 p { color: var(--muted); font-size: 15px; }
+
+.slot_buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.pill {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 18px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 14px;
+    border: 1px solid transparent;
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+.pill:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.pill .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+.free          { background: #e8faf0; color: #15803d; border-color: #bbf0d0; }
+.free .dot     { background: #22c55e; }
+.occupied-pill { background: #fef1f1; color: #b91c1c; border-color: #fecaca; }
+.occupied-pill .dot { background: #ef4444; }
+.reserved-pill { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+.reserved-pill .dot { background: #f59e0b; }
+
+/* Block cards */
+.block-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+    animation: fadeUp 0.4s ease both;
+    transition: box-shadow var(--transition);
+}
+.block-card:hover { box-shadow: var(--shadow); }
+
+.block-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.badge {
+    width: 50px; height: 50px;
+    background: var(--navy);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 22px; font-weight: 700;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(10,10,35,0.25);
+}
+
+.block-head h3 { font-size: 18px; font-weight: 700; color: var(--text); }
+.block-head p  { color: var(--muted); font-size: 13.5px; margin-top: 2px; }
+
+.slots-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.drive-lane {
+    display: flex; align-items: center;
+    color: #b0b5c3; margin: 14px 0;
+    font-size: 12.5px; letter-spacing: 0.5px;
+}
+.drive-lane::before, .drive-lane::after {
+    content: ""; flex: 1;
+    border-top: 2px dashed #e2e5ef;
+}
+.drive-lane span { padding: 0 14px; }
+
+/* ══════════════════════════════
+   SLOT CARDS — lighter colors
+══════════════════════════════ */
+.slot {
+    width: 190px; height: 106px;
+    background: #f0faf5;
+    border: 2px solid #86efb0;
+    border-radius: 16px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 5px;
+    cursor: pointer;
+    transition: transform var(--transition), box-shadow var(--transition),
+                border-color var(--transition), background var(--transition);
+}
+
+.slot svg { width: 22px; height: 22px; fill: #4ade80; color: #4ade80; }
+.slot .num { font-size: 18px; font-weight: 700; color: #22a55e; }
+.slot .dot { width: 8px; height: 8px; border-radius: 50%; background: #86efb0; }
+
+.slot:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(34,197,94,0.18);
+    border-color: #4ade80;
+    background: #e5f8ee;
+}
+
+/* Occupied — muted red */
+.slot.occupied {
+    background: #fef5f5;
+    border-color: #fca5a5;
+    cursor: not-allowed;
+}
+.slot.occupied:hover { transform: none; box-shadow: none; }
+.slot.occupied svg  { fill: #f87171; color: #f87171; }
+.slot.occupied .num { color: #ef4444; }
+.slot.occupied .dot { background: #fca5a5; }
+
+/* Reserved — muted amber */
+.slot.reserved {
+    background: #fffbf0;
+    border-color: #fcd34d;
+    cursor: not-allowed;
+}
+.slot.reserved:hover { transform: none; box-shadow: none; }
+.slot.reserved svg  { fill: #fbbf24; color: #fbbf24; }
+.slot.reserved .num { color: #d97706; }
+.slot.reserved .dot { background: #fcd34d; }
+
+/* Legend */
+.legend-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px 30px;
+    box-shadow: var(--shadow-sm);
+    animation: fadeUp 0.4s 0.15s ease both;
+}
+
+.legend-card h4 {
+    color: var(--muted); font-size: 13px;
+    font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.6px; margin-bottom: 16px;
+}
+
+.legend-items {
+    display: flex; gap: 32px; flex-wrap: wrap;
+}
+
+.legend-items > div {
+    display: flex; align-items: center;
+    gap: 10px; font-size: 14.5px; color: var(--text);
+}
+
+.lg-box {
+    width: 32px; height: 26px;
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+}
+.lg-box svg { width: 15px; height: 15px; }
+.lg-box.av  { background: #f0faf5; border: 2px solid #86efb0; }
+.lg-box.av svg { fill: #4ade80; }
+.lg-box.oc  { background: #fef5f5; border: 2px solid #fca5a5; }
+.lg-box.oc svg { fill: #f87171; }
+.lg-box.rs  { background: #fffbf0; border: 2px solid #fcd34d; }
+.lg-box.rs svg { fill: #fbbf24; }
+
+/* ══════════════════════════════
+   FOOTER — from BookSlot
+══════════════════════════════ */
+footer.footer {
+    width: 100%;
+    background: #1a1d2e;
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+    padding: 48px 60px;
+    border-top: 1px solid #2a2d3e;
+    margin-top: auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    padding-right: 40px;
+}
+.footer-section:last-child { padding-right: 0; }
+
+.footer-logo {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+}
+
+.footer-logo .logo-box {
+    width: 34px; height: 34px;
+    background: #2d3047;
+    color: #a5b4fc;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid #3d4163;
+}
+
+.footer-logo h2 {
+    font-size: 16px; font-weight: 700;
+    color: #ffffff;
+}
+
+.footer-text {
+    font-size: 13px;
+    color: #8b92b3;
+    line-height: 1.7;
+    max-width: 220px;
+}
+
+.footer-section h3 {
+    font-size: 12px;
+    font-weight: 600;
+    color: #a5b4fc;
+    margin-bottom: 14px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.footer-section ul { list-style: none; }
+
+.footer-section ul li {
+    font-size: 13px;
+    color: #8b92b3;
+    margin-bottom: 9px;
+}
+
+.footer-section ul li a {
+    color: #8b92b3;
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.footer-section ul li a:hover { color: #e0e4ff; }
+
+.footer-bottom {
+    width: 100%;
+    background: #13152a;
+    color: #5a6080;
+    text-align: center;
+    font-size: 12px;
+    padding: 16px;
+    border-top: 1px solid #22253a;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d0d3e0; border-radius: 3px; }
+
+@media (max-width: 600px) {
+    .slot { width: calc(50% - 7px); height: 92px; }
+    .slots-row { gap: 10px; }
+    .navbar { padding: 0 16px; }
+    .navbar .links a span { display: none; }
+    footer.footer { padding: 36px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAVBAR (BookSlot style) ══ -->
+<nav class="navbar" id="navbar">
+    <a class="logo" href="Home.html">
+        <div class="logo-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z"/>
+            </svg>
+        </div>
+        <h2>SmartPark</h2>
+    </a>
+
+    <div class="links">
+        <a href="Home.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z"/>
+            </svg>
+            <span>Home</span>
+        </a>
+        <a href="Dashboard.html" class="active">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M6 1v3H1V1zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1zm14 12v3h-5v-3zm-5-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1zM6 8v7H1V8zM1 7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zm14-6v7h-5V1zm-5-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z"/>
+            </svg>
+            <span>Dashboard</span>
+        </a>
+        <a href="BookSlot.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+            </svg>
+            <span>Book Slot</span>
+        </a>
+    </div>
+
+    <div class="buttons">
+        <button onclick="Login()" class="Login">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+            </svg>
+            Login
+        </button>
+        <button onclick="Register()" class="Register">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
+            </svg>
+            Register
+        </button>
+    </div>
+</nav>
+
+<!-- ══ MAIN ══ -->
+<div class="main">
+
+  <section class="hero1">
+    <h1>Parking Map</h1>
+    <div class="intro_hero1">
+      <div class="text_hero1"><p>Click an available slot to proceed with booking</p></div>
+      <div class="slot_buttons">
+        <div class="pill free"><span class="dot"></span><span id="cnt-av">0 Available</span></div>
+        <div class="pill occupied-pill"><span class="dot"></span><span id="cnt-oc">0 Occupied</span></div>
+        <div class="pill reserved-pill"><span class="dot"></span><span id="cnt-rs">0 Reserved</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="blocks"></div>
+
+  <div class="legend-card">
+    <h4>Legend</h4>
+    <div class="legend-items">
+      <div><div class="lg-box av" id="lg-av"></div> Available — click to book</div>
+      <div><div class="lg-box oc" id="lg-oc"></div> Occupied</div>
+      <div><div class="lg-box rs" id="lg-rs"></div> Reserved</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ FOOTER (BookSlot style) ══ -->
+<footer class="footer">
+    <div class="footer-section">
+        <div class="footer-logo">
+            <div class="logo-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2z"/>
+                </svg>
+            </div>
+            <h2>SmartPark</h2>
+        </div>
+        <p class="footer-text">Smart parking solutions for modern cities. Find, book, and manage parking spots with ease.</p>
+    </div>
+
+    <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+            <li><a href="Dashboard.html">Dashboard</a></li>
+            <li><a href="BookSlot.html">Book a Slot</a></li>
+            <li><a href="Admin.html">Admin Login</a></li>
+        </ul>
+    </div>
+
+    <div class="footer-section">
+        <h3>Contact</h3>
+        <ul>
+            <li>support@smartpark.com</li>
+            <li>+1 (555) 123-4567</li>
+            <li>24/7 Customer Support</li>
+        </ul>
+    </div>
+</footer>
+<div class="footer-bottom">© 2026 SmartPark. All rights reserved.</div>
+
+<script>
+const CAR = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z"/></svg>`;
+
+/* Legend icons */
+document.getElementById('lg-av').innerHTML = CAR;
+document.getElementById('lg-oc').innerHTML = CAR;
+document.getElementById('lg-rs').innerHTML = CAR;
+
+const API = 'http://127.0.0.1:8000';
+
+function statusToClass(s) {
+  const v = (s || '').toLowerCase();
+  if (v === 'booked' || v === 'occupied') return 'occupied';
+  if (v === 'reserved') return 'reserved';
+  return '';
+}
+
+function floorLabel(floor_no, block_no) {
+  const map = {
+    'Ground-Floor': 'Ground Floor', 'First-Floor': 'Level 1',
+    'Second-Floor': 'Level 2',      'Third-Floor':  'Level 3',
+  };
+  return `Block ${block_no} — ${map[floor_no] || floor_no}`;
+}
+
+function renderSlotEl(slot) {
+  const cls   = statusToClass(slot.slot_status);
+  const isAv  = cls === '';
+  const label = `${slot.block_no}-${String(slot.slot_no).padStart(2,'0')}`;
+  const el    = document.createElement('div');
+  el.className = 'slot ' + cls;
+  el.innerHTML = `${CAR}<span class="num">${label}</span><span class="dot"></span>`;
+  if (isAv) {
+    el.title   = `Click to book slot ${label}`;
+    el.onclick = () => { window.location.href = `BookSlot.html?block=${slot.block_no}&slot=${slot.slot_no}`; };
+  } else {
+    el.title = `Slot ${label} is ${slot.slot_status}`;
+  }
+  return el;
+}
+
+function renderBlocks(groups, stats) {
+  const wrap = document.getElementById('blocks');
+  wrap.innerHTML = '';
+
+  groups.forEach((group, bi) => {
+    const slots  = group.slots;
+    const avCount = slots.filter(s => (s.slot_status||'').toLowerCase() === 'available').length;
+    const half   = Math.ceil(slots.length / 2);
+    const upper  = slots.slice(0, half);
+    const lower  = slots.slice(half);
+
+    const card = document.createElement('div');
+    card.className = 'block-card';
+    card.style.animationDelay = (bi * 0.07) + 's';
+    card.innerHTML = `
+      <div class="block-head">
+        <div class="badge">${group.block_no}</div>
+        <div>
+          <h3>${floorLabel(group.floor_no, group.block_no)}</h3>
+          <p>${avCount} of ${slots.length} slots available</p>
+        </div>
+      </div>
+      <div class="slots-row" data-row="upper"></div>
+      <div class="drive-lane"><span>← DRIVE LANE →</span></div>
+      <div class="slots-row" data-row="lower"></div>
+    `;
+    wrap.appendChild(card);
+
+    const rowUpper = card.querySelector('[data-row="upper"]');
+    const rowLower = card.querySelector('[data-row="lower"]');
+    upper.forEach(s => rowUpper.appendChild(renderSlotEl(s)));
+    lower.forEach(s => rowLower.appendChild(renderSlotEl(s)));
+  });
+
+  document.getElementById('cnt-av').textContent = `${stats.available} Available`;
+  document.getElementById('cnt-oc').textContent = `${stats.occupied} Occupied`;
+  document.getElementById('cnt-rs').textContent = `${stats.reserved} Reserved`;
+}
+
+async function loadSlots() {
+  const wrap = document.getElementById('blocks');
+  try {
+    const res  = await fetch(`${API}/slots/grouped`);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    renderBlocks(data.groups, data.stats);
+  } catch(err) {
+    wrap.innerHTML = `<p style="padding:30px;color:#dc2626;">Failed to load slots: ${err.message}</p>`;
+  }
+}
+
+loadSlots();
+// auto-refresh every 30 seconds
+setInterval(loadSlots, 30000);
+
+/* Navbar shadow on scroll */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+});
+
+function Login()    { alert('Login coming soon!'); }
+function Register() { alert('Register coming soon!'); }
+</script>
+</body>
+</html>
