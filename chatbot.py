@@ -3,6 +3,8 @@ from pathlib import Path
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.linear_model import LinearRegression
+import numpy as np
 
 BASE_DIR = Path(__file__).parent
 FAQ_PATH = BASE_DIR / "smart_park_chatbot.csv"
@@ -216,7 +218,33 @@ def get_all_analytics() -> dict:
         parking_df["Peak_Hour_Start"] == peak_start, "Peak_Hour_End"
     ].mode().iloc[0]
 
+    # ── Revenue forecast: linear regression over day index → Revenue_PKR ──
+    df_sorted = parking_df.sort_values("Date").reset_index(drop=True)
+    X = np.arange(len(df_sorted)).reshape(-1, 1)
+    y = df_sorted["Revenue_PKR"].values
+    reg = LinearRegression().fit(X, y)
+    future_X = np.arange(len(df_sorted), len(df_sorted) + 7).reshape(-1, 1)
+    preds = reg.predict(future_X)
+    last_date = df_sorted["Date"].iloc[-1]
+    revenue_forecast = [
+        {
+            "day": (last_date + pd.Timedelta(days=i + 1)).strftime("%b %d"),
+            "revenue": round(max(0.0, float(v)), 2),
+        }
+        for i, v in enumerate(preds)
+    ]
+
+    # ── Cost breakdown: avg revenue vs operating/maintenance cost vs profit ──
+    cost_breakdown = [
+        {"name": "Revenue", "value": round(float(parking_df["Revenue_PKR"].mean()), 0), "color": "#3b82f6"},
+        {"name": "Operating Cost", "value": round(float(parking_df["Operating_Cost_PKR"].mean()), 0), "color": "#f59e0b"},
+        {"name": "Maintenance", "value": round(float(parking_df["Maintenance_Cost_PKR"].mean()), 0), "color": "#ef4444"},
+        {"name": "Net Profit", "value": round(float(parking_df["Net_Profit_PKR"].mean()), 0), "color": "#10b981"},
+    ]
+
     return {
+        "revenue_forecast": revenue_forecast,
+        "cost_breakdown": cost_breakdown,
         "stats": [
             {
                 "icon": "car",

@@ -1,22 +1,12 @@
-/* ============================================================
-   Admin_script.js  — SmartPark Admin Panel
-   Changes vs original:
-   • Overview tab  : now shows 4 live Chart.js graphs (revenue,
-                     daily bookings, occupancy trend, slot status)
-                     pulled from /api/analytics + /slots/grouped
-   • Slots tab     : fetches real slots from GET /slots/grouped
-                     and renders them grouped by block, with live
-                     available / occupied / reserved badges
-   • Everything else (bookings, users, stats) unchanged
-   ============================================================ */
 
-const API_BASE = "http://127.0.0.1:3000";
+const API_BASE = "http://127.0.0.1:8000";
 
-let analyticsData  = null;  // from /api/analytics
-let liveSlotGroups = [];    // from /slots/grouped
-let liveSlotStats  = {};    // { available, occupied, reserved }
-let liveUsers      = null;  // from /admin/users   (null = not yet loaded)
-let liveBookings   = null;  // from /admin/bookings (null = not yet loaded)
+let analyticsData  = null;
+let liveSlotGroups = [];
+let liveSlotStats  = {};
+let liveUsers      = null;
+let liveBookings   = null;
+let allSlots       = []; // Flat list for table view
 
 /* ── icons ── */
 const ICONS = {
@@ -31,12 +21,17 @@ const ICONS = {
   more:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>',
   bar:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
   refresh:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>',
+  check:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+  x:        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
 };
 
 /* ── state ── */
 let activeTab    = "overview";
 let searchTerm   = "";
 let chartInstances = [];
+let currentModal = null;
+let editingId    = null;
+let editingType  = null; // 'slot', 'user', 'booking'
 
 function escapeHtml(str) {
   const d = document.createElement("div");
@@ -65,9 +60,22 @@ async function loadLiveSlots() {
       liveSlotStats  = data.stats  ?? {};
     }
   } catch (e) {
-    console.warn("Slots API unavailable.", e);
+    console.warn("Slots grouped API unavailable.", e);
     liveSlotGroups = [];
     liveSlotStats  = {};
+  }
+}
+
+async function loadAllSlots() {
+  try {
+    const res = await fetch(`${API_BASE}/slots`);
+    if (res.ok) {
+      const data = await res.json();
+      allSlots = data.slots ?? [];
+    }
+  } catch (e) {
+    console.warn("Slots API unavailable.", e);
+    allSlots = [];
   }
 }
 
@@ -111,6 +119,8 @@ function getEarnings() {
     { label:"Avg. per Booking",  value:"PKR 43",       sub:"All types" },
   ];
 }
+function getRevenueForecast() { return analyticsData?.revenue_forecast ?? []; }
+function getCostBreakdown()   { return analyticsData?.cost_breakdown   ?? VEHICLE_DISTRIBUTION; }
 
 /* ══════════════════════════════════════════════
    STATS CARDS
@@ -154,7 +164,7 @@ function renderTabContent() {
 
   if      (activeTab === "overview") { root.innerHTML = overviewHTML(); initOverviewCharts(); }
   else if (activeTab === "charts")   { root.innerHTML = chartsHTML();   initDetailCharts(); }
-  else if (activeTab === "slots")    { root.innerHTML = slotsHTML(); attachSlotRefresh(); }
+  else if (activeTab === "slots")    { root.innerHTML = slotsHTML();    attachSlotRefresh(); }
   else if (activeTab === "bookings") { root.innerHTML = bookingsHTML(); attachBookingRefresh(); }
   else if (activeTab === "users")    { root.innerHTML = usersHTML();    attachUserRefresh(); }
 
@@ -163,11 +173,70 @@ function renderTabContent() {
 }
 
 /* ══════════════════════════════════════════════
-   OVERVIEW TAB  — now shows 4 mini charts
+   MODAL SYSTEM
+══════════════════════════════════════════════ */
+function showModal(title, content, onConfirm) {
+  const modal = document.createElement("div");
+  modal.className = "modal-overlay";
+  modal.innerHTML = `
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>${escapeHtml(title)}</h3>
+        <button class="modal-close" onclick="closeModal()">${ICONS.x}</button>
+      </div>
+      <div class="modal-body">${content}</div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" id="modalConfirmBtn">Confirm</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  currentModal = modal;
+  
+  document.getElementById("modalConfirmBtn").addEventListener("click", () => {
+    onConfirm();
+  });
+  
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+}
+
+async function refreshStats() {
+  await loadAnalytics();
+  renderStats();
+}
+
+function closeModal() {
+  if (currentModal) {
+    currentModal.remove();
+    currentModal = null;
+  }
+  editingId = null;
+  editingType = null;
+}
+
+function showToast(message, type = "success") {
+  const toast = document.createElement("div");
+  toast.className = `toast toast-${type}`;
+  toast.innerHTML = `
+    <span class="toast-icon">${type === "success" ? ICONS.check : ICONS.x}</span>
+    <span>${escapeHtml(message)}</span>
+  `;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add("toast-hide");
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+/* ══════════════════════════════════════════════
+   OVERVIEW TAB
 ══════════════════════════════════════════════ */
 function overviewHTML() {
   const summary = getSummary();
-  const recentRows = BOOKINGS.map(b => `
+  const recentRows = BOOKINGS.slice(0, 5).map(b => `
     <div class="activity-row">
       <div>
         <p class="activity-name">${escapeHtml(b.user)}</p>
@@ -175,11 +244,10 @@ function overviewHTML() {
       </div>
       <div class="activity-right">
         <span class="activity-amount">${b.amount}</span>
-        <span class="badge badge-${b.status}">${b.status}</span>
+        <span class="badge badge-sm badge-${b.status}">${b.status}</span>
       </div>
     </div>`).join("");
 
-  /* slot status donut data */
   const av  = liveSlotStats.available ?? 0;
   const oc  = liveSlotStats.occupied  ?? 0;
   const rs  = liveSlotStats.reserved  ?? 0;
@@ -187,8 +255,6 @@ function overviewHTML() {
 
   return `
     <div class="stack">
-
-      <!-- snapshot cards -->
       <div>
         <h3 class="section-title">Today's Snapshot</h3>
         <div class="mini-grid">
@@ -199,26 +265,21 @@ function overviewHTML() {
         </div>
       </div>
 
-      <!-- 4 overview charts -->
       <div>
         <h3 class="section-title">Quick Analytics</h3>
         <div class="charts-grid">
-
           <div class="chart-card">
             <h4>Monthly Revenue (Last 6 Months)</h4>
             <div class="chart-wrap"><canvas id="ovChartRevenue"></canvas></div>
           </div>
-
           <div class="chart-card">
             <h4>Daily Bookings This Week</h4>
             <div class="chart-wrap"><canvas id="ovChartDaily"></canvas></div>
           </div>
-
           <div class="chart-card">
             <h4>Occupancy by Hour (%)</h4>
             <div class="chart-wrap"><canvas id="ovChartOccupancy"></canvas></div>
           </div>
-
           <div class="chart-card">
             <h4>Live Slot Status</h4>
             <div class="chart-wrap"><canvas id="ovChartSlots"></canvas></div>
@@ -229,16 +290,13 @@ function overviewHTML() {
               <span style="color:#d97706">▣ ${rs} Reserved</span>
             </p>
           </div>
-
         </div>
       </div>
 
-      <!-- recent activity -->
       <div>
         <h3 class="section-title">Recent Activity</h3>
         <div class="stack-sm" style="gap:0;">${recentRows}</div>
       </div>
-
     </div>`;
 }
 
@@ -255,7 +313,6 @@ function initOverviewCharts() {
   const oc = liveSlotStats.occupied  ?? 0;
   const rs = liveSlotStats.reserved  ?? 0;
 
-  /* Revenue bar */
   chartInstances.push(new Chart(document.getElementById("ovChartRevenue"), {
     type: "bar",
     data: {
@@ -272,7 +329,6 @@ function initOverviewCharts() {
     }
   }));
 
-  /* Daily bookings bar */
   chartInstances.push(new Chart(document.getElementById("ovChartDaily"), {
     type: "bar",
     data: {
@@ -289,7 +345,6 @@ function initOverviewCharts() {
     }
   }));
 
-  /* Occupancy line */
   chartInstances.push(new Chart(document.getElementById("ovChartOccupancy"), {
     type: "line",
     data: {
@@ -311,7 +366,6 @@ function initOverviewCharts() {
     }
   }));
 
-  /* Live slot status doughnut */
   chartInstances.push(new Chart(document.getElementById("ovChartSlots"), {
     type: "doughnut",
     data: {
@@ -334,48 +388,37 @@ function initOverviewCharts() {
 }
 
 /* ══════════════════════════════════════════════
-   CHARTS TAB  — full detail analytics (unchanged)
+   CHARTS TAB
 ══════════════════════════════════════════════ */
 function chartsHTML() {
   const earnings = getEarnings();
   return `
     <style>
-      .charts-grid-asymmetric {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 1.25rem;
-      }
-      .charts-grid-3 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.25rem;
-      }
+      .charts-grid-asymmetric { display: grid; grid-template-columns: 2fr 1fr; gap: 1.25rem; }
+      .charts-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
       .chart-card-wide { grid-column: span 1; }
       .chart-wrap-tall { height: 260px; }
       @media (max-width: 900px) {
-        .charts-grid-asymmetric,
-        .charts-grid-3 { grid-template-columns: 1fr; }
+        .charts-grid-asymmetric, .charts-grid-3 { grid-template-columns: 1fr; }
       }
     </style>
     <div class="stack" style="gap:2rem;">
       <div class="charts-header">${ICONS.bar}<h3 class="section-title" style="margin-bottom:0;">Analytics &amp; Charts</h3></div>
 
-      <!-- Row 1: Revenue (wide) + Vehicle Distribution (narrow) -->
       <div class="charts-grid charts-grid-asymmetric">
         <div class="chart-card chart-card-wide">
           <h4>Monthly Revenue (Last 6 Months)</h4>
           <div class="chart-wrap chart-wrap-tall"><canvas id="chartRevenue"></canvas></div>
         </div>
         <div class="chart-card">
-          <h4>Vehicle Type Distribution</h4>
+          <h4>Cost Breakdown (Avg / Day)</h4>
           <div class="chart-wrap chart-wrap-tall"><canvas id="chartVehicle"></canvas></div>
         </div>
       </div>
 
-      <!-- Row 2: 3 equal charts -->
       <div class="charts-grid charts-grid-3">
         <div class="chart-card">
-          <h4>Daily Bookings (This Week)</h4>
+          <h4>Revenue Forecast (Next 7 Days · Linear Regression)</h4>
           <div class="chart-wrap"><canvas id="chartDaily"></canvas></div>
         </div>
         <div class="chart-card">
@@ -388,7 +431,6 @@ function chartsHTML() {
         </div>
       </div>
 
-      <!-- Earnings summary -->
       <div>
         <h3 class="section-title">Earnings Summary</h3>
         <div class="earnings-grid">
@@ -410,12 +452,11 @@ function initDetailCharts() {
   Chart.defaults.font.size   = 12;
 
   const mr  = getMonthlyRevenue();
-  const db  = getDailyBookings();
+  const rf  = getRevenueForecast();
   const ot  = getOccupancyTrend();
-  const vd  = VEHICLE_DISTRIBUTION;   // vehicle type donut
-  const dow = analyticsData?.day_of_week_bookings ?? DAILY_BOOKINGS; // day-of-week bookings bar
+  const cb  = getCostBreakdown();
+  const dow = analyticsData?.day_of_week_bookings ?? DAILY_BOOKINGS;
 
-  /* ── 1. Monthly Revenue — gradient bar ── */
   chartInstances.push(new Chart(document.getElementById("chartRevenue"), {
     type: "bar",
     data: {
@@ -424,99 +465,73 @@ function initDetailCharts() {
         label: "Revenue",
         data: mr.map(d => d.revenue),
         backgroundColor: mr.map((_, i) => i === mr.length - 1 ? "#d97706" : "#fbbf24"),
-        borderRadius: 6,
-        maxBarThickness: 52,
+        borderRadius: 6, maxBarThickness: 52,
       }]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: c => `PKR ${c.parsed.y.toLocaleString()}` } }
-      },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `PKR ${c.parsed.y.toLocaleString()}` } } },
       scales: {
         x: { grid: { display: false }, ticks: { color: fontColor } },
-        y: {
-          grid: { color: borderColor },
-          ticks: { color: fontColor, callback: v => `PKR ${(v / 1000).toFixed(0)}k` },
-          beginAtZero: true,
-        }
+        y: { grid: { color: borderColor }, ticks: { color: fontColor, callback: v => `PKR ${(v / 1000).toFixed(0)}k` }, beginAtZero: true }
       }
     }
   }));
 
-  /* ── 2. Vehicle Type Distribution — doughnut ── */
   chartInstances.push(new Chart(document.getElementById("chartVehicle"), {
     type: "doughnut",
     data: {
-      labels: vd.map(d => d.name),
+      labels: cb.map(d => d.name),
       datasets: [{
-        data: vd.map(d => d.value),
-        backgroundColor: vd.map(d => d.color),
-        borderWidth: 3,
-        borderColor: "#ffffff",
-        hoverOffset: 6,
+        data: cb.map(d => d.value),
+        backgroundColor: cb.map(d => d.color),
+        borderWidth: 3, borderColor: "#ffffff", hoverOffset: 6,
       }]
     },
     options: {
       responsive: true, maintainAspectRatio: false, cutout: "58%",
       plugins: {
         legend: { position: "bottom", labels: { color: fontColor, boxWidth: 12, padding: 14, font: { size: 12 } } },
-        tooltip: { callbacks: { label: c => ` ${c.label}: ${c.parsed} vehicles (${Math.round(c.parsed / vd.reduce((a,d)=>a+d.value,0)*100)}%)` } }
+        tooltip: { callbacks: { label: c => ` ${c.label}: PKR ${c.parsed.toLocaleString()}` } }
       }
     }
   }));
 
-  /* ── 3. Daily Bookings This Week — horizontal bar ── */
   chartInstances.push(new Chart(document.getElementById("chartDaily"), {
-    type: "bar",
+    type: "line",
     data: {
-      labels: db.map(d => d.day),
+      labels: rf.map(d => d.day),
       datasets: [{
-        label: "Bookings",
-        data: db.map(d => d.bookings),
-        backgroundColor: "#4f46e5",
-        borderRadius: 5,
-        maxBarThickness: 36,
+        label: "Forecast Revenue", data: rf.map(d => d.revenue),
+        borderColor: "#d97706", backgroundColor: "rgba(217,119,6,0.10)",
+        borderDash: [5, 4], pointBackgroundColor: "#d97706",
+        pointRadius: 4, pointHoverRadius: 6, tension: 0.3, borderWidth: 2.5, fill: true,
       }]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: c => `${c.parsed.y} bookings` } }
-      },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `PKR ${c.parsed.y.toLocaleString()}` } } },
       scales: {
         x: { grid: { display: false }, ticks: { color: fontColor } },
-        y: { grid: { color: borderColor }, ticks: { color: fontColor }, beginAtZero: true }
+        y: { grid: { color: borderColor }, ticks: { color: fontColor, callback: v => `PKR ${(v / 1000).toFixed(0)}k` }, beginAtZero: true }
       }
     }
   }));
 
-  /* ── 4. Occupancy by Hour — area line ── */
   chartInstances.push(new Chart(document.getElementById("chartOccupancy"), {
     type: "line",
     data: {
       labels: ot.map(d => d.time),
       datasets: [{
-        label: "Occupancy %",
-        data: ot.map(d => d.rate),
-        borderColor: "#10b981",
-        backgroundColor: "rgba(16,185,129,0.10)",
-        pointBackgroundColor: "#10b981",
-        pointRadius: 4,
-        pointHoverRadius: 6,
-        tension: 0.40,
-        borderWidth: 2.5,
-        fill: true,
+        label: "Occupancy %", data: ot.map(d => d.rate),
+        borderColor: "#10b981", backgroundColor: "rgba(16,185,129,0.10)",
+        pointBackgroundColor: "#10b981", pointRadius: 4, pointHoverRadius: 6,
+        tension: 0.40, borderWidth: 2.5, fill: true,
       }]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: c => `${c.parsed.y}% occupancy` } }
-      },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${c.parsed.y}% occupancy` } } },
       scales: {
         x: { grid: { display: false }, ticks: { color: fontColor } },
         y: { grid: { color: borderColor }, ticks: { color: fontColor, callback: v => `${v}%` }, max: 100, beginAtZero: true }
@@ -524,7 +539,6 @@ function initDetailCharts() {
     }
   }));
 
-  /* ── 5. Bookings by Day of Week — polar / bar with color gradient ── */
   const dowLabels = dow.map(d => d.day);
   const dowValues = dow.map(d => d.bookings);
   const dowColors = ["#3b82f6","#6366f1","#8b5cf6","#a855f7","#ec4899","#f43f5e","#f97316"];
@@ -533,19 +547,13 @@ function initDetailCharts() {
     data: {
       labels: dowLabels,
       datasets: [{
-        label: "Bookings",
-        data: dowValues,
-        backgroundColor: dowColors,
-        borderRadius: 5,
-        maxBarThickness: 36,
+        label: "Bookings", data: dowValues,
+        backgroundColor: dowColors, borderRadius: 5, maxBarThickness: 36,
       }]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: c => `${c.parsed.y} bookings` } }
-      },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${c.parsed.y} bookings` } } },
       scales: {
         x: { grid: { display: false }, ticks: { color: fontColor } },
         y: { grid: { color: borderColor }, ticks: { color: fontColor }, beginAtZero: true }
@@ -560,14 +568,12 @@ function destroyCharts() {
 }
 
 /* ══════════════════════════════════════════════
-   SLOTS TAB  — live data from /slots/grouped
+   SLOTS TAB — Full CRUD
 ══════════════════════════════════════════════ */
 function slotsHTML() {
-  /* If live data is available render by block groups */
   if (liveSlotGroups.length > 0) {
     return liveSlotsSectionHTML();
   }
-  /* Fallback: mock table */
   return mockSlotsTableHTML();
 }
 
@@ -575,8 +581,6 @@ function liveSlotsSectionHTML() {
   const av = liveSlotStats.available ?? 0;
   const oc = liveSlotStats.occupied  ?? 0;
   const rs = liveSlotStats.reserved  ?? 0;
-
-  /* search filter across all slots */
   const q = searchTerm.toLowerCase();
 
   const blocksHTML = liveSlotGroups.map(group => {
@@ -590,17 +594,20 @@ function liveSlotsSectionHTML() {
 
     const slotCards = filteredSlots.map(s => {
       const status = (s.slot_status || "available").toLowerCase();
-      /* map booked -> occupied for badge */
       const badge  = status === "booked" ? "occupied" : status;
       const label  = status === "booked" ? "Booked" : status.charAt(0).toUpperCase() + status.slice(1);
       return `
-        <div class="live-slot-card live-slot-${badge}">
+        <div class="live-slot-card live-slot-${badge}" data-id="${s.id}">
           <div class="live-slot-id">${group.block_no}-${String(s.slot_no).padStart(2,"0")}</div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="live-slot-car">
             <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
             <circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>
           </svg>
           <span class="badge badge-sm badge-${badge}">${label}</span>
+          <div class="slot-actions">
+            <button class="icon-btn slot-edit" data-id="${s.id}" data-action="edit" title="Edit Slot">${ICONS.edit}</button>
+            <button class="icon-btn slot-delete" data-id="${s.id}" data-action="delete" title="Delete Slot">${ICONS.trash}</button>
+          </div>
         </div>`;
     }).join("");
 
@@ -619,7 +626,6 @@ function liveSlotsSectionHTML() {
 
   return `
     <style>
-      /* ── live slot styles (scoped here so they don't bleed) ── */
       .live-slot-summary { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:20px; }
       .live-slot-pill { display:flex; align-items:center; gap:7px; padding:7px 14px;
         border-radius:99px; font-size:13px; font-weight:600; border:1px solid transparent; }
@@ -643,10 +649,13 @@ function liveSlotsSectionHTML() {
 
       .live-slot-card { width:110px; border-radius:12px; border:2px solid;
         padding:12px 10px; display:flex; flex-direction:column;
-        align-items:center; gap:8px; transition:transform .18s, box-shadow .18s; }
+        align-items:center; gap:8px; transition:transform .18s, box-shadow .18s; position:relative; }
       .live-slot-card:hover { transform:translateY(-3px); box-shadow:0 4px 14px rgba(0,0,0,0.10); }
+      .live-slot-card:hover .slot-actions { opacity:1; }
       .live-slot-id  { font-size:13px; font-weight:700; }
       .live-slot-car { width:28px; height:28px; }
+      .slot-actions { display:flex; gap:4px; opacity:0; transition:opacity 0.2s; position:absolute; top:4px; right:4px; }
+      .slot-actions .icon-btn { padding:3px; background:rgba(255,255,255,0.9); border-radius:4px; }
 
       .live-slot-available { background:#f0fdf6; border-color:#6ee7a8; }
       .live-slot-available .live-slot-id  { color:#15803d; }
@@ -662,27 +671,28 @@ function liveSlotsSectionHTML() {
     </style>
 
     <div class="stack" style="gap:1rem;">
-
-      <!-- toolbar -->
       <div class="toolbar">
         <div class="search-wrap">
           ${ICONS.search}
           <input type="text" class="search-input" id="searchInput"
             placeholder="Search by block, slot or status…" value="${escapeHtml(searchTerm)}" />
         </div>
-        <button class="btn btn-outline" id="slotRefreshBtn" style="gap:6px;">
-          ${ICONS.refresh} Refresh
-        </button>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-primary" id="addSlotBtn" style="gap:6px;">
+            ${ICONS.plus} Add Slot
+          </button>
+          <button class="btn btn-outline" id="slotRefreshBtn" style="gap:6px;">
+            ${ICONS.refresh} Refresh
+          </button>
+        </div>
       </div>
 
-      <!-- summary pills -->
       <div class="live-slot-summary">
         <div class="live-slot-pill pill-av"><span class="dot"></span>${av} Available</div>
         <div class="live-slot-pill pill-oc"><span class="dot"></span>${oc} Occupied / Booked</div>
         <div class="live-slot-pill pill-rs"><span class="dot"></span>${rs} Reserved</div>
       </div>
 
-      <!-- block groups -->
       ${blocksHTML || `<p style="color:var(--muted-foreground);padding:20px 0;">No slots match your search.</p>`}
     </div>`;
 }
@@ -697,8 +707,8 @@ function mockSlotsTableHTML() {
       <td>$${s.price}</td>
       <td><span class="badge badge-sm badge-${s.status}">${s.status}</span></td>
       <td><div class="row-actions">
-        <button class="icon-btn" data-action="edit">${ICONS.edit}</button>
-        <button class="icon-btn danger" data-action="delete">${ICONS.trash}</button>
+        <button class="icon-btn" data-action="edit" data-id="${s.id}">${ICONS.edit}</button>
+        <button class="icon-btn danger" data-action="delete" data-id="${s.id}">${ICONS.trash}</button>
       </div></td>
     </tr>`).join("") : `<tr class="empty-row"><td colspan="6">No slots found</td></tr>`;
 
@@ -706,7 +716,7 @@ function mockSlotsTableHTML() {
     <div class="stack" style="gap:1rem;">
       <div class="toolbar">
         <div class="search-wrap">${ICONS.search}<input type="text" class="search-input" id="searchInput" placeholder="Search slots…" value="${escapeHtml(searchTerm)}" /></div>
-        <button class="btn btn-primary" id="addBtn">${ICONS.plus} Add Slot</button>
+        <button class="btn btn-primary" id="addSlotBtn">${ICONS.plus} Add Slot</button>
       </div>
       <p style="color:var(--muted-foreground);font-size:13px;">⚠ Could not reach /slots/grouped — showing mock data.</p>
       <div class="table-scroll">
@@ -719,18 +729,131 @@ function mockSlotsTableHTML() {
 }
 
 function attachSlotRefresh() {
-  const btn = document.getElementById("slotRefreshBtn");
-  if (!btn) return;
-  btn.addEventListener("click", async () => {
-    btn.disabled = true;
-    btn.innerHTML = ICONS.refresh + " Loading…";
-    await loadLiveSlots();
-    renderTabContent();
+  const refreshBtn = document.getElementById("slotRefreshBtn");
+  if (refreshBtn) {
+    refreshBtn.addEventListener("click", async () => {
+      refreshBtn.disabled = true;
+      refreshBtn.innerHTML = ICONS.refresh + " Loading…";
+      await loadLiveSlots();
+      await loadAllSlots();
+      renderTabContent();
+    });
+  }
+
+  const addBtn = document.getElementById("addSlotBtn");
+  if (addBtn) {
+    addBtn.addEventListener("click", () => showSlotModal());
+  }
+}
+
+function showSlotModal(slot = null) {
+  editingId = slot ? slot.id : null;
+  editingType = "slot";
+  const isEdit = !!slot;
+  
+  const content = `
+    <div class="form-stack">
+      <div class="form-field">
+        <label>Slot Number</label>
+        <input type="number" id="slotNoInput" value="${slot ? slot.slot_no : ''}" placeholder="e.g. 1, 2, 3" />
+      </div>
+      <div class="form-field">
+        <label>Block</label>
+        <select id="blockNoInput">
+          <option value="A" ${slot && slot.block_no === 'A' ? 'selected' : ''}>Block A</option>
+          <option value="B" ${slot && slot.block_no === 'B' ? 'selected' : ''}>Block B</option>
+          <option value="C" ${slot && slot.block_no === 'C' ? 'selected' : ''}>Block C</option>
+          <option value="D" ${slot && slot.block_no === 'D' ? 'selected' : ''}>Block D</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Floor</label>
+        <select id="floorNoInput">
+          <option value="Ground-Floor" ${slot && slot.floor_no === 'Ground-Floor' ? 'selected' : ''}>Ground Floor</option>
+          <option value="First-Floor" ${slot && slot.floor_no === 'First-Floor' ? 'selected' : ''}>First Floor</option>
+          <option value="Second-Floor" ${slot && slot.floor_no === 'Second-Floor' ? 'selected' : ''}>Second Floor</option>
+          <option value="Third-Floor" ${slot && slot.floor_no === 'Third-Floor' ? 'selected' : ''}>Third Floor</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Status</label>
+        <select id="slotStatusInput">
+          <option value="Available" ${slot && slot.slot_status === 'Available' ? 'selected' : ''}>Available</option>
+          <option value="Booked" ${slot && slot.slot_status === 'Booked' ? 'selected' : ''}>Booked</option>
+          <option value="Reserved" ${slot && slot.slot_status === 'Reserved' ? 'selected' : ''}>Reserved</option>
+        </select>
+      </div>
+    </div>
+  `;
+
+  showModal(isEdit ? "Edit Slot" : "Add New Slot", content, async () => {
+    const slotNo = document.getElementById("slotNoInput").value;
+    const blockNo = document.getElementById("blockNoInput").value;
+    const floorNo = document.getElementById("floorNoInput").value;
+    const status = document.getElementById("slotStatusInput").value;
+
+    if (!slotNo) {
+      showToast("Please enter a slot number", "error");
+      return;
+    }
+
+    try {
+      const url = isEdit ? `${API_BASE}/slots/${editingId}` : `${API_BASE}/slots`;
+      const method = isEdit ? "PUT" : "POST";
+      
+      const res = await fetch(url, {
+        method: method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          slot_no: parseInt(slotNo),
+          block_no: blockNo,
+          floor_no: floorNo,
+          slot_status: status
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        showToast(data.detail || "Operation failed", "error");
+        return;
+      }
+
+      showToast(isEdit ? "Slot updated successfully" : "Slot created successfully");
+      closeModal();
+      await loadLiveSlots();
+      await loadAllSlots();
+      await refreshStats();
+      renderTabContent();
+    } catch (e) {
+      showToast("Network error: " + e.message, "error");
+    }
   });
 }
 
+async function deleteSlot(slotId) {
+  if (!confirm("Are you sure you want to delete this slot?")) return;
+  
+  try {
+    const res = await fetch(`${API_BASE}/slots/${slotId}`, { method: "DELETE" });
+    const data = await res.json();
+    
+    if (!res.ok) {
+      showToast(data.detail || "Delete failed", "error");
+      return;
+    }
+    
+    showToast("Slot deleted successfully");
+    await loadLiveSlots();
+    await loadAllSlots();
+    await refreshStats();
+    renderTabContent();
+  } catch (e) {
+    showToast("Network error: " + e.message, "error");
+  }
+}
+
 /* ══════════════════════════════════════════════
-   BOOKINGS TAB  — live from /admin/bookings
+   BOOKINGS TAB — Full CRUD
 ══════════════════════════════════════════════ */
 function bookingsHTML() {
   const source   = liveBookings ?? BOOKINGS;
@@ -757,8 +880,9 @@ function bookingsHTML() {
         <td>${escapeHtml(b.amount)}</td>
         <td><span class="badge badge-sm badge-${status}">${status}</span></td>
         <td><div class="row-actions">
-          <button class="icon-btn" data-action="view"  title="View">${ICONS.more}</button>
-          <button class="icon-btn" data-action="edit"  title="Edit">${ICONS.edit}</button>
+          <button class="icon-btn" data-action="view" data-id="${b.id}" title="View">${ICONS.more}</button>
+          <button class="icon-btn" data-action="edit" data-id="${b.id}" title="Edit">${ICONS.edit}</button>
+          <button class="icon-btn danger" data-action="delete" data-id="${b.id}" title="Delete">${ICONS.trash}</button>
         </div></td>
       </tr>`;
   }).join("") : `<tr class="empty-row"><td colspan="10">No bookings found</td></tr>`;
@@ -809,8 +933,53 @@ function attachBookingRefresh() {
   });
 }
 
+async function deleteBooking(bookingId) {
+  if (!confirm("Are you sure you want to delete this booking? The slot will be freed.")) return;
+  
+  try {
+    const res = await fetch(`${API_BASE}/admin/bookings/${bookingId}`, { method: "DELETE" });
+    const data = await res.json();
+    
+    if (!res.ok) {
+      showToast(data.detail || "Delete failed", "error");
+      return;
+    }
+    
+    showToast("Booking deleted and slot freed");
+    await loadLiveBookings();
+    await loadLiveSlots();
+    await refreshStats();
+    renderTabContent();
+  } catch (e) {
+    showToast("Network error: " + e.message, "error");
+  }
+}
+
+async function updateBookingStatus(bookingId, newStatus) {
+  try {
+    const res = await fetch(`${API_BASE}/admin/bookings/${bookingId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ booking_status: newStatus })
+    });
+    
+    const data = await res.json();
+    if (!res.ok) {
+      showToast(data.detail || "Update failed", "error");
+      return;
+    }
+    
+    showToast("Booking status updated");
+    await loadLiveBookings();
+    await refreshStats();
+    renderTabContent();
+  } catch (e) {
+    showToast("Network error: " + e.message, "error");
+  }
+}
+
 /* ══════════════════════════════════════════════
-   USERS TAB  — live from /admin/users
+   USERS TAB — Full CRUD
 ══════════════════════════════════════════════ */
 function usersHTML() {
   const source   = liveUsers ?? USERS;
@@ -832,9 +1001,9 @@ function usersHTML() {
         <td>${u.totalBookings}</td>
         <td><span class="badge badge-sm badge-${status}">${status}</span></td>
         <td><div class="row-actions">
-          <button class="icon-btn" data-action="edit"  title="Edit">${ICONS.edit}</button>
-          <button class="icon-btn danger" data-action="delete" title="Delete">${ICONS.trash}</button>
-          <button class="icon-btn" data-action="more"  title="More">${ICONS.more}</button>
+          <button class="icon-btn" data-action="edit" data-id="${u.id}" title="Edit">${ICONS.edit}</button>
+          <button class="icon-btn danger" data-action="delete" data-id="${u.id}" title="Delete">${ICONS.trash}</button>
+          <button class="icon-btn" data-action="more" data-id="${u.id}" title="More">${ICONS.more}</button>
         </div></td>
       </tr>`;
   }).join("") : `<tr class="empty-row"><td colspan="6">No users found</td></tr>`;
@@ -854,6 +1023,9 @@ function usersHTML() {
         </div>
         <div style="display:flex;align-items:center;gap:10px;">
           ${sourceLabel}
+          <button class="btn btn-primary" id="addUserBtn" style="gap:6px;">
+            ${ICONS.plus} Add User
+          </button>
           <button class="btn btn-outline" id="userRefreshBtn" style="gap:6px;">
             ${ICONS.refresh} Refresh
           </button>
@@ -875,13 +1047,111 @@ function usersHTML() {
 
 function attachUserRefresh() {
   const btn = document.getElementById("userRefreshBtn");
-  if (!btn) return;
-  btn.addEventListener("click", async () => {
-    btn.disabled = true;
-    btn.innerHTML = ICONS.refresh + " Loading…";
-    await loadLiveUsers();
-    renderTabContent();
+  if (btn) {
+    btn.addEventListener("click", async () => {
+      btn.disabled = true;
+      btn.innerHTML = ICONS.refresh + " Loading…";
+      await loadLiveUsers();
+      renderTabContent();
+    });
+  }
+
+  const addBtn = document.getElementById("addUserBtn");
+  if (addBtn) {
+    addBtn.addEventListener("click", () => showUserModal());
+  }
+}
+
+function showUserModal(user = null) {
+  editingId = user ? user.id : null;
+  editingType = "user";
+  const isEdit = !!user;
+
+  const content = `
+    <div class="form-stack">
+      <div class="form-field">
+        <label>Full Name</label>
+        <input type="text" id="userNameInput" value="${user ? escapeHtml(user.name) : ''}" placeholder="e.g. John Doe" />
+      </div>
+      <div class="form-field">
+        <label>Email</label>
+        <input type="email" id="userEmailInput" value="${user ? escapeHtml(user.email) : ''}" placeholder="e.g. john@email.com" />
+      </div>
+      <div class="form-field">
+        <label>Phone</label>
+        <input type="text" id="userPhoneInput" value="${user ? escapeHtml(user.phone) : ''}" placeholder="e.g. 03001234567" />
+      </div>
+      <div class="form-field">
+        <label>Password ${isEdit ? '(leave blank to keep unchanged)' : ''}</label>
+        <input type="password" id="userPasswordInput" placeholder="${isEdit ? '••••••••' : 'Set a password'}" autocomplete="new-password" />
+      </div>
+    </div>
+  `;
+
+  showModal(isEdit ? "Edit User" : "Add New User", content, async () => {
+    const name     = document.getElementById("userNameInput").value.trim();
+    const email    = document.getElementById("userEmailInput").value.trim();
+    const phone    = document.getElementById("userPhoneInput").value.trim();
+    const password = document.getElementById("userPasswordInput").value;
+
+    if (!name || !email) {
+      showToast("Name and email are required", "error");
+      return;
+    }
+    if (!isEdit && !password) {
+      showToast("Please set a password for the new user", "error");
+      return;
+    }
+
+    const body = { Full_name: name, Phone_no: phone, Email: email };
+    if (password) body.user_password = password;
+
+    try {
+      const url    = isEdit ? `${API_BASE}/admin/users/${editingId}` : `${API_BASE}/admin/users`;
+      const method = isEdit ? "PUT" : "POST";
+
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        showToast(data.detail || "Operation failed", "error");
+        return;
+      }
+
+      showToast(isEdit ? "User updated successfully" : "User created successfully");
+      closeModal();
+      await loadLiveUsers();
+      await refreshStats();
+      renderTabContent();
+    } catch (e) {
+      showToast("Network error: " + e.message, "error");
+    }
   });
+}
+
+async function deleteUser(userId) {
+  if (!confirm("Are you sure you want to delete this user?")) return;
+  
+  try {
+    const res = await fetch(`${API_BASE}/admin/users/${userId}`, { method: "DELETE" });
+    const data = await res.json();
+    
+    if (!res.ok) {
+      showToast(data.detail || "Delete failed", "error");
+      return;
+    }
+    
+    showToast("User deleted successfully");
+    await loadLiveUsers();
+    await refreshStats();
+    renderTabContent();
+  } catch (e) {
+    showToast("Network error: " + e.message, "error");
+  }
 }
 
 /* ══════════════════════════════════════════════
@@ -897,16 +1167,63 @@ function attachSearchHandler() {
     const newInput = document.getElementById("searchInput");
     if (newInput) { newInput.focus(); newInput.setSelectionRange(pos, pos); }
   });
-  const addBtn = document.getElementById("addBtn");
-  if (addBtn) addBtn.addEventListener("click", () => alert("Hook up your create modal here."));
 }
 
 function attachTableActionHandlers() {
-  document.querySelectorAll(".icon-btn").forEach(btn => {
-    btn.addEventListener("click", e => {
+  // Slot actions
+  document.querySelectorAll(".slot-edit").forEach(btn => {
+    btn.addEventListener("click", async (e) => {
       e.stopPropagation();
+      const slotId = btn.dataset.id;
+      const slot = allSlots.find(s => s.id == slotId);
+      if (slot) showSlotModal(slot);
+    });
+  });
+
+  document.querySelectorAll(".slot-delete").forEach(btn => {
+    btn.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      await deleteSlot(btn.dataset.id);
+    });
+  });
+
+  // General table actions
+  document.querySelectorAll(".icon-btn[data-action]").forEach(btn => {
+    btn.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      const action = btn.dataset.action;
+      const id = btn.dataset.id;
       const row = btn.closest("tr");
-      console.log(`Action "${btn.dataset.action}" on row ${row?.dataset.id}`);
+
+      if (activeTab === "bookings") {
+        if (action === "delete") await deleteBooking(id);
+        else if (action === "edit") {
+          const booking = liveBookings?.find(b => b.id == id);
+          if (booking) {
+            const statuses = ["active", "completed", "cancelled"];
+            const currentStatus = booking.status;
+            const newStatus = prompt(`Change status (current: ${currentStatus})\\nOptions: ${statuses.join(", ")}`, currentStatus);
+            if (newStatus && statuses.includes(newStatus.toLowerCase())) {
+              await updateBookingStatus(id, newStatus.toLowerCase());
+            }
+          }
+        }
+      }
+      else if (activeTab === "users") {
+        if (action === "delete") await deleteUser(id);
+        else if (action === "edit") {
+          const source = liveUsers ?? USERS;
+          const user = source.find(u => u.id == id);
+          if (user) showUserModal(user);
+        }
+      }
+      else if (activeTab === "slots" && !btn.classList.contains("slot-edit") && !btn.classList.contains("slot-delete")) {
+        if (action === "delete") await deleteSlot(id);
+        else if (action === "edit") {
+          const slot = allSlots.find(s => s.id == id);
+          if (slot) showSlotModal(slot);
+        }
+      }
     });
   });
 }
@@ -921,10 +1238,10 @@ document.getElementById("signOutBtn").addEventListener("click", () => {
    INIT
 ══════════════════════════════════════════════ */
 async function initAdminPanel() {
-  /* load everything in parallel */
   await Promise.all([
     loadAnalytics(),
     loadLiveSlots(),
+    loadAllSlots(),
     loadLiveUsers(),
     loadLiveBookings(),
   ]);
