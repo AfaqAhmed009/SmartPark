@@ -303,7 +303,7 @@ function overviewHTML() {
 function initOverviewCharts() {
   const fontColor   = "#6b7280";
   const borderColor = "#e5e7eb";
-  Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+  Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
   Chart.defaults.font.size   = 12;
 
   const mr = getMonthlyRevenue();
@@ -317,7 +317,7 @@ function initOverviewCharts() {
     type: "bar",
     data: {
       labels: mr.map(d => d.month),
-      datasets: [{ data: mr.map(d => d.revenue), backgroundColor: "#d97706", borderRadius: 5, maxBarThickness: 38 }]
+      datasets: [{ data: mr.map(d => d.revenue), backgroundColor: "#0a0a23", borderRadius: 5, maxBarThickness: 38 }]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
@@ -448,7 +448,7 @@ function chartsHTML() {
 function initDetailCharts() {
   const fontColor   = "#6b7280";
   const borderColor = "#e5e7eb";
-  Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+  Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
   Chart.defaults.font.size   = 12;
 
   const mr  = getMonthlyRevenue();
@@ -464,7 +464,7 @@ function initDetailCharts() {
       datasets: [{
         label: "Revenue",
         data: mr.map(d => d.revenue),
-        backgroundColor: mr.map((_, i) => i === mr.length - 1 ? "#d97706" : "#fbbf24"),
+        backgroundColor: mr.map((_, i) => i === mr.length - 1 ? "#0a0a23" : "#c7c9da"),
         borderRadius: 6, maxBarThickness: 52,
       }]
     },
@@ -503,8 +503,8 @@ function initDetailCharts() {
       labels: rf.map(d => d.day),
       datasets: [{
         label: "Forecast Revenue", data: rf.map(d => d.revenue),
-        borderColor: "#d97706", backgroundColor: "rgba(217,119,6,0.10)",
-        borderDash: [5, 4], pointBackgroundColor: "#d97706",
+        borderColor: "#4f46e5", backgroundColor: "rgba(79,70,229,0.10)",
+        borderDash: [5, 4], pointBackgroundColor: "#4f46e5",
         pointRadius: 4, pointHoverRadius: 6, tension: 0.3, borderWidth: 2.5, fill: true,
       }]
     },
