@@ -5,29 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Parking Map · SmartPark</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ── Reset & tokens ── */
+/* -- Reset & tokens -- */
 *, *::before, *::after {
     margin: 0; padding: 0; box-sizing: border-box;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 :root {
-    --navy:        #0a0a23;
-    --navy-light:  #1a1a3e;
-    --accent:      #4f46e5;
-    --accent-soft: rgba(79,70,229,0.08);
-    --bg:          #f4f6fb;
+    --charcoal:    #1c1917;
+    --charcoal-light: #292524;
+    --accent:      #0d9488;
+    --accent-soft: rgba(13,148,136,0.06);
+    --bg:          #fafaf9;
     --card:        #ffffff;
-    --border:      #e8eaf0;
-    --muted:       #6b7280;
-    --text:        #111827;
-    --green:       #16a34a;
-    --green-bg:    #dcfce7;
+    --border:      #e7e5e4;
+    --muted:       #78716c;
+    --text:        #1c1917;
+    --green:       #059669;
+    --green-bg:    #d1fae5;
     --radius:      14px;
-    --shadow:      0 2px 8px rgba(0,0,0,0.05), 0 8px 28px rgba(0,0,0,0.07);
-    --shadow-sm:   0 1px 4px rgba(0,0,0,0.06);
+    --shadow:      0 2px 8px rgba(0,0,0,0.04), 0 8px 28px rgba(0,0,0,0.06);
+    --shadow-sm:   0 1px 4px rgba(0,0,0,0.04);
     --transition:  0.2s cubic-bezier(0.4,0,0.2,1);
 }
 
@@ -41,9 +41,9 @@ body {
     flex-direction: column;
 }
 
-/* ══════════════════════════════
-   NAVBAR — from BookSlot
-══════════════════════════════ */
+/* ============================== 
+   NAVBAR
+============================== */
 .navbar {
     width: 100%;
     display: flex;
@@ -60,7 +60,7 @@ body {
     transition: box-shadow var(--transition);
 }
 
-.navbar.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,0.10); }
+.navbar.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
 
 .navbar .logo {
     display: flex;
@@ -71,7 +71,7 @@ body {
 
 .navbar .logo .logo-box {
     width: 38px; height: 38px;
-    background: var(--navy);
+    background: var(--charcoal);
     color: white;
     border-radius: 9px;
     display: flex;
@@ -86,7 +86,7 @@ body {
 .navbar .logo h2 {
     font-size: 17px;
     font-weight: 700;
-    color: var(--navy);
+    color: var(--charcoal);
     letter-spacing: -0.3px;
 }
 
@@ -109,8 +109,8 @@ body {
     transition: background var(--transition), color var(--transition);
 }
 
-.navbar .links a:hover { background: #f1f2f6; color: var(--text); }
-.navbar .links a.active { background: var(--navy); color: #fff; }
+.navbar .links a:hover { background: #f5f5f4; color: var(--text); }
+.navbar .links a.active { background: var(--charcoal); color: #fff; }
 
 .navbar .buttons {
     display: flex;
@@ -129,13 +129,13 @@ body {
     cursor: pointer;
     transition: background var(--transition), border-color var(--transition);
 }
-.navbar .buttons .Login:hover { background: #f5f5f8; border-color: #ccc; }
+.navbar .buttons .Login:hover { background: #fafaf9; border-color: #d6d3d1; }
 
 .navbar .buttons .Register {
     display: flex; align-items: center; gap: 6px;
     padding: 8px 16px;
     border: none; border-radius: 9px;
-    background: var(--navy);
+    background: var(--charcoal);
     font-size: 13.5px; font-weight: 500;
     color: white;
     cursor: pointer;
@@ -143,9 +143,9 @@ body {
 }
 .navbar .buttons .Register:hover { opacity: 0.88; transform: translateY(-1px); }
 
-/* ══════════════════════════════
+/* ============================== 
    MAIN CONTENT
-══════════════════════════════ */
+============================== */
 .main {
     flex: 1;
     max-width: 1280px;
@@ -203,12 +203,12 @@ body {
     border: 1px solid transparent;
     transition: transform var(--transition), box-shadow var(--transition);
 }
-.pill:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.pill:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
 .pill .dot { width: 8px; height: 8px; border-radius: 50%; }
 
-.free          { background: #e8faf0; color: #15803d; border-color: #bbf0d0; }
-.free .dot     { background: #22c55e; }
-.occupied-pill { background: #fef1f1; color: #b91c1c; border-color: #fecaca; }
+.free          { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+.free .dot     { background: #059669; }
+.occupied-pill { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
 .occupied-pill .dot { background: #ef4444; }
 .reserved-pill { background: #fffbeb; color: #92400e; border-color: #fde68a; }
 .reserved-pill .dot { background: #f59e0b; }
@@ -235,12 +235,12 @@ body {
 
 .badge {
     width: 50px; height: 50px;
-    background: var(--navy);
+    background: var(--charcoal);
     border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
     color: #fff; font-size: 22px; font-weight: 700;
     flex-shrink: 0;
-    box-shadow: 0 4px 14px rgba(10,10,35,0.25);
+    box-shadow: 0 4px 14px rgba(28,25,23,0.2);
 }
 
 .block-head h3 { font-size: 18px; font-weight: 700; color: var(--text); }
@@ -255,22 +255,22 @@ body {
 
 .drive-lane {
     display: flex; align-items: center;
-    color: #b0b5c3; margin: 14px 0;
+    color: #d6d3d1; margin: 14px 0;
     font-size: 12.5px; letter-spacing: 0.5px;
 }
 .drive-lane::before, .drive-lane::after {
     content: ""; flex: 1;
-    border-top: 2px dashed #e2e5ef;
+    border-top: 2px dashed #e7e5e4;
 }
 .drive-lane span { padding: 0 14px; }
 
-/* ══════════════════════════════
-   SLOT CARDS — lighter colors
-══════════════════════════════ */
+/* ============================== 
+   SLOT CARDS
+============================== */
 .slot {
     width: 190px; height: 106px;
-    background: #f0faf5;
-    border: 2px solid #86efb0;
+    background: #ecfdf5;
+    border: 2px solid #6ee7b7;
     border-radius: 16px;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 5px;
@@ -279,20 +279,20 @@ body {
                 border-color var(--transition), background var(--transition);
 }
 
-.slot svg { width: 22px; height: 22px; fill: #4ade80; color: #4ade80; }
-.slot .num { font-size: 18px; font-weight: 700; color: #22a55e; }
-.slot .dot { width: 8px; height: 8px; border-radius: 50%; background: #86efb0; }
+.slot svg { width: 22px; height: 22px; fill: #34d399; color: #34d399; }
+.slot .num { font-size: 18px; font-weight: 700; color: #059669; }
+.slot .dot { width: 8px; height: 8px; border-radius: 50%; background: #6ee7b7; }
 
 .slot:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(34,197,94,0.18);
-    border-color: #4ade80;
-    background: #e5f8ee;
+    box-shadow: 0 8px 24px rgba(5,150,105,0.15);
+    border-color: #34d399;
+    background: #d1fae5;
 }
 
-/* Occupied — muted red */
+/* Occupied -- muted red */
 .slot.occupied {
-    background: #fef5f5;
+    background: #fef2f2;
     border-color: #fca5a5;
     cursor: not-allowed;
 }
@@ -301,9 +301,9 @@ body {
 .slot.occupied .num { color: #ef4444; }
 .slot.occupied .dot { background: #fca5a5; }
 
-/* Reserved — muted amber */
+/* Reserved -- muted amber */
 .slot.reserved {
-    background: #fffbf0;
+    background: #fffbeb;
     border-color: #fcd34d;
     cursor: not-allowed;
 }
@@ -343,24 +343,24 @@ body {
     display: flex; align-items: center; justify-content: center;
 }
 .lg-box svg { width: 15px; height: 15px; }
-.lg-box.av  { background: #f0faf5; border: 2px solid #86efb0; }
-.lg-box.av svg { fill: #4ade80; }
-.lg-box.oc  { background: #fef5f5; border: 2px solid #fca5a5; }
+.lg-box.av  { background: #ecfdf5; border: 2px solid #6ee7b7; }
+.lg-box.av svg { fill: #34d399; }
+.lg-box.oc  { background: #fef2f2; border: 2px solid #fca5a5; }
 .lg-box.oc svg { fill: #f87171; }
-.lg-box.rs  { background: #fffbf0; border: 2px solid #fcd34d; }
+.lg-box.rs  { background: #fffbeb; border: 2px solid #fcd34d; }
 .lg-box.rs svg { fill: #fbbf24; }
 
-/* ══════════════════════════════
-   FOOTER — from BookSlot
-══════════════════════════════ */
+/* ============================== 
+   FOOTER
+============================== */
 footer.footer {
     width: 100%;
-    background: #1a1d2e;
+    background: #1c1917;
     display: flex;
     gap: 0;
     flex-wrap: wrap;
     padding: 48px 60px;
-    border-top: 1px solid #2a2d3e;
+    border-top: 1px solid #292524;
     margin-top: auto;
 }
 
@@ -378,11 +378,10 @@ footer.footer {
 
 .footer-logo .logo-box {
     width: 34px; height: 34px;
-    background: #2d3047;
-    color: #a5b4fc;
+    background: #292524; color: #0d9488;
     border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    border: 1px solid #3d4163;
+    border: 1px solid #44403c;
 }
 
 .footer-logo h2 {
@@ -392,7 +391,7 @@ footer.footer {
 
 .footer-text {
     font-size: 13px;
-    color: #8b92b3;
+    color: #a8a29e;
     line-height: 1.7;
     max-width: 220px;
 }
@@ -400,7 +399,7 @@ footer.footer {
 .footer-section h3 {
     font-size: 12px;
     font-weight: 600;
-    color: #a5b4fc;
+    color: #0d9488;
     margin-bottom: 14px;
     letter-spacing: 0.8px;
     text-transform: uppercase;
@@ -410,12 +409,12 @@ footer.footer {
 
 .footer-section ul li {
     font-size: 13px;
-    color: #8b92b3;
+    color: #a8a29e;
     margin-bottom: 9px;
 }
 
 .footer-section ul li a {
-    color: #8b92b3;
+    color: #a8a29e;
     text-decoration: none;
     transition: color var(--transition);
 }
@@ -424,18 +423,18 @@ footer.footer {
 
 .footer-bottom {
     width: 100%;
-    background: #13152a;
-    color: #5a6080;
+    background: #0c0a09;
+    color: #78716c;
     text-align: center;
     font-size: 12px;
     padding: 16px;
-    border-top: 1px solid #22253a;
+    border-top: 1px solid #292524;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #d0d3e0; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 3px; }
 
 @media (max-width: 600px) {
     .slot { width: calc(50% - 7px); height: 92px; }
@@ -448,7 +447,7 @@ footer.footer {
 </head>
 <body>
 
-<!-- ══ NAVBAR (BookSlot style) ══ -->
+<!-- == NAVBAR (BookSlot style) == -->
 <nav class="navbar" id="navbar">
     <a class="logo" href="Home.html">
         <div class="logo-box">
@@ -498,7 +497,7 @@ footer.footer {
     </div>
 </nav>
 
-<!-- ══ MAIN ══ -->
+<!-- == MAIN == -->
 <div class="main">
 
   <section class="hero1">
@@ -518,7 +517,7 @@ footer.footer {
   <div class="legend-card">
     <h4>Legend</h4>
     <div class="legend-items">
-      <div><div class="lg-box av" id="lg-av"></div> Available — click to book</div>
+      <div><div class="lg-box av" id="lg-av"></div> Available -- click to book</div>
       <div><div class="lg-box oc" id="lg-oc"></div> Occupied</div>
       <div><div class="lg-box rs" id="lg-rs"></div> Reserved</div>
     </div>
@@ -526,7 +525,7 @@ footer.footer {
 
 </div>
 
-<!-- ══ FOOTER (BookSlot style) ══ -->
+<!-- == FOOTER (BookSlot style) == -->
 <footer class="footer">
     <div class="footer-section">
         <div class="footer-logo">
@@ -558,7 +557,7 @@ footer.footer {
         </ul>
     </div>
 </footer>
-<div class="footer-bottom">© 2026 SmartPark. All rights reserved.</div>
+<div class="footer-bottom">&copy; 2026 SmartPark. All rights reserved.</div>
 
 <script>
 const CAR = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z"/></svg>`;
@@ -582,7 +581,7 @@ function floorLabel(floor_no, block_no) {
     'Ground-Floor': 'Ground Floor', 'First-Floor': 'Level 1',
     'Second-Floor': 'Level 2',      'Third-Floor':  'Level 3',
   };
-  return `Block ${block_no} — ${map[floor_no] || floor_no}`;
+  return `Block ${block_no} -- ${map[floor_no] || floor_no}`;
 }
 
 function renderSlotEl(slot) {
@@ -624,7 +623,7 @@ function renderBlocks(groups, stats) {
         </div>
       </div>
       <div class="slots-row" data-row="upper"></div>
-      <div class="drive-lane"><span>← DRIVE LANE →</span></div>
+      <div class="drive-lane"><span>&larr; DRIVE LANE &rarr;</span></div>
       <div class="slots-row" data-row="lower"></div>
     `;
     wrap.appendChild(card);
@@ -661,8 +660,8 @@ window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
 });
 
-function Login()    { alert('Login coming soon!'); }
-function Register() { alert('Register coming soon!'); }
+function Login()    { window.location.href = "Login.html" }
+function Register() { window.location.href = "Register.html" }
 </script>
 </body>
 </html>

@@ -5,29 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In · SmartPark</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <style>
-/* ── Reset & tokens (SmartPark system) ── */
+/* -- Reset & tokens -- */
 *, *::before, *::after {
     margin: 0; padding: 0; box-sizing: border-box;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 :root {
-    --navy:        #0a0a23;
-    --navy-light:  #1a1a3e;
-    --accent:      #4f46e5;
-    --accent-soft: rgba(79,70,229,0.09);
-    --bg:          #f4f6fb;
+    --charcoal:    #1c1917;
+    --charcoal-light: #292524;
+    --accent:      #0d9488;
+    --accent-soft: rgba(13,148,136,0.08);
+    --bg:          #fafaf9;
     --card:        #ffffff;
-    --border:      #e8eaf0;
-    --muted:       #6b7280;
-    --text:        #111827;
-    --green:       #16a34a;
+    --border:      #e7e5e4;
+    --muted:       #78716c;
+    --text:        #1c1917;
+    --green:       #059669;
     --radius:      14px;
-    --shadow:      0 2px 8px rgba(0,0,0,0.05), 0 8px 28px rgba(0,0,0,0.07);
-    --shadow-sm:   0 1px 4px rgba(0,0,0,0.06);
+    --shadow:      0 2px 8px rgba(0,0,0,0.04), 0 8px 28px rgba(0,0,0,0.06);
+    --shadow-sm:   0 1px 4px rgba(0,0,0,0.04);
     --transition:  0.2s cubic-bezier(0.4,0,0.2,1);
 }
 
@@ -40,21 +40,21 @@ body {
     flex-direction: column;
 }
 
-/* ── Subtle background texture ── */
+/* -- Subtle background texture -- */
 body::before {
     content: '';
     position: fixed;
     inset: 0;
     background:
-        radial-gradient(ellipse 80% 60% at 20% -10%, rgba(79,70,229,0.07) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 50% at 85% 110%, rgba(10,10,35,0.05) 0%, transparent 55%);
+        radial-gradient(ellipse 80% 60% at 20% -10%, rgba(13,148,136,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 85% 110%, rgba(28,25,23,0.03) 0%, transparent 55%);
     pointer-events: none;
     z-index: 0;
 }
 
-/* ══════════════════════════════
+/* ============================== 
    NAVBAR
-══════════════════════════════ */
+============================== */
 .navbar {
     width: 100%;
     display: flex;
@@ -77,7 +77,7 @@ body::before {
 
 .navbar .logo .logo-box {
     width: 38px; height: 38px;
-    background: var(--navy);
+    background: var(--charcoal);
     color: white;
     border-radius: 9px;
     display: flex; align-items: center; justify-content: center;
@@ -88,7 +88,7 @@ body::before {
 
 .navbar .logo h2 {
     font-size: 17px; font-weight: 700;
-    color: var(--navy); letter-spacing: -0.3px;
+    color: var(--charcoal); letter-spacing: -0.3px;
 }
 
 .navbar .links {
@@ -102,8 +102,8 @@ body::before {
     color: var(--muted); text-decoration: none;
     transition: background var(--transition), color var(--transition);
 }
-.navbar .links a:hover { background: #f1f2f6; color: var(--text); }
-.navbar .links a.active { background: var(--navy); color: #fff; }
+.navbar .links a:hover { background: #f5f5f4; color: var(--text); }
+.navbar .links a.active { background: var(--charcoal); color: #fff; }
 
 .navbar .buttons {
     display: flex; align-items: center; gap: 8px;
@@ -118,22 +118,22 @@ body::before {
     color: var(--text); cursor: pointer;
     transition: background var(--transition), border-color var(--transition);
 }
-.navbar .buttons .btn-login:hover { background: #f5f5f8; border-color: #ccc; }
+.navbar .buttons .btn-login:hover { background: #fafaf9; border-color: #d6d3d1; }
 
 .navbar .buttons .btn-register {
     display: flex; align-items: center; gap: 6px;
     padding: 8px 16px;
     border: none; border-radius: 9px;
-    background: var(--navy);
+    background: var(--charcoal);
     font-size: 13.5px; font-weight: 500;
     color: white; cursor: pointer;
     transition: opacity var(--transition), transform var(--transition);
 }
 .navbar .buttons .btn-register:hover { opacity: 0.88; transform: translateY(-1px); }
 
-/* ══════════════════════════════
+/* ============================== 
    PAGE BODY
-══════════════════════════════ */
+============================== */
 .page-body {
     flex: 1;
     display: flex;
@@ -144,9 +144,9 @@ body::before {
     z-index: 1;
 }
 
-/* ══════════════════════════════
+/* ============================== 
    LOGIN CARD
-══════════════════════════════ */
+============================== */
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -163,7 +163,7 @@ body::before {
     animation: fadeUp 0.4s ease both;
 }
 
-/* ── Logo / header ── */
+/* -- Logo / header -- */
 .card-logo {
     display: flex;
     flex-direction: column;
@@ -174,12 +174,12 @@ body::before {
 
 .card-logo .logo-icon {
     width: 56px; height: 56px;
-    background: var(--navy);
+    background: var(--charcoal);
     color: white;
     border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 16px;
-    box-shadow: 0 4px 16px rgba(10,10,35,0.25);
+    box-shadow: 0 4px 16px rgba(28,25,23,0.2);
     transition: transform var(--transition);
 }
 .card-logo .logo-icon:hover { transform: scale(1.05); }
@@ -196,14 +196,14 @@ body::before {
     line-height: 1.5;
 }
 
-/* ── Tabs ── */
+/* -- Tabs -- */
 .login-tabs {
     display: flex;
     border: 1.5px solid var(--border);
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 26px;
-    background: #f8f9fc;
+    background: #fafaf9;
     padding: 3px;
     gap: 3px;
 }
@@ -224,16 +224,16 @@ body::before {
 
 .tab-btn.active {
     background: #ffffff;
-    color: #0a0a23;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+    color: #1c1917;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 
 .tab-btn:not(.active):hover {
-    background: #ededf3;
+    background: #f0eeec;
     color: var(--text);
 }
 
-/* ── Form ── */
+/* -- Form -- */
 .field {
     margin-bottom: 18px;
 }
@@ -251,15 +251,15 @@ body::before {
     height: 44px;
     border: 1.5px solid var(--border);
     border-radius: 10px;
-    background: #f8f9fc;
+    background: #fafaf9;
     transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
-    color: #b0b5c3;
+    color: #a8a29e;
 }
 
 .input-wrap:focus-within {
     border-color: var(--accent);
     background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(79,70,229,0.10);
+    box-shadow: 0 0 0 3px rgba(13,148,136,0.08);
     color: var(--muted);
 }
 
@@ -273,19 +273,19 @@ body::before {
     font-family: inherit;
 }
 
-.input-wrap input::placeholder { color: #b0b5c3; }
+.input-wrap input::placeholder { color: #a8a29e; }
 
 /* Password toggle */
 .eye-btn {
     background: none; border: none; cursor: pointer;
     padding: 0; display: flex; align-items: center;
-    color: #b0b5c3;
+    color: #a8a29e;
     transition: color var(--transition);
     flex-shrink: 0;
 }
 .eye-btn:hover { color: var(--muted); }
 
-/* ── Forgot row ── */
+/* -- Forgot row -- */
 .extras {
     display: flex;
     justify-content: flex-end;
@@ -301,30 +301,33 @@ body::before {
 }
 .extras a:hover { opacity: 0.75; }
 
-/* ── Sign in button ── */
+/* -- Sign in button -- */
 .btn-signin {
     width: 100%;
     height: 44px;
     border: none;
     border-radius: 10px;
-    background: var(--navy);
+    background: var(--charcoal);
     color: white;
     font-size: 14.5px; font-weight: 600;
     cursor: pointer;
     letter-spacing: 0.1px;
     font-family: inherit;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
-    box-shadow: 0 2px 10px rgba(10,10,35,0.2);
+    box-shadow: 0 2px 10px rgba(28,25,23,0.15);
 }
 .btn-signin:hover {
     opacity: 0.88;
     transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(10,10,35,0.28);
+    box-shadow: 0 4px 16px rgba(28,25,23,0.22);
 }
 .btn-signin:active { transform: scale(0.98); }
 
-/* ── Divider ── */
+/* -- Divider -- */
 .divider {
     display: flex; align-items: center; gap: 12px;
     margin: 22px 0;
@@ -335,7 +338,7 @@ body::before {
     border-top: 1px solid var(--border);
 }
 
-/* ── Social buttons ── */
+/* -- Social buttons -- */
 .social-buttons {
     display: flex; gap: 10px;
     margin-bottom: 22px;
@@ -354,13 +357,13 @@ body::before {
     font-family: inherit;
 }
 .btn-social:hover {
-    background: #f5f6fb;
-    border-color: #ccc;
+    background: #fafaf9;
+    border-color: #d6d3d1;
     transform: translateY(-1px);
 }
 .btn-social:active { transform: scale(0.98); }
 
-/* ── Footer text ── */
+/* -- Footer text -- */
 .card-footer-text {
     text-align: center;
     font-size: 13.5px;
@@ -368,22 +371,22 @@ body::before {
 }
 .card-footer-text a {
     font-weight: 600;
-    color: var(--navy);
+    color: var(--charcoal);
     text-decoration: none;
     transition: opacity var(--transition);
 }
 .card-footer-text a:hover { opacity: 0.7; }
 
-/* ══════════════════════════════
+/* ============================== 
    FOOTER
-══════════════════════════════ */
+============================== */
 footer.footer {
     width: 100%;
-    background: #1a1d2e;
+    background: #1c1917;
     display: flex;
     gap: 0; flex-wrap: wrap;
     padding: 48px 60px;
-    border-top: 1px solid #2a2d3e;
+    border-top: 1px solid #292524;
 }
 
 .footer-section {
@@ -399,48 +402,48 @@ footer.footer {
 
 .footer-logo .logo-box {
     width: 34px; height: 34px;
-    background: #2d3047; color: #a5b4fc;
+    background: #292524; color: #0d9488;
     border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    border: 1px solid #3d4163;
+    border: 1px solid #44403c;
 }
 
 .footer-logo h2 { font-size: 16px; font-weight: 700; color: #ffffff; }
 
 .footer-text {
-    font-size: 13px; color: #8b92b3;
+    font-size: 13px; color: #a8a29e;
     line-height: 1.7; max-width: 220px;
 }
 
 .footer-section h3 {
     font-size: 12px; font-weight: 600;
-    color: #a5b4fc; margin-bottom: 14px;
+    color: #0d9488; margin-bottom: 14px;
     letter-spacing: 0.8px; text-transform: uppercase;
 }
 
 .footer-section ul { list-style: none; }
 
 .footer-section ul li {
-    font-size: 13px; color: #8b92b3; margin-bottom: 9px;
+    font-size: 13px; color: #a8a29e; margin-bottom: 9px;
 }
 
 .footer-section ul li a {
-    color: #8b92b3; text-decoration: none;
+    color: #a8a29e; text-decoration: none;
     transition: color var(--transition);
 }
 .footer-section ul li a:hover { color: #e0e4ff; }
 
 .footer-bottom {
     width: 100%;
-    background: #13152a; color: #5a6080;
+    background: #0c0a09; color: #78716c;
     text-align: center; font-size: 12px;
-    padding: 16px; border-top: 1px solid #22253a;
+    padding: 16px; border-top: 1px solid #292524;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #d0d3e0; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 3px; }
 
 @media (max-width: 520px) {
     .login-card { padding: 28px 20px 24px; border-radius: 16px; }
@@ -451,7 +454,7 @@ footer.footer {
 </style>
 <body>
 
-<!-- ══ NAVBAR ══ -->
+<!-- == NAVBAR == -->
 <nav class="navbar">
     <a class="logo" href="Home.html">
         <div class="logo-box">
@@ -501,7 +504,7 @@ footer.footer {
     </div>
 </nav>
 
-<!-- ══ PAGE BODY ══ -->
+<!-- == PAGE BODY == -->
 <div class="page-body">
     <div class="login-card">
 
@@ -600,7 +603,7 @@ footer.footer {
     </div>
 </div>
 
-<!-- ══ FOOTER ══ -->
+<!-- == FOOTER == -->
 <footer class="footer">
     <div class="footer-section">
         <div class="footer-logo">
@@ -632,10 +635,10 @@ footer.footer {
         </ul>
     </div>
 </footer>
-<div class="footer-bottom">© 2026 SmartPark. All rights reserved.</div>
+<div class="footer-bottom">&copy; 2026 SmartPark. All rights reserved.</div>
 
 <script>
-/* ── Tab switching ── */
+/* -- Tab switching -- */
 let activeTab = 'user';
 
 function switchTab(tab) {
@@ -648,7 +651,7 @@ function switchTab(tab) {
     }
 }
 
-/* ── Password toggle ── */
+/* -- Password toggle -- */
 function togglePassword() {
     const input = document.getElementById('password');
     const icon  = document.getElementById('eye-icon');
@@ -660,7 +663,7 @@ function togglePassword() {
       : `<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>`;
 }
 
-/* ── Login handler ── */
+/* -- Login handler -- */
 function handleLogin() {
     const email    = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
@@ -689,7 +692,7 @@ function handleLogin() {
     });
 }
 
-/* ── Enter key submits ── */
+/* -- Enter key submits -- */
 document.addEventListener('keydown', e => {
     if (e.key === 'Enter') handleLogin();
 });

@@ -6,12 +6,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <title>Home</title>
 <style>
-/* ── Global reset ── */
+/* -- Global reset -- */
 *, *::before, *::after {
-    font-family: 'Inter', system-ui, sans-serif !important;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -24,18 +24,18 @@ h1, h2, h3, h4, h5, h6,
 .footer-logo h2,
 .card-content h3,
 .step-card h3 {
-    font-family: 'Inter', system-ui, sans-serif !important;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
     letter-spacing: -0.2px;
 }
 
 body {
-    background: #f5f5f5;
-    color: #1a1a1a;
+    background: #fafaf9;
+    color: #1c1917;
     font-weight: 400;
     line-height: 1.6;
 }
 
-/* ── Navbar ── */
+/* -- Navbar -- */
 .navbar {
     display: flex;
     align-items: center;
@@ -43,8 +43,8 @@ body {
     padding: 0 32px;
     height: 60px;
     background: #ffffff;
-    border-bottom: 1px solid #e4e4e4;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    border-bottom: 1px solid #e7e5e4;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -59,7 +59,7 @@ body {
 .navbar .logo h2 {
     font-size: 18px;
     font-weight: 700;
-    color: #0a0a23;
+    color: #1c1917;
     margin: 0;
     letter-spacing: -0.3px;
 }
@@ -67,7 +67,7 @@ body {
 .navbar .logo .logo-box {
     width: 36px;
     height: 36px;
-    background: #0a0a23;
+    background: #1c1917;
     color: white;
     border-radius: 8px;
     display: flex;
@@ -89,18 +89,18 @@ body {
     border-radius: 8px;
     font-size: 14px;
     font-weight: 500;
-    color: #555555;
+    color: #78716c;
     text-decoration: none;
     transition: background 0.15s, color 0.15s;
 }
 
 .navbar .links a:hover {
-    background: #f0f0f0;
-    color: #0a0a23;
+    background: #f5f5f4;
+    color: #1c1917;
 }
 
 .navbar .links a.active {
-    background: #0a0a23;
+    background: #1c1917;
     color: #ffffff;
 }
 
@@ -115,17 +115,17 @@ body {
     align-items: center;
     gap: 6px;
     padding: 8px 16px;
-    border: 1px solid #e4e4e4;
+    border: 1px solid #e7e5e4;
     border-radius: 8px;
     background: white;
     font-size: 14px;
     font-weight: 500;
-    color: #0a0a23;
+    color: #1c1917;
     cursor: pointer;
     transition: background 0.15s;
 }
 
-.navbar .buttons .Login:hover { background: #f5f5f5; }
+.navbar .buttons .Login:hover { background: #fafaf9; }
 
 .navbar .buttons .Register {
     display: flex;
@@ -134,7 +134,7 @@ body {
     padding: 8px 16px;
     border: none;
     border-radius: 8px;
-    background: #0a0a23;
+    background: #1c1917;
     font-size: 14px;
     font-weight: 500;
     color: white;
@@ -145,10 +145,10 @@ body {
 .navbar .buttons .Register:hover { opacity: 0.88; }
 
 
-/* ── Hero 1 — chatbot banner ── */
+/* -- Hero 1 -- chatbot banner -- */
 .hero1 {
-    background: #fafafa;
-    border-bottom: 1px solid #e4e4e4;
+    background: #fafaf9;
+    border-bottom: 1px solid #e7e5e4;
     padding: 48px 24px 40px;
     text-align: center;
 }
@@ -164,7 +164,7 @@ body {
 .hero-header .logo-box {
     width: 48px;
     height: 48px;
-    background: #0a0a23;
+    background: #1c1917;
     color: white;
     border-radius: 10px;
     display: flex;
@@ -175,14 +175,14 @@ body {
 .hero-header h1 {
     font-size: 36px;
     font-weight: 700;
-    color: #0a0a23;
+    color: #1c1917;
     letter-spacing: -0.5px;
     margin: 0;
 }
 
 .hero-subtitle {
     font-size: 15px;
-    color: #666666;
+    color: #78716c;
     margin-bottom: 24px;
 }
 
@@ -191,9 +191,9 @@ body {
     max-width: 620px;
     margin: 0 auto;
     background: white;
-    border: 1px solid #e4e4e4;
+    border: 1px solid #e7e5e4;
     border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
     padding: 12px;
     max-height: 380px;
     overflow-y: auto;
@@ -203,8 +203,8 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: #f5f5f5;
-    border: 1px solid #e4e4e4;
+    background: #fafaf9;
+    border: 1px solid #e7e5e4;
     border-radius: 8px;
     padding: 10px 14px;
 }
@@ -217,13 +217,13 @@ body {
     outline: none;
     background: transparent;
     font-size: 14px;
-    color: #0a0a23;
+    color: #1c1917;
 }
 
-.search-container input::placeholder { color: #999999; }
+.search-container input::placeholder { color: #a8a29e; }
 
 .search-btn {
-    background: #0a0a23;
+    background: #1c1917;
     color: white;
     border: none;
     border-radius: 6px;
@@ -241,7 +241,7 @@ body {
 .search-btn:hover { opacity: 0.85; }
 
 .user-message {
-    background: #0a0a23;
+    background: #1c1917;
     color: white;
     padding: 8px 12px;
     border-radius: 10px 10px 2px 10px;
@@ -252,8 +252,8 @@ body {
 }
 
 .bot-message {
-    background: #f0f0f0;
-    color: #0a0a23;
+    background: #f5f5f4;
+    color: #1c1917;
     padding: 8px 12px;
     border-radius: 10px 10px 10px 2px;
     font-size: 13px;
@@ -261,7 +261,7 @@ body {
     margin: 8px auto 8px 0;
 }
 
-/* ── Hero 2 ── */
+/* -- Hero 2 -- */
 .hero2 {
     background: #ffffff;
     padding: 60px 24px;
@@ -280,7 +280,7 @@ body {
     position: relative;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.1);
 }
 
 .image_hero2 img {
@@ -295,7 +295,7 @@ body {
     display:inline-flex;
     align-items:center;
     gap:10px;
-    background:#e6e6e6;
+    background:#f5f5f4;
     padding:12px 24px;
     border-radius:50px;
     margin-bottom:25px;
@@ -310,7 +310,7 @@ body {
 .intro_hero2 h1 {
     font-size: 36px;
     font-weight: 700;
-    color: #0a0a23;
+    color: #1c1917;
     line-height: 1.2;
     letter-spacing: -0.5px;
     margin-bottom: 16px;
@@ -318,7 +318,7 @@ body {
 
 .text_hero2 {
     font-size: 15px;
-    color: #555555;
+    color: #78716c;
     line-height: 1.7;
     margin-bottom: 24px;
 }
@@ -332,7 +332,7 @@ body {
 
 .primary_btn {
     padding: 10px 24px;
-    background: #0a0a23;
+    background: #1c1917;
     color: white;
     border: none;
     border-radius: 8px;
@@ -348,8 +348,8 @@ body {
 .secondary_btn {
     padding: 10px 24px;
     background: white;
-    color: #0a0a23;
-    border: 1px solid #e4e4e4;
+    color: #1c1917;
+    border: 1px solid #e7e5e4;
     border-radius: 8px;
     font-size: 14px;
     font-weight: 500;
@@ -358,13 +358,13 @@ body {
     font-family: inherit !important;
 }
 
-.secondary_btn:hover { background: #f5f5f5; }
+.secondary_btn:hover { background: #fafaf9; }
 
 .stats {
     display: flex;
     gap: 20px;
     font-size: 13px;
-    color: #555555;
+    color: #78716c;
     align-items: center;
 }
 
@@ -378,7 +378,7 @@ body {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #22c55e;
+    background: #059669;
     display: inline-block;
 }
 
@@ -386,13 +386,13 @@ body {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #3b82f6;
+    background: #0d9488;
     display: inline-block;
 }
 
-/* ── Hero 3 — AI Feature Cards ── */
+/* -- Hero 3 -- AI Feature Cards -- */
 .hero3 {
-    background: #f5f5f5;
+    background: #fafaf9;
     padding: 60px 24px;
 }
 
@@ -406,7 +406,7 @@ body {
 .section-title h2 {
     font-size: 28px;
     font-weight: 700;
-    color: #0a0a23;
+    color: #1c1917;
     letter-spacing: -0.3px;
 }
 
@@ -420,17 +420,17 @@ body {
     position: relative;
     border-radius: 12px;
     overflow: hidden;
-    border: 1px solid #e4e4e4;
+    border: 1px solid #e7e5e4;
     background: white;
     cursor: pointer;
     padding: 0;
     aspect-ratio: 4/3;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     transition: box-shadow 0.2s, transform 0.2s;
 }
 
 .feature-card:hover {
-    box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.1);
     transform: translateY(-2px);
 }
 
@@ -470,7 +470,7 @@ body {
     opacity: 0.85;
 }
 
-/* ── How It Works ── */
+/* -- How It Works -- */
 .how-it-works {
     background: #ffffff;
     padding: 60px 24px;
@@ -486,14 +486,14 @@ body {
 .section-header h2 {
     font-size: 28px;
     font-weight: 700;
-    color: #0a0a23;
+    color: #1c1917;
     letter-spacing: -0.3px;
     margin-bottom: 8px;
 }
 
 .section-header p {
     font-size: 14px;
-    color: #666666;
+    color: #78716c;
 }
 
 .steps {
@@ -510,7 +510,7 @@ body {
 .step-number {
     width: 52px;
     height: 52px;
-    background: #0a0a23;
+    background: #1c1917;
     color: white;
     border-radius: 50%;
     display: flex;
@@ -524,31 +524,31 @@ body {
 .step-card h3 {
     font-size: 16px;
     font-weight: 600;
-    color: #0a0a23;
+    color: #1c1917;
     margin-bottom: 8px;
 }
 
 .step-card p {
     font-size: 13px;
-    color: #666666;
+    color: #78716c;
     line-height: 1.6;
 }
 
-/* ── Hero 4 — Pricing ── */
+/* -- Hero 4 -- Pricing -- */
 .hero4 {
-    background: #f5f5f5;
+    background: #fafaf9;
     padding: 60px 24px;
 }
 
 .hero4 .card {
     border-radius: 12px !important;
-    border-color: #e4e4e4 !important;
+    border-color: #e7e5e4 !important;
 }
 
 .hero4 .card-header {
-    background: #f0f0f0 !important;
-    border-bottom: 1px solid #e4e4e4 !important;
-    color: #0a0a23 !important;
+    background: #f5f5f4 !important;
+    border-bottom: 1px solid #e7e5e4 !important;
+    color: #1c1917 !important;
     font-weight: 600 !important;
     font-size: 13px !important;
     letter-spacing: 0.5px;
@@ -556,12 +556,12 @@ body {
 }
 
 .hero4 .card-header.text-bg-dark {
-    background: #0a0a23 !important;
+    background: #1c1917 !important;
     color: white !important;
 }
 
 .hero4 .card-header.text-bg-danger {
-    background: #0a0a23 !important;
+    background: #1c1917 !important;
     color: white !important;
 }
 
@@ -570,19 +570,19 @@ body {
 .hero4 .card-title {
     font-size: 28px !important;
     font-weight: 700 !important;
-    color: #0a0a23 !important;
+    color: #1c1917 !important;
     margin-bottom: 12px !important;
 }
 
 .hero4 .list-unstyled li {
     font-size: 13px;
-    color: #555555;
+    color: #78716c;
     padding: 4px 0;
 }
 
 .hero4 .btn-outline-dark {
-    border-color: #0a0a23 !important;
-    color: #0a0a23 !important;
+    border-color: #1c1917 !important;
+    color: #1c1917 !important;
     font-size: 13px !important;
     font-weight: 500 !important;
     border-radius: 8px !important;
@@ -590,27 +590,27 @@ body {
 }
 
 .hero4 .btn-outline-dark:hover {
-    background: #0a0a23 !important;
+    background: #1c1917 !important;
     color: white !important;
 }
 
 .hero4 .btn-dark,
 .hero4 .btn-danger {
-    background: #0a0a23 !important;
-    border-color: #0a0a23 !important;
+    background: #1c1917 !important;
+    border-color: #1c1917 !important;
     font-size: 13px !important;
     font-weight: 500 !important;
     border-radius: 8px !important;
     padding: 9px !important;
 }
 
-.hero4 .border-danger { border-color: #e4e4e4 !important; }
+.hero4 .border-danger { border-color: #e7e5e4 !important; }
 
-/* ── Hero 5 — Jumbotron CTA ── */
+/* -- Hero 5 -- Jumbotron CTA -- */
 .hero5 { background: #ffffff; padding: 48px 24px; }
 
 .hero5 .p-5 {
-    background: #f0f0f0 !important;
+    background: #f5f5f4 !important;
     border-radius: 16px !important;
     padding: 48px 32px !important;
 }
@@ -618,18 +618,18 @@ body {
 .hero5 h1 {
     font-size: 28px !important;
     font-weight: 700 !important;
-    color: #0a0a23 !important;
+    color: #1c1917 !important;
     margin-bottom: 12px !important;
 }
 
 .hero5 .text-muted {
     font-size: 14px !important;
-    color: #666666 !important;
+    color: #78716c !important;
 }
 
 .hero5 .btn-dark {
-    background: #0a0a23 !important;
-    border-color: #0a0a23 !important;
+    background: #1c1917 !important;
+    border-color: #1c1917 !important;
     border-radius: 8px !important;
     font-size: 14px !important;
     font-weight: 600 !important;
@@ -637,8 +637,8 @@ body {
 }
 
 .hero5 .btn-outline-secondary {
-    border-color: #e4e4e4 !important;
-    color: #0a0a23 !important;
+    border-color: #e7e5e4 !important;
+    color: #1c1917 !important;
     border-radius: 8px !important;
     font-size: 14px !important;
     font-weight: 500 !important;
@@ -646,19 +646,19 @@ body {
 }
 
 .hero5 .btn-outline-secondary:hover {
-    background: #e4e4e4 !important;
-    color: #0a0a23 !important;
+    background: #e7e5e4 !important;
+    color: #1c1917 !important;
 }
 
-/* ── Footer ── */
+/* -- Footer -- */
 footer.footer {
     width: 100%;
-    background: #1a1d2e;
+    background: #1c1917;
     display: flex;
     gap: 0;
     flex-wrap: wrap;
     padding: 48px 60px;
-    border-top: 1px solid #2a2d3e;
+    border-top: 1px solid #292524;
     margin-top: auto;
 }
 
@@ -676,11 +676,11 @@ footer.footer {
 
 .footer-logo .logo-box {
     width: 34px; height: 34px;
-    background: #2d3047;
-    color: #a5b4fc;
+    background: #292524;
+    color: #0d9488;
     border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    border: 1px solid #3d4163;
+    border: 1px solid #44403c;
 }
 
 .footer-logo h2 {
@@ -690,7 +690,7 @@ footer.footer {
 
 .footer-text {
     font-size: 13px;
-    color: #8b92b3;
+    color: #a8a29e;
     line-height: 1.7;
     max-width: 220px;
 }
@@ -698,7 +698,7 @@ footer.footer {
 .footer-section h3 {
     font-size: 12px;
     font-weight: 600;
-    color: #a5b4fc;
+    color: #0d9488;
     margin-bottom: 14px;
     letter-spacing: 0.8px;
     text-transform: uppercase;
@@ -708,12 +708,12 @@ footer.footer {
 
 .footer-section ul li {
     font-size: 13px;
-    color: #8b92b3;
+    color: #a8a29e;
     margin-bottom: 9px;
 }
 
 .footer-section ul li a {
-    color: #8b92b3;
+    color: #a8a29e;
     text-decoration: none;
     transition: color var(--transition);
 }
@@ -722,18 +722,18 @@ footer.footer {
 
 .footer-bottom {
     width: 100%;
-    background: #13152a;
-    color: #5a6080;
+    background: #0c0a09;
+    color: #78716c;
     text-align: center;
     font-size: 12px;
     padding: 16px;
-    border-top: 1px solid #22253a;
+    border-top: 1px solid #292524;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #d0d3e0; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 3px; }
 
 @media (max-width: 600px) {
     .slot { width: calc(50% - 7px); height: 92px; }
@@ -743,12 +743,12 @@ footer.footer {
     footer.footer { padding: 36px 24px; }
 }
 
-/* ── Availability card — original style ── */
+/* -- Availability card -- original style -- */
 .availability_card {
     position: absolute;
     bottom: 16px;
     right: 16px;
-    background: #0a0a23;
+    background: #1c1917;
     color: white;
     padding: 14px 20px;
     border-radius: 12px;
@@ -857,19 +857,19 @@ footer.footer {
 
         <!-- Tagline -->
         <p class="hero-subtitle">
-            Your intelligent parking companion — ask us anything below.
+            Your intelligent parking companion -- ask us anything below.
         </p>
 
         <!-- Search Box -->
         <div id="chatbox" class="chat-box">
             <div class="search-container">
                 <div class="search-icon">
-                    🤖
+                    &#x1F916;
                 </div>
                 <input id="Chat" type="text" placeholder="Ask SmartPark Assistant anything...">
 
                 <button class="search-btn" onclick="chatbot()">
-                    ❯
+                    &#x276F;
                 </button>
             </div>
         </div>
@@ -902,7 +902,7 @@ footer.footer {
 
             <p class="text_hero2">
                 Find, book, and manage parking spots in seconds.
-                Supports all vehicle types — sedan, SUV, truck, and bus —
+                Supports all vehicle types -- sedan, SUV, truck, and bus --
                 with transparent flat-rate pricing.
             </p>
 
@@ -950,7 +950,7 @@ footer.footer {
 
                             <div class="card-footer">
                                 <span>Generate Articles</span>
-                                <span>→</span>
+                                <span>&rarr;</span>
                             </div>
                         </div>
                     </button>
@@ -968,7 +968,7 @@ footer.footer {
 
                             <div class="card-footer">
                                 <span>Create Images</span>
-                                <span>→</span>
+                                <span>&rarr;</span>
                             </div>
                         </div>
                     </button>
@@ -986,7 +986,7 @@ footer.footer {
 
                             <div class="card-footer">
                                 <span>Smart Responses</span>
-                                <span>→</span>
+                                <span>&rarr;</span>
                             </div>
                         </div>
                     </button>
@@ -1232,7 +1232,7 @@ footer.footer {
     </footer>
 
     <div class="footer-bottom">
-        © 2026 SmartPark. All rights reserved.
+        &copy; 2026 SmartPark. All rights reserved.
     </div>
 </body>
 <script>

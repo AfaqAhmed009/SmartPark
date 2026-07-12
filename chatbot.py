@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).parent
 FAQ_PATH = BASE_DIR / "smart_park_chatbot.csv"
 PARKING_PATH = BASE_DIR / "smart_parking_dataset.csv"
 
-faq_df = pd.read_csv(FAQ_PATH)
+faq_df = pd.read_csv(FAQ_PATH, encoding="windows-1252")
 parking_df = pd.read_csv(PARKING_PATH)
 parking_df["Date"] = pd.to_datetime(parking_df["Date"])
 

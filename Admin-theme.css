@@ -1,54 +1,51 @@
 /* ============================================================
-   SmartPark Admin — Base Theme & Layout
-   Design language: matches the rest of SmartPark (Home, Login,
-   Register, Dashboard, Book Slot) — a neutral navy/charcoal
-   brand color on white surfaces, with a dark navy footer band.
-   No amber/orange branding; status colors are used only for
-   semantic state (available, occupied, reserved, etc).
+   SmartPark Admin — Premium Minimal Theme
+   Warm Charcoal & Muted Emerald Accent
+   Dark theme for admin pages
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* surfaces */
-  --background: #f4f6fb;
-  --card: #ffffff;
-  --border: #e8eaf0;
-  --muted: #f5f6fb;
-  --input-background: #f8f9fc;
+  /* dark surfaces */
+  --background: #0c0a09;
+  --card: #1c1917;
+  --border: #292524;
+  --muted: #1a1715;
+  --input-background: #1c1917;
 
   /* text */
-  --foreground: #111827;
-  --muted-foreground: #6b7280;
+  --foreground: #fafaf9;
+  --muted-foreground: #a8a29e;
 
-  /* brand — navy, matching Login/Register/Dashboard */
-  --primary: #0a0a23;
-  --primary-hover: #1a1a3e;
-  --primary-foreground: #ffffff;
-  --accent: #eef0fb;
+  /* brand — warm charcoal */
+  --primary: #fafaf9;
+  --primary-hover: #e7e5e4;
+  --primary-foreground: #1c1917;
+  --accent: #1a1715;
 
-  /* secondary accent (links, focus rings) */
-  --accent-2: #4f46e5;
-  --accent-2-soft: rgba(79,70,229,0.09);
+  /* secondary accent — muted teal/emerald */
+  --accent-2: #0d9488;
+  --accent-2-soft: rgba(13,148,136,0.12);
 
-  /* the navy "band" used by footer (and footer only, to match site) */
-  --navy: #0a0a23;
-  --navy-soft: #1a1d2e;
-  --navy-foreground: #f3f1ea;
+  /* footer band */
+  --navy: #0c0a09;
+  --navy-soft: #1c1917;
+  --navy-foreground: #fafaf9;
 
   /* status */
-  --destructive: #dc2626;
-  --destructive-soft: #fef2f2;
-  --green: #16a34a;
-  --green-soft: #f0fdf4;
-  --amber-soft: #fffbeb;
-  --blue: #2563eb;
-  --blue-soft: #eff6ff;
+  --destructive: #ef4444;
+  --destructive-soft: rgba(239,68,68,0.10);
+  --green: #059669;
+  --green-soft: rgba(5,150,105,0.10);
+  --amber-soft: rgba(217,119,6,0.10);
+  --blue: #0d9488;
+  --blue-soft: rgba(13,148,136,0.08);
 
   --radius: 14px;
   --radius-sm: 9px;
-  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-display: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 * {
@@ -77,14 +74,14 @@ button { cursor: pointer; }
 }
 
 /* ============================================================
-   NAVBAR  (white — matches Home / Login / Dashboard navbars)
+   NAVBAR
    ============================================================ */
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  background: #ffffff;
+  background: #141210;
   color: var(--foreground);
   padding: 0 32px;
   height: 64px;
@@ -92,7 +89,7 @@ button { cursor: pointer; }
   top: 0;
   z-index: 50;
   border-bottom: 1px solid var(--border);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
 
 .navbar .logo {
@@ -107,7 +104,7 @@ button { cursor: pointer; }
   height: 38px;
   border-radius: 10px;
   background: var(--primary);
-  color: #fff;
+  color: var(--primary-foreground);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,13 +142,13 @@ button { cursor: pointer; }
 .navbar .links a svg { width: 17px; height: 17px; flex-shrink: 0; }
 
 .navbar .links a:hover {
-  background: #f1f2f6;
+  background: #1c1917;
   color: var(--foreground);
 }
 
 .navbar .links a.active {
   background: var(--primary);
-  color: #fff;
+  color: var(--primary-foreground);
 }
 
 .navbar .buttons {
@@ -166,7 +163,7 @@ button { cursor: pointer; }
   padding: 8px 14px;
   border-radius: var(--radius-sm);
   border: 1.5px solid var(--border);
-  background: #ffffff;
+  background: transparent;
   color: var(--foreground);
   font-size: 13px;
   font-weight: 600;
@@ -174,12 +171,12 @@ button { cursor: pointer; }
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 
-.navbar .buttons button:hover { background: #f5f5f8; border-color: #ccc; }
+.navbar .buttons button:hover { background: #1c1917; border-color: #44403c; }
 
 .navbar .buttons .Register {
   background: var(--primary);
   border-color: var(--primary);
-  color: #fff;
+  color: var(--primary-foreground);
 }
 
 .navbar .buttons .Register:hover { background: var(--primary-hover); }
@@ -252,7 +249,7 @@ button { cursor: pointer; }
 .btn:hover { background: var(--primary-hover); }
 .btn:active { transform: translateY(1px); }
 
-.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary { background: var(--primary); color: var(--primary-foreground); }
 .btn-primary:hover { background: var(--primary-hover); }
 
 .btn-outline {
@@ -279,7 +276,7 @@ button { cursor: pointer; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 18px 20px;
-  box-shadow: 0 1px 2px rgba(15,23,42,0.03);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .stat-card-top {
@@ -301,8 +298,8 @@ button { cursor: pointer; }
 
 .stat-icon-wrap.color-blue   { background: var(--blue-soft);   color: var(--blue); }
 .stat-icon-wrap.color-green  { background: var(--green-soft);  color: var(--green); }
-.stat-icon-wrap.color-purple { background: #f5f0fe; color: #7c3aed; }
-.stat-icon-wrap.color-orange { background: var(--accent); color: var(--primary); }
+.stat-icon-wrap.color-purple { background: rgba(139,92,246,0.1); color: #a78bfa; }
+.stat-icon-wrap.color-orange { background: rgba(217,119,6,0.1); color: #f59e0b; }
 
 .stat-change {
   font-size: 12px;
@@ -341,7 +338,7 @@ button { cursor: pointer; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: 0 1px 2px rgba(15,23,42,0.03);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .tabs-bar {
@@ -373,8 +370,8 @@ button { cursor: pointer; }
 
 .tab-btn.active {
   background: var(--card);
-  color: var(--primary);
-  box-shadow: 0 1px 3px rgba(15,23,42,0.08);
+  color: var(--foreground);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 .tab-content { padding: 24px; }
@@ -483,15 +480,15 @@ button { cursor: pointer; }
 }
 
 .earnings-card {
-  background: var(--navy);
+  background: var(--navy-soft);
   color: var(--navy-foreground);
   border-radius: var(--radius-sm);
   padding: 16px;
 }
 
-.earnings-label { font-size: 12px; color: rgba(243,241,234,0.6); margin-bottom: 8px; }
-.earnings-value { font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #a5b4fc; }
-.earnings-sub { font-size: 11.5px; color: rgba(243,241,234,0.5); margin-top: 4px; }
+.earnings-label { font-size: 12px; color: rgba(250,250,249,0.5); margin-bottom: 8px; }
+.earnings-value { font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #0d9488; }
+.earnings-sub { font-size: 11.5px; color: rgba(250,250,249,0.4); margin-top: 4px; }
 
 @media (max-width: 900px) { .earnings-grid { grid-template-columns: repeat(2, 1fr); } }
 
@@ -591,14 +588,14 @@ tbody tr:last-child td { border-bottom: none; }
 .badge-sm { padding: 3px 9px; font-size: 11px; }
 
 .badge-active,
-.badge-available  { background: var(--green-soft); color: #15803d; border-color: #bbf7d0; }
+.badge-available  { background: rgba(5,150,105,0.12); color: #34d399; border-color: rgba(5,150,105,0.25); }
 
-.badge-completed  { background: var(--blue-soft); color: #1d4ed8; border-color: #bfdbfe; }
+.badge-completed  { background: rgba(13,148,136,0.10); color: #2dd4bf; border-color: rgba(13,148,136,0.2); }
 
 .badge-cancelled,
-.badge-occupied   { background: var(--destructive-soft); color: #b91c1c; border-color: #fecaca; }
+.badge-occupied   { background: rgba(239,68,68,0.10); color: #f87171; border-color: rgba(239,68,68,0.2); }
 
-.badge-reserved   { background: var(--amber-soft); color: #b45309; border-color: #fde68a; }
+.badge-reserved   { background: rgba(217,119,6,0.10); color: #fbbf24; border-color: rgba(217,119,6,0.2); }
 
 .badge-inactive    { background: var(--muted); color: var(--muted-foreground); border-color: var(--border); }
 
@@ -628,21 +625,21 @@ tbody tr:last-child td { border-bottom: none; }
 .icon-btn:hover {
   background: var(--accent);
   color: var(--primary);
-  border-color: var(--primary);
+  border-color: #44403c;
 }
 
 .icon-btn.danger:hover {
   background: var(--destructive-soft);
   color: var(--destructive);
-  border-color: #fecaca;
+  border-color: rgba(239,68,68,0.2);
 }
 
 /* ============================================================
-   FOOTER  (navy band, identical to Home / Login / Dashboard)
+   FOOTER
    ============================================================ */
 .footer {
   background: var(--navy-soft);
-  color: rgba(243,241,234,0.75);
+  color: rgba(250,250,249,0.65);
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   gap: 32px;
@@ -659,10 +656,10 @@ tbody tr:last-child td { border-bottom: none; }
 
 .footer-logo .logo-box {
   width: 34px; height: 34px;
-  background: #2d3047; color: #a5b4fc;
+  background: #292524; color: #0d9488;
   border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  border: 1px solid #3d4163;
+  border: 1px solid #44403c;
 }
 
 .footer-logo h2 { color: var(--navy-foreground); font-size: 16px; }
@@ -670,13 +667,13 @@ tbody tr:last-child td { border-bottom: none; }
 .footer-text {
   font-size: 13px;
   line-height: 1.6;
-  color: rgba(243,241,234,0.55);
+  color: rgba(250,250,249,0.45);
   max-width: 320px;
 }
 
 .footer-section h3 {
   font-size: 13px;
-  color: #a5b4fc;
+  color: #0d9488;
   margin-bottom: 12px;
 }
 
@@ -685,7 +682,7 @@ tbody tr:last-child td { border-bottom: none; }
 .footer-section li,
 .footer-section a {
   font-size: 13px;
-  color: rgba(243,241,234,0.6);
+  color: rgba(250,250,249,0.5);
   text-decoration: none;
 }
 
@@ -693,8 +690,8 @@ tbody tr:last-child td { border-bottom: none; }
 
 .footer-bottom {
   text-align: center;
-  background: #13152a;
-  color: rgba(243,241,234,0.45);
+  background: #0c0a09;
+  color: rgba(250,250,249,0.35);
   font-size: 12px;
   padding: 14px;
 }

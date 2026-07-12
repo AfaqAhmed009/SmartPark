@@ -5,43 +5,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Book a Parking Slot</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif}
-body{background:#f4f6fb;padding:30px 20px}
-.wrap{max-width:1000px;margin:0 auto}
-h1{text-align:center;font-size:34px;color:#111827}
-.sub{text-align:center;color:#6b7280;margin-top:8px;margin-bottom:30px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif}
+body{
+    margin:0;
+    padding:0;
+    background:#fafaf9;
+}
+.wrap{
+    max-width:1000px;
+    margin:30px auto 40px;
+    padding:0 20px;
+}
+h1{text-align:center;font-size:34px;color:#1c1917}
+.sub{text-align:center;color:#78716c;margin-top:8px;margin-bottom:30px}
 
-/* ── Navbar ── */
+/* -- Navbar -- */
 .navbar { display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 60px; background: #ffffff;
-    border-bottom: 1px solid #e4e4e4; box-shadow: 0 1px 4px rgba(0,0,0,0.06); position: sticky;
+    border-bottom: 1px solid #e7e5e4; box-shadow: 0 1px 4px rgba(0,0,0,0.04); position: sticky;
     top: 0;z-index: 100;}
 
 .navbar .logo { display: flex; align-items: center; gap: 10px;}
-.navbar .logo h2 { font-size: 18px; font-weight: 700; color: #0a0a23; margin: 0; letter-spacing: -0.3px;}
+.navbar .logo h2 { font-size: 18px; font-weight: 700; color: #1c1917; margin: 0; letter-spacing: -0.3px;}
 
-.navbar .logo .logo-box {width: 36px;height: 36px;background: #0a0a23;color: white;border-radius: 8px;
+.navbar .logo .logo-box {width: 36px;height: 36px;background: #1c1917;color: white;border-radius: 8px;
     display: flex;align-items: center;justify-content: center;}
 .navbar .links { display: flex;align-items: center;gap: 4px;}
-.navbar .links a { display: flex; align-items: center;gap: 6px;padding: 7px 14px;border-radius: 8px;font-size: 14px; font-weight: 500; color: #555555;text-decoration: none; transition: background 0.15s, color 0.15s;}
-.navbar .links a:hover { background: #f0f0f0; color: #0a0a23;}
-.navbar .links a.active {  background: #0a0a23;  color: #ffffff;}
+.navbar .links a { display: flex; align-items: center;gap: 6px;padding: 7px 14px;border-radius: 8px;font-size: 14px; font-weight: 500; color: #78716c;text-decoration: none; transition: background 0.15s, color 0.15s;}
+.navbar .links a:hover { background: #f5f5f4; color: #1c1917;}
+.navbar .links a.active {  background: #1c1917;  color: #ffffff;}
 .navbar .buttons { display: flex; align-items: center; gap: 8px;}
-.navbar .buttons .Login {display: flex;align-items: center;gap: 6px;padding: 8px 16px;border: 1px solid #e4e4e4;border-radius: 8px;  background: white; font-size: 14px;font-weight: 500;color: #0a0a23;cursor: pointer;transition: background 0.15s;}
-.navbar .buttons .Login:hover { background: #f5f5f5; }
-.navbar .buttons .Register { display: flex; align-items: center; gap: 6px; padding: 8px 16px;border: none;border-radius: 8px; background: #0a0a23; font-size: 14px; font-weight: 500; color: white; cursor: pointer; transition: opacity 0.15s;}
+.navbar .buttons .Login {display: flex;align-items: center;gap: 6px;padding: 8px 16px;border: 1px solid #e7e5e4;border-radius: 8px;  background: white; font-size: 14px;font-weight: 500;color: #1c1917;cursor: pointer;transition: background 0.15s;}
+.navbar .buttons .Login:hover { background: #fafaf9; }
+.navbar .buttons .Register { display: flex; align-items: center; gap: 6px; padding: 8px 16px;border: none;border-radius: 8px; background: #1c1917; font-size: 14px; font-weight: 500; color: white; cursor: pointer; transition: opacity 0.15s;}
 .navbar .buttons .Register:hover { opacity: 0.88; }
 
-/* ── Footer ── */
+/* -- Footer -- */
 footer.footer {
     width: 100%;
-    background: #1a1d2e;
+    background: #1c1917;
     display: flex;
     gap: 0;
     flex-wrap: wrap;
     padding: 48px 60px;
-    border-top: 1px solid #2a2d3e;
+    border-top: 1px solid #292524;
     margin-top: auto;
 }
 
@@ -59,11 +67,10 @@ footer.footer {
 
 .footer-logo .logo-box {
     width: 34px; height: 34px;
-    background: #2d3047;
-    color: #a5b4fc;
+    background: #292524; color: #0d9488;
     border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    border: 1px solid #3d4163;
+    border: 1px solid #44403c;
 }
 
 .footer-logo h2 {
@@ -73,7 +80,7 @@ footer.footer {
 
 .footer-text {
     font-size: 13px;
-    color: #8b92b3;
+    color: #a8a29e;
     line-height: 1.7;
     max-width: 220px;
 }
@@ -81,7 +88,7 @@ footer.footer {
 .footer-section h3 {
     font-size: 12px;
     font-weight: 600;
-    color: #a5b4fc;
+    color: #0d9488;
     margin-bottom: 14px;
     letter-spacing: 0.8px;
     text-transform: uppercase;
@@ -91,12 +98,12 @@ footer.footer {
 
 .footer-section ul li {
     font-size: 13px;
-    color: #8b92b3;
+    color: #a8a29e;
     margin-bottom: 9px;
 }
 
 .footer-section ul li a {
-    color: #8b92b3;
+    color: #a8a29e;
     text-decoration: none;
     transition: color var(--transition);
 }
@@ -105,18 +112,18 @@ footer.footer {
 
 .footer-bottom {
     width: 100%;
-    background: #13152a;
-    color: #5a6080;
+    background: #0c0a09;
+    color: #78716c;
     text-align: center;
     font-size: 12px;
     padding: 16px;
-    border-top: 1px solid #22253a;
+    border-top: 1px solid #292524;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #d0d3e0; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 3px; }
 
 @media (max-width: 600px) {
     .slot { width: calc(50% - 7px); height: 92px; }
@@ -128,67 +135,67 @@ footer.footer {
   
 /* Tracker */
 .tracker{background:#fff;border-radius:20px;padding:30px 50px;display:flex;align-items:center;
-box-shadow:0 4px 12px rgba(0,0,0,.05);margin-bottom:30px}
+box-shadow:0 4px 12px rgba(0,0,0,.04);margin-bottom:30px}
 .t-step{display:flex;flex-direction:column;align-items:center;gap:10px;flex-shrink:0}
-.t-circle{width:48px;height:48px;border-radius:50%;background:#eceef1;color:#9aa0aa;
+.t-circle{width:48px;height:48px;border-radius:50%;background:#f5f5f4;color:#a8a29e;
 display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;transition:.3s}
-.t-step.done .t-circle, .t-step.active .t-circle{background:#0a0a23;color:#fff}
-.t-label{font-size:14px;color:#6b7280}
-.t-step.active .t-label, .t-step.done .t-label{color:#111827;font-weight:600}
-.t-line{flex:1;height:2px;background:#eceef1;margin:0 15px;margin-bottom:24px;transition:.3s}
-.t-line.done{background:#0a0a23}
+.t-step.done .t-circle, .t-step.active .t-circle{background:#1c1917;color:#fff}
+.t-label{font-size:14px;color:#78716c}
+.t-step.active .t-label, .t-step.done .t-label{color:#1c1917;font-weight:600}
+.t-line{flex:1;height:2px;background:#f5f5f4;margin:0 15px;margin-bottom:24px;transition:.3s}
+.t-line.done{background:#1c1917}
 
 /* Layout */
 .grid{display:grid;grid-template-columns:1fr 380px;gap:25px}
 @media(max-width:800px){.grid{grid-template-columns:1fr}}
-.card{background:#fff;border-radius:20px;padding:35px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
-.card h2{font-size:24px;margin-bottom:25px;color:#111827}
+.card{background:#fff;border-radius:20px;padding:35px;box-shadow:0 4px 12px rgba(0,0,0,.04)}
+.card h2{font-size:24px;margin-bottom:25px;color:#1c1917}
 
 .field{margin-bottom:20px}
-.field label{display:flex;align-items:center;gap:8px;font-weight:600;font-size:15px;margin-bottom:8px;color:#111827}
+.field label{display:flex;align-items:center;gap:8px;font-weight:600;font-size:15px;margin-bottom:8px;color:#1c1917}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-input,select{width:100%;padding:14px 16px;border:1px solid #e5e7eb;border-radius:12px;background:#f4f5f7;
-font-size:15px;color:#111827}
-input:focus,select:focus{outline:2px solid #0a0a23}
+input,select{width:100%;padding:14px 16px;border:1px solid #e7e5e4;border-radius:12px;background:#fafaf9;
+font-size:15px;color:#1c1917}
+input:focus,select:focus{outline:2px solid #1c1917}
 
 .btn{padding:16px;border:none;border-radius:14px;font-size:17px;font-weight:700;cursor:pointer;width:100%}
-.btn-primary{background:#0a0a23;color:#fff}
+.btn-primary{background:#1c1917;color:#fff}
 .btn-primary:disabled{opacity:.5;cursor:not-allowed}
-.btn-outline{background:#fff;border:1px solid #d9d9d9;color:#111827}
+.btn-outline{background:#fff;border:1px solid #e7e5e4;color:#1c1917}
 .btn-row{display:flex;gap:15px;margin-top:5px}
 
 /* Vehicle type cards */
 .vtype-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:25px}
-.vtype{border:1px solid #e5e7eb;border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:14px;
+.vtype{border:1px solid #e7e5e4;border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:14px;
 cursor:pointer;transition:.15s}
-.vtype.selected{border:2px solid #0a0a23;background:#f4f5f7}
+.vtype.selected{border:2px solid #1c1917;background:#f5f5f4}
 .vtype .emoji{font-size:26px}
 .vtype .vt-name{font-weight:700;font-size:16px}
-.vtype .vt-desc{font-size:13px;color:#6b7280}
+.vtype .vt-desc{font-size:13px;color:#78716c}
 .vtype .vt-price{margin-left:auto;font-weight:700;font-size:18px}
 
 /* Payment method */
 .pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:25px}
-.paymethod{border:1px solid #e5e7eb;border-radius:14px;padding:30px;text-align:center;cursor:pointer;font-weight:700}
-.paymethod.selected{border:2px solid #0a0a23;background:#f4f5f7}
+.paymethod{border:1px solid #e7e5e4;border-radius:14px;padding:30px;text-align:center;cursor:pointer;font-weight:700}
+.paymethod.selected{border:2px solid #1c1917;background:#f5f5f4}
 .paymethod .pm-icon{font-size:26px;display:block;margin-bottom:10px}
 
 /* Summary */
-.summary-row{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #f0f0f0;font-size:15px}
-.summary-row span:first-child{color:#6b7280}
-.summary-row span:last-child{font-weight:600;color:#111827}
-.total-box{background:#f4f5f7;border-radius:14px;padding:18px;margin-top:15px}
+.summary-row{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #f5f5f4;font-size:15px}
+.summary-row span:first-child{color:#78716c}
+.summary-row span:last-child{font-weight:600;color:#1c1917}
+.total-box{background:#f5f5f4;border-radius:14px;padding:18px;margin-top:15px}
 .total-box .trow{display:flex;justify-content:space-between;font-weight:700;font-size:18px}
-.total-box .tnote{font-size:12px;color:#9aa0aa;margin-top:4px}
+.total-box .tnote{font-size:12px;color:#a8a29e;margin-top:4px}
 
 /* Confirmation */
 .confirm-wrap{max-width:600px;margin:60px auto;text-align:center}
-.check{width:90px;height:90px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;
-justify-content:center;font-size:42px;color:#15803d;margin:0 auto 25px}
-.confirm-card{background:#fff;border-radius:20px;padding:40px;box-shadow:0 4px 12px rgba(0,0,0,.05);text-align:left}
+.check{width:90px;height:90px;border-radius:50%;background:#d1fae5;display:flex;align-items:center;
+justify-content:center;font-size:42px;color:#059669;margin:0 auto 25px}
+.confirm-card{background:#fff;border-radius:20px;padding:40px;box-shadow:0 4px 12px rgba(0,0,0,.04);text-align:left}
 .confirm-card h1{font-size:30px;text-align:center}
-.confirm-card .csub{text-align:center;color:#6b7280;margin:10px 0 25px}
-.receipt{background:#f4f5f7;border-radius:14px;padding:10px 20px}
+.confirm-card .csub{text-align:center;color:#78716c;margin:10px 0 25px}
+.receipt{background:#f5f5f4;border-radius:14px;padding:10px 20px}
 .receipt .summary-row:last-child{border-bottom:none}
 
 .hidden{display:none}
@@ -239,14 +246,14 @@ justify-content:center;font-size:42px;color:#15803d;margin:0 auto 25px}
         </div>
 
         <div class="buttons">
-            <button onclick="Login()" class="Login">
+            <button onclick="window.location.href = 'Login.html'" class="Login">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
                 <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
                 </svg>
                 Login</button>
 
-            <button onclick="Register()" class="Register">
+            <button onclick="window.location.href = 'Register.html'" class="Register">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
                 <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
                 <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
@@ -278,7 +285,7 @@ justify-content:center;font-size:42px;color:#15803d;margin:0 auto 25px}
           <h2>Slot &amp; Schedule</h2>
           <div class="field-row">
             <div class="field">
-              <label>📚 Block No</label>
+              <label>&#x1F4DA; Block No</label>
               <select id="blockNo">
                 <option value="">Select Block</option>
                 <option value="A">Block A</option>
@@ -293,16 +300,16 @@ justify-content:center;font-size:42px;color:#15803d;margin:0 auto 25px}
             </div>
           </div>
           <div class="field">
-            <label>📅 Date</label>
+            <label>&#x1F4C5; Date</label>
             <input type="date" id="bDate">
           </div>
           <div class="field-row">
             <div class="field">
-              <label>🕐 Entry Time</label>
+              <label>&#x1F550; Entry Time</label>
               <input type="time" id="entryTime">
             </div>
             <div class="field">
-              <label>🕐 Exit Time</label>
+              <label>&#x1F550; Exit Time</label>
               <input type="time" id="exitTime">
             </div>
           </div>
@@ -313,10 +320,10 @@ justify-content:center;font-size:42px;color:#15803d;margin:0 auto 25px}
         <div class="card hidden" id="step2">
           <h2>Vehicle Details</h2>
           <div class="field">
-            <label>🚗 Car Number Plate</label>
+            <label>&#x1F697; Car Number Plate</label>
             <input type="text" id="carNo" placeholder="E.G. ABC-1234">
           </div>
-          <p style="font-weight:700;margin-bottom:12px">Vehicle Type <span style="font-weight:400;color:#6b7280;font-size:14px">(flat rate — not time-based)</span></p>
+          <p style="font-weight:700;margin-bottom:12px">Vehicle Type <span style="font-weight:400;color:#78716c;font-size:14px">(flat rate -- not time-based)</span></p>
           <div class="vtype-grid" id="vtypeGrid"></div>
           <div class="btn-row">
             <button class="btn btn-outline" onclick="goToStep(1)">Back</button>
@@ -327,10 +334,10 @@ justify-content:center;font-size:42px;color:#15803d;margin:0 auto 25px}
         <!-- STEP 3 -->
         <div class="card hidden" id="step3">
           <h2>Payment</h2>
-          <p style="font-weight:700;margin-bottom:12px">💳 Payment Method</p>
+          <p style="font-weight:700;margin-bottom:12px">&#x1F4B3; Payment Method</p>
           <div class="pay-grid" id="payGrid">
-            <div class="paymethod selected" data-pm="card"><span class="pm-icon">💳</span>Credit / Debit Card</div>
-            <div class="paymethod" data-pm="wallet"><span class="pm-icon">📍</span>Digital Wallet</div>
+            <div class="paymethod selected" data-pm="card"><span class="pm-icon">&#x1F4B3;</span>Credit / Debit Card</div>
+            <div class="paymethod" data-pm="wallet"><span class="pm-icon">&#x1F4CC;</span>Digital Wallet</div>
           </div>
           <div id="cardFields">
             <div class="field"><label>Card Number</label><input type="text" id="cardNum" placeholder="1234 5678 9012 3456"></div>
@@ -350,13 +357,13 @@ justify-content:center;font-size:42px;color:#15803d;margin:0 auto 25px}
       <!-- SUMMARY -->
       <div class="card">
         <h2>Booking Summary</h2>
-        <div class="summary-row"><span>Block</span><span id="s-block">—</span></div>
-        <div class="summary-row"><span>Slot No</span><span id="s-slot">—</span></div>
-        <div class="summary-row"><span>Date</span><span id="s-date">—</span></div>
-        <div class="summary-row"><span>Entry Time</span><span id="s-entry">—</span></div>
-        <div class="summary-row"><span>Exit Time</span><span id="s-exit">—</span></div>
-        <div class="summary-row"><span>Car No</span><span id="s-car">—</span></div>
-        <div class="summary-row"><span>Vehicle Type</span><span id="s-vtype">—</span></div>
+        <div class="summary-row"><span>Block</span><span id="s-block">--</span></div>
+        <div class="summary-row"><span>Slot No</span><span id="s-slot">--</span></div>
+        <div class="summary-row"><span>Date</span><span id="s-date">--</span></div>
+        <div class="summary-row"><span>Entry Time</span><span id="s-entry">--</span></div>
+        <div class="summary-row"><span>Exit Time</span><span id="s-exit">--</span></div>
+        <div class="summary-row"><span>Car No</span><span id="s-car">--</span></div>
+        <div class="summary-row"><span>Vehicle Type</span><span id="s-vtype">--</span></div>
         <div class="total-box">
           <div class="trow"><span>Total (flat rate)</span><span id="s-total">$30.00</span></div>
           <div class="tnote">Fixed price regardless of parking duration</div>
@@ -368,11 +375,11 @@ justify-content:center;font-size:42px;color:#15803d;margin:0 auto 25px}
   <!-- CONFIRMATION -->
   <div class="confirm-wrap hidden" id="confirmScreen">
     <div class="confirm-card">
-      <div class="check">✓</div>
+      <div class="check">&#x2713;</div>
       <h1>Booking Confirmed!</h1>
       <p class="csub">Your parking slot has been successfully reserved.</p>
       <div class="receipt">
-        <div class="summary-row"><span>Booking ID</span><span id="r-bookingid" style="font-weight:700;color:#16a34a;"></span></div>
+        <div class="summary-row"><span>Booking ID</span><span id="r-bookingid" style="font-weight:700;color:#059669;"></span></div>
         <div class="summary-row"><span>Slot</span><span id="r-slot"></span></div>
         <div class="summary-row"><span>Block</span><span id="r-block"></span></div>
         <div class="summary-row"><span>Date</span><span id="r-date"></span></div>
@@ -437,15 +444,15 @@ justify-content:center;font-size:42px;color:#15803d;margin:0 auto 25px}
     </footer>
 
     <div class="footer-bottom">
-        © 2026 SmartPark. All rights reserved.
+        &copy; 2026 SmartPark. All rights reserved.
     </div>
 
 <script>
 const VEHICLES = [
-  {id:'sedan', emoji:'🚗', name:'Sedan', desc:'Standard 4-door car', price:30},
-  {id:'suv',   emoji:'🚙', name:'SUV',   desc:'Sport Utility Vehicle', price:50},
-  {id:'truck', emoji:'🚚', name:'Truck', desc:'Light or heavy truck', price:70},
-  {id:'bus',   emoji:'🚌', name:'Bus',   desc:'Mini or full-size bus', price:100},
+  {id:'sedan', emoji:'\u{1F697}', name:'Sedan', desc:'Standard 4-door car', price:30},
+  {id:'suv',   emoji:'\u{1F699}', name:'SUV',   desc:'Sport Utility Vehicle', price:50},
+  {id:'truck', emoji:'\u{1F69A}', name:'Truck', desc:'Light or heavy truck', price:70},
+  {id:'bus',   emoji:'\u{1F68C}', name:'Bus',   desc:'Mini or full-size bus', price:100},
 ];
 let selectedVehicle = VEHICLES[0];
 let selectedPM = 'card';
@@ -482,15 +489,15 @@ document.querySelectorAll('.paymethod').forEach(el=>{
 });
 
 function updateSummary(){
-  const block = document.getElementById('blockNo').value || '—';
+  const block = document.getElementById('blockNo').value || '--';
   const slotNoRaw = document.getElementById('slotNo').value;
-  const slot = slotNoRaw ? `${block!=='—'?block:'?'}-${slotNoRaw.padStart(2,'0')}` : '—';
+  const slot = slotNoRaw ? `${block!=='--'?block:'?'}-${slotNoRaw.padStart(2,'0')}` : '--';
   document.getElementById('s-block').textContent = block;
   document.getElementById('s-slot').textContent = slot;
-  document.getElementById('s-date').textContent = document.getElementById('bDate').value || '—';
-  document.getElementById('s-entry').textContent = document.getElementById('entryTime').value || '—';
-  document.getElementById('s-exit').textContent = document.getElementById('exitTime').value || '—';
-  document.getElementById('s-car').textContent = document.getElementById('carNo').value || '—';
+  document.getElementById('s-date').textContent = document.getElementById('bDate').value || '--';
+  document.getElementById('s-entry').textContent = document.getElementById('entryTime').value || '--';
+  document.getElementById('s-exit').textContent = document.getElementById('exitTime').value || '--';
+  document.getElementById('s-car').textContent = document.getElementById('carNo').value || '--';
   document.getElementById('s-vtype').textContent = `${selectedVehicle.emoji} ${selectedVehicle.name}`;
   document.getElementById('s-total').textContent = `$${selectedVehicle.price.toFixed(2)}`;
 }
@@ -532,7 +539,7 @@ async function confirmBooking(){
   // Disable confirm button and show loading
   const confirmBtn = event.target;
   confirmBtn.disabled = true;
-  confirmBtn.textContent = 'Processing…';
+  confirmBtn.textContent = 'Processing\u2026';
 
   try {
     const res = await fetch('http://127.0.0.1:8000/book', {

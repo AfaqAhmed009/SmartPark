@@ -285,7 +285,7 @@ function overviewHTML() {
             <div class="chart-wrap"><canvas id="ovChartSlots"></canvas></div>
             <p style="text-align:center;font-size:12px;color:var(--muted-foreground);margin-top:6px;">
               Total: ${tot} &nbsp;|&nbsp;
-              <span style="color:#16a34a">▣ ${av} Available</span> &nbsp;
+              <span style="color:#34d399">▣ ${av} Available</span> &nbsp;
               <span style="color:#dc2626">▣ ${oc} Occupied</span> &nbsp;
               <span style="color:#d97706">▣ ${rs} Reserved</span>
             </p>
@@ -301,9 +301,9 @@ function overviewHTML() {
 }
 
 function initOverviewCharts() {
-  const fontColor   = "#6b7280";
-  const borderColor = "#e5e7eb";
-  Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+  const fontColor   = "#a8a29e";
+  const borderColor = "#292524";
+  Chart.defaults.font.family = "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
   Chart.defaults.font.size   = 12;
 
   const mr = getMonthlyRevenue();
@@ -317,7 +317,7 @@ function initOverviewCharts() {
     type: "bar",
     data: {
       labels: mr.map(d => d.month),
-      datasets: [{ data: mr.map(d => d.revenue), backgroundColor: "#0a0a23", borderRadius: 5, maxBarThickness: 38 }]
+      datasets: [{ data: mr.map(d => d.revenue), backgroundColor: "#fafaf9", borderRadius: 5, maxBarThickness: 38 }]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
@@ -333,7 +333,7 @@ function initOverviewCharts() {
     type: "bar",
     data: {
       labels: db.map(d => d.day),
-      datasets: [{ data: db.map(d => d.bookings), backgroundColor: "#4f46e5", borderRadius: 5, maxBarThickness: 38 }]
+      datasets: [{ data: db.map(d => d.bookings), backgroundColor: "#0d9488", borderRadius: 5, maxBarThickness: 38 }]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
@@ -351,8 +351,8 @@ function initOverviewCharts() {
       labels: ot.map(d => d.time),
       datasets: [{
         data: ot.map(d => d.rate),
-        borderColor: "#10b981", backgroundColor: "rgba(16,185,129,0.08)",
-        pointBackgroundColor: "#10b981", pointRadius: 4,
+        borderColor: "#059669", backgroundColor: "rgba(5,150,105,0.08)",
+        pointBackgroundColor: "#059669", pointRadius: 4,
         tension: 0.35, borderWidth: 2, fill: true,
       }]
     },
@@ -372,7 +372,7 @@ function initOverviewCharts() {
       labels: ["Available", "Occupied", "Reserved"],
       datasets: [{
         data: [av || 1, oc, rs],
-        backgroundColor: ["#16a34a", "#dc2626", "#d97706"],
+        backgroundColor: ["#34d399", "#f87171", "#fbbf24"],
         borderWidth: 0,
       }]
     },
@@ -446,9 +446,9 @@ function chartsHTML() {
 }
 
 function initDetailCharts() {
-  const fontColor   = "#6b7280";
-  const borderColor = "#e5e7eb";
-  Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+  const fontColor   = "#a8a29e";
+  const borderColor = "#292524";
+  Chart.defaults.font.family = "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
   Chart.defaults.font.size   = 12;
 
   const mr  = getMonthlyRevenue();
@@ -464,7 +464,7 @@ function initDetailCharts() {
       datasets: [{
         label: "Revenue",
         data: mr.map(d => d.revenue),
-        backgroundColor: mr.map((_, i) => i === mr.length - 1 ? "#0a0a23" : "#c7c9da"),
+        backgroundColor: mr.map((_, i) => i === mr.length - 1 ? "#fafaf9" : "#44403c"),
         borderRadius: 6, maxBarThickness: 52,
       }]
     },
@@ -485,7 +485,7 @@ function initDetailCharts() {
       datasets: [{
         data: cb.map(d => d.value),
         backgroundColor: cb.map(d => d.color),
-        borderWidth: 3, borderColor: "#ffffff", hoverOffset: 6,
+        borderWidth: 3, borderColor: "#1c1917", hoverOffset: 6,
       }]
     },
     options: {
@@ -503,8 +503,8 @@ function initDetailCharts() {
       labels: rf.map(d => d.day),
       datasets: [{
         label: "Forecast Revenue", data: rf.map(d => d.revenue),
-        borderColor: "#4f46e5", backgroundColor: "rgba(79,70,229,0.10)",
-        borderDash: [5, 4], pointBackgroundColor: "#4f46e5",
+        borderColor: "#0d9488", backgroundColor: "rgba(13,148,136,0.10)",
+        borderDash: [5, 4], pointBackgroundColor: "#0d9488",
         pointRadius: 4, pointHoverRadius: 6, tension: 0.3, borderWidth: 2.5, fill: true,
       }]
     },
@@ -524,8 +524,8 @@ function initDetailCharts() {
       labels: ot.map(d => d.time),
       datasets: [{
         label: "Occupancy %", data: ot.map(d => d.rate),
-        borderColor: "#10b981", backgroundColor: "rgba(16,185,129,0.10)",
-        pointBackgroundColor: "#10b981", pointRadius: 4, pointHoverRadius: 6,
+        borderColor: "#059669", backgroundColor: "rgba(5,150,105,0.10)",
+        pointBackgroundColor: "#059669", pointRadius: 4, pointHoverRadius: 6,
         tension: 0.40, borderWidth: 2.5, fill: true,
       }]
     },
@@ -639,7 +639,7 @@ function liveSlotsSectionHTML() {
 
       .live-block-section { margin-bottom:28px; }
       .live-block-header { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
-      .live-block-badge { width:40px; height:40px; background:#0b0c2a; color:#fff;
+      .live-block-badge { width:40px; height:40px; background:#1c1917; color:#fff;
         border-radius:10px; display:flex; align-items:center; justify-content:center;
         font-size:16px; font-weight:700; flex-shrink:0; }
       .live-block-title { font-weight:700; font-size:15px; color:var(--foreground); }
@@ -659,7 +659,7 @@ function liveSlotsSectionHTML() {
 
       .live-slot-available { background:#f0fdf6; border-color:#6ee7a8; }
       .live-slot-available .live-slot-id  { color:#15803d; }
-      .live-slot-available .live-slot-car { stroke:#16a34a; }
+      .live-slot-available .live-slot-car { stroke:#34d399; }
 
       .live-slot-occupied  { background:#fff5f5; border-color:#fca5a5; }
       .live-slot-occupied  .live-slot-id  { color:#dc2626; }

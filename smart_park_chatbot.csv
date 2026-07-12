@@ -16,11 +16,11 @@ Can I reserve a slot?,"Yes, users can book a slot before arrival. The system mar
 How is parking time calculated?,From entry time to exit time automatically. System stores timestamps.
 How is billing calculated?,Billing is based on time duration and parking rate. System calculates total cost automatically.
 Architecture?,Client-server architecture is used. Frontend interacts with backend APIs.
-Data flow?,User request → backend → database → response. System processes and returns result.
+Data flow?,User request ? backend ? database ? response. System processes and returns result.
 REST API use?,"Used for communication between frontend and backend. Uses GET, POST methods."
 Why backend is needed?,To handle logic and data storage. Frontend alone cannot manage system data.
 What is stored in database?,"User data, slot status, bookings, and billing info. Also timestamps and vehicle details."
-How is slot updated?,"When a car parks, status changes to “occupied”. When it leaves, status becomes “free”."
+How is slot updated?,"When a car parks, status changes to �occupied�. When it leaves, status becomes �free�."
 Why database instead of file only?,Database is faster and more reliable. It supports large-scale data handling.
 What model used?,Incremental or prototype model. System built step-by-step.
 Functional requirements?,"Login, slot booking, availability checking, billing. These are main system features."
@@ -58,7 +58,7 @@ Slot allocation logic?,System checks first available or nearest slot. Then updat
 REST API?,It allows communication between frontend and backend. Uses HTTP methods like GET/POST.
 Frontend-backend connection?,Frontend sends API requests to backend. Backend responds in JSON format.
 Why not only frontend?,Frontend alone cannot store or process data. Backend is needed for logic and storage.
-Slot update process?,When car enters → slot = occupied. When exits → slot = free.
+Slot update process?,When car enters ? slot = occupied. When exits ? slot = free.
 Why CSV or DB?,CSV is simple for small projects. Databases are better for large systems.
 Data consistency?,System updates database immediately after actions. Ensures no mismatch in slot status.
 Model used?,Incremental or prototype model. System built step-by-step with updates.
@@ -82,7 +82,7 @@ Who are the users?,"Drivers, parking staff, and system administrators. Anyone wh
 Web or desktop system?,"It depends on implementation, but usually it is a web-based system. It can also be converted into desktop or hybrid system."
 How long can I park?,Parking time depends on system rules or admin settings. Time is tracked from entry to exit.
 System architecture?,It follows a client-server architecture. Frontend handles UI and backend handles logic.
-How does data flow?,User request goes to backend → database → response returned. This ensures smooth communication.
+How does data flow?,User request goes to backend ? database ? response returned. This ensures smooth communication.
 Why CSV or database?,CSV is simple for small projects and easy to manage. Databases are used for scalability and performance.
 How is slot assigned?,System checks first available or best-fit slot. Then marks it as occupied in database.
 What is REST API?,It is a way for frontend and backend to communicate. It uses HTTP methods like GET and POST.
@@ -92,6 +92,17 @@ What model did you follow?,Mostly incremental or prototype model. System is buil
 Can AI be added?,"Yes, AI can predict parking demand. It can also suggest best parking times."
 If two users book same slot?,System uses locking or checking before assignment. Only one booking is allowed per slot.
 What if system crashes?,Data is stored in database so it can be recovered. Backup system ensures safety.
-What if parking is full?,System shows “No slots available” message. User can wait or reserve later.
+What if parking is full?,System shows �No slots available� message. User can wait or reserve later.
 How did you test system?,By checking all features manually and with test cases. Ensured correct slot allocation and billing.
 What test cases used?,"Booking, cancellation, login, and slot update tests. Each function was tested separately."
+Hello,"Hy how are you, hope are doing well."
+How do i register?,For this you have to goto the Register section and enter credentials and you you will be registered.
+Hello my name is Afaq.,"Hy how are you, hope are doing well. My name is Smart Park."
+Can i book two slots at a time.,"unfortutanely No, You can book one at a time."
+When you were created?,i was created in the 2026.
+How developed you?,A software enginner Afaq Ahmed created my me as a semester project.
+do you have an amdin portal?,"Yes we have admin portal and is accessed by Afaq Ahmed, Faizan Rasool, Haider Rasool"
+where  is your location?,"My  Loccation is in London , UK."
+"what a coincidence, i am also from London.","Nice, it'a wonderful city. I really love it."
+i have never been there,Oh sad! you should visit it's a lovely city.
+Are there any special places to visit in london?,"Yes there are many places to visit, Like london bridge etc."

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SmartPark</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   * {
     margin: 0;
@@ -14,14 +14,14 @@
   }
 
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(to bottom right, #0a0a23, #1a1d2e, #0a0a23);
+    background: #0c0a09;
     position: relative;
     overflow-x: hidden;
-    color: #fff;
+    color: #fafaf9;
   }
 
   /* Background decorative blurred circles */
@@ -43,7 +43,7 @@
     left: -10%;
     width: 500px;
     height: 500px;
-    background: rgba(79, 70, 229, 0.16);
+    background: rgba(13, 148, 136, 0.14);
   }
 
   .circle-2 {
@@ -51,7 +51,7 @@
     right: -10%;
     width: 400px;
     height: 400px;
-    background: rgba(79, 70, 229, 0.12);
+    background: rgba(13, 148, 136, 0.10);
   }
 
   .circle-3 {
@@ -59,7 +59,7 @@
     left: 50%;
     width: 600px;
     height: 600px;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(250, 250, 249, 0.02);
     transform: translate(-50%, -50%);
   }
 
@@ -86,19 +86,20 @@
   .logo-icon {
     width: 80px;
     height: 80px;
-    background: #2d3047;
+    background: #1c1917;
+    border: 1px solid #292524;
     border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 20px 35px rgba(10, 10, 35, 0.45);
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5);
     margin-bottom: 24px;
   }
 
   .logo-icon svg {
     width: 40px;
     height: 40px;
-    color: #fff;
+    color: #0d9488;
   }
 
   h1 {
@@ -109,14 +110,14 @@
   }
 
   .tagline {
-    color: #cbd5e1;
+    color: #a8a29e;
     font-size: 18px;
     max-width: 420px;
     line-height: 1.6;
   }
 
   .subtext {
-    color: #94a3b8;
+    color: #78716c;
     font-size: 16px;
     max-width: 380px;
     margin-top: 8px;
@@ -135,8 +136,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(250, 250, 249, 0.06);
+    border: 1px solid rgba(250, 250, 249, 0.1);
     backdrop-filter: blur(6px);
     border-radius: 999px;
     padding: 8px 16px;
@@ -145,12 +146,12 @@
   .pill svg {
     width: 16px;
     height: 16px;
-    color: #a5b4fc;
+    color: #0d9488;
   }
 
   .pill span {
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(250, 250, 249, 0.7);
   }
 
   /* CTA buttons */
@@ -172,9 +173,9 @@
   }
 
   .btn-primary {
-    background: #0a0a23;
-    color: #fff;
-    box-shadow: 0 10px 25px rgba(10, 10, 35, 0.35);
+    background: #fafaf9;
+    color: #1c1917;
+    box-shadow: 0 10px 25px rgba(250, 250, 249, 0.15);
   }
 
   .btn-primary:hover {
@@ -182,26 +183,26 @@
   }
 
   .btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: #fff;
+    background: rgba(250, 250, 249, 0.08);
+    border: 1px solid rgba(250, 250, 249, 0.15);
+    color: #fafaf9;
     backdrop-filter: blur(6px);
   }
 
   .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(250, 250, 249, 0.14);
   }
 
   .guest-link {
     margin-top: 24px;
-    color: #94a3b8;
+    color: #78716c;
     font-size: 14px;
     text-decoration: underline;
     text-underline-offset: 4px;
   }
 
   .guest-link:hover {
-    color: #cbd5e1;
+    color: #a8a29e;
   }
 
   /* Footer */
@@ -210,7 +211,7 @@
     z-index: 1;
     text-align: center;
     padding-bottom: 24px;
-    color: #475569;
+    color: #52525b;
     font-size: 12px;
   }
 
@@ -269,7 +270,7 @@
       <a href="Register.html" class="btn btn-secondary">Sign Up</a>
     </div>
 
-    <a href="Home.html" class="guest-link">Continue as guest →</a>
+    <a href="Home.html" class="guest-link">Continue as guest &rarr;</a>
 
   </div>
 
